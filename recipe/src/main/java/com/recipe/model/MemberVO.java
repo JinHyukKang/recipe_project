@@ -7,7 +7,7 @@ public class MemberVO {
 	private String user_id;
 	private String user_pass;
 	private String user_name;
-	private int user_gender;
+	private String user_gender;
 	private String user_birth;
 	private String user_nickname;
 	private String user_email;
@@ -40,10 +40,10 @@ public class MemberVO {
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
-	public int getUser_gender() {
+	public String getUser_gender() {
 		return user_gender;
 	}
-	public void setUser_gender(int user_gender) {
+	public void setUser_gender(String user_gender) {
 		this.user_gender = user_gender;
 	}
 	public String getUser_birth() {
@@ -94,6 +94,7 @@ public class MemberVO {
 	public void setJoin_date(Date join_date) {
 		this.join_date = join_date;
 	}
+	
 	
 	
 }

@@ -1,15 +1,12 @@
-package com.recipe.service;
+package com.recipe.mapper;
 
 import com.recipe.model.MemberVO;
 
-public interface MemberService {
+public interface MemberMapper {
 	
-	//íšŒì›ê°€ì…
+	//È¸¿ø°¡ÀÔ
 	public void memberJoin(MemberVO member) throws Exception;
-	
-	//ì•„ì´ë”” ì¤‘ë³µ í™•ì¸
+	 
+	//¾ÆÀÌµğ Áßº¹ È®ÀÎ
 	public int idChk(MemberVO member) throws Exception;
-	
-		
-	
 }

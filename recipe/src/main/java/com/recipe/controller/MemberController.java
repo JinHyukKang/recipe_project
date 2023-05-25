@@ -19,6 +19,9 @@ import com.recipe.service.MemberService;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
+	@Autowired
+	private MemberService memberservice;
+	
 	
 	//로그인 페이지 이동
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -38,6 +41,28 @@ public class MemberController {
 		return "member/join";
 		
 	}
+	
+	//회원가입 기능 추가 
+	@RequestMapping(value="/join.do", method=RequestMethod.POST)
+	public String joinPOST(MemberVO member) throws Exception{
+		
+		logger.info("join 진입");
+		
+		memberservice.memberJoin(member);
+		
+		logger.info("join Service 작업완료");
+		
+		return "redirect:/member/login";
+		
+	}
+	
+	//아이디 중복검사
+	@RequestMapping(value="/idChk.do", method=RequestMethod.POST)
+	public int idChk(MemberVO member) throws Exception{
+		int result = memberservice.idChk(member);
+		return result;
+	}
+	
 	
 	
 	
