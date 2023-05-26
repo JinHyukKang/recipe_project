@@ -13,6 +13,7 @@
   <link href="${path}/resources/css/custome.css" rel="stylesheet" type="text/css">
   <script type="text/javascript" src="${path}/resources/js/join.js"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>회원가입</title>
 </head>
@@ -30,7 +31,8 @@
               <label for="user_id">아이디</label>
               <div class="d-flex">
               	<input type="text" class="form-control col-lg-5" id="user_id" name="user_id" required>
-              	<button class="btn btn-primary col-lg-2">중복 확인</button>
+              	<span id="id_error"></span><br>
+              	<button class="btn btn-primary col-lg-2" id="id_Chk">중복 확인</button>
               </div>
           </div>
           
@@ -70,7 +72,7 @@
               <label for="user_nickname">닉네임</label>
               <div class="d-flex">
               	<input type="text" class="form-control col-lg-5" id="user_nickname" name="user_nickname" required>
-              	<button class="btn btn-primary col-lg-2" id="idChk" onclick="fn_idChk();">중복 확인</button>
+              	<button class="btn btn-primary col-lg-2" id="idChk" >중복 확인</button>
               </div>
             </div>
           
@@ -123,7 +125,37 @@
 </footer>
 
    
+<script>
+//아이디 중복 테스트
+$(document).ready(function(){
+    function checkUserId() {
+        var user_id = $('#user_id').val();
+        
+        $.ajax({
+            url: '/member/idChk',
+            type: 'post',
+            data: {user_id: user_id},
+            success: function(response){
+                if(response == 'exist'){
+                    $('#id_error').text('이미 사용중인 아이디입니다.');
+                } else{
+                    $('#id_error').text('사용가능한 아이디입니다.');
+                }	
+            }
+        });
+    }
 
+    $('#id_Chk').on('click', function(){
+        checkUserId();
+    });
+
+    $('#user_id').on('blur', function(){
+        checkUserId();
+    });
+});
+
+
+</script>
 
 
 

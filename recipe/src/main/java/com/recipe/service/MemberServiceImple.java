@@ -17,10 +17,11 @@ public class MemberServiceImple implements MemberService{
 		membermapper.memberJoin(member);
 		
 	}
-	@Override
-	public int idChk(MemberVO member) throws Exception{
-		int result = membermapper.idChk(member);
+	
+	//아이디 중복확인
+	public int idChk(String user_id) throws Exception{
+		int result = membermapper.idChk(user_id);
 		return result;
-		
 	}
+	
 }

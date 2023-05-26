@@ -46,7 +46,6 @@ public class MemberController {
 	@RequestMapping(value="/join.do", method=RequestMethod.POST)
 	public String joinPOST(MemberVO member) throws Exception{
 		
-		logger.info("join 진입");
 		
 		memberservice.memberJoin(member);
 		
@@ -57,10 +56,17 @@ public class MemberController {
 	}
 	
 	//아이디 중복검사
-	@RequestMapping(value="/idChk.do", method=RequestMethod.POST)
-	public int idChk(MemberVO member) throws Exception{
-		int result = memberservice.idChk(member);
-		return result;
+	@PostMapping("/idChk")
+	@ResponseBody
+	public String idChk(@RequestParam String user_id) throws Exception {
+		
+		int result = memberservice.idChk(user_id);
+		if(result != 0) {
+			return "exist";
+		}else {
+			return "not_exist";
+		}
+		
 	}
 	
 	
