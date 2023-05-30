@@ -136,7 +136,7 @@ $(document).ready(function(){
             type: 'post',
             data: {user_id: user_id},
             success: function(response){
-                if(response == 'exist'){
+                if(response){
                     $('#id_error').text('이미 사용중인 아이디입니다.');
                 } else{
                     $('#id_error').text('사용가능한 아이디입니다.');
