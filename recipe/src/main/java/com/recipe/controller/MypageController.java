@@ -19,6 +19,7 @@ import com.recipe.service.MypageService;
 
 
 @Controller
+@RequestMapping(value="/MyPage/*")
 public class MypageController {
    
    private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
@@ -37,7 +38,7 @@ public class MypageController {
     	  String user_id = loginUser.getUser_id();
     	  String user_nickname= loginUser.getUser_nickname();
     	  String user_name = loginUser.getUser_name();
-    	  String user_pw = loginUser.getUser_pass();
+    	  String user_pass = loginUser.getUser_pass();
     	  String user_email = loginUser.getUser_email();
     	  String user_postcode = loginUser.getUser_postcode();
     	  String user_addr = loginUser.getUser_addr();
@@ -48,7 +49,7 @@ public class MypageController {
     	  model.addAttribute("user_id",user_id);
     	  model.addAttribute("user_nickname",user_nickname);
     	  model.addAttribute("user_name",user_name);
-    	  model.addAttribute("user_pw",user_pw);
+    	  model.addAttribute("user_pass",user_pass);
     	  model.addAttribute("user_email",user_email);
     	  model.addAttribute("user_postcode",user_postcode);
     	  model.addAttribute("user_addr",user_addr);
@@ -56,22 +57,24 @@ public class MypageController {
     	  model.addAttribute("user_extraaddr",user_extraaddr);
       }
       
-      return "MyPage/MyPage";
+      return "/MyPage/MyPage";
    }
    //마이페이지(내게시물) 이동
    @RequestMapping(value="/MyPagePost", method = RequestMethod.GET)
    public  String MyPagePost() {
       logger.info("내게시물 진입");
       
-      return "MyPage/MyPagePost";
+      return "/MyPage/MyPagePost";
    }
 
    //마이페이지 정보수정
    
-   @RequestMapping(value = "/updateMember.do")
+   @RequestMapping(value = "/updateMember.do", method = RequestMethod.POST)
    public String updateMember(MemberVO vo) throws Exception {
+	   logger.info("마이페이지 수정");
+	   
 	   mypageservice.updateMember(vo);
-       return "redirect:/MyPage"; //
+       return "redirect:/MyPage/MyPage"; //
    }
    
 }

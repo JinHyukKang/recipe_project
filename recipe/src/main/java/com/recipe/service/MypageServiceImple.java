@@ -11,6 +11,7 @@ public class MypageServiceImple implements MypageService{
 	@Autowired
 	MypageMapper mypagemapper;
 	
+	//회원정보 수정
 	@Override
     public void updateMember(MemberVO vo) throws Exception {
         mypagemapper.updateMember(vo);

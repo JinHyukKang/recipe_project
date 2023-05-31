@@ -21,8 +21,8 @@
 <!-- 마이페이지 헤더 -->
 <div id="change-mod" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-	    <li class="ui-state-default ui-corner-top"><a href="/MyPage"><span><strong>회원정보수정</strong></span></a></li>
-	    <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="/MyPagePost"><span><strong>내게시물</strong></span></a></li>
+	    <li class="ui-state-default ui-corner-top"><a href="/MyPage/MyPage"><span><strong>회원정보수정</strong></span></a></li>
+	    <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="/MyPage/MyPagePost"><span><strong>내게시물</strong></span></a></li>
     </ul>
 </div>
 <div class="container">

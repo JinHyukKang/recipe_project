@@ -21,15 +21,15 @@
 <!-- 마이페이지 헤더 -->
 <div id="change-mod" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-	    <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="/MyPage"><span><strong>회원정보수정</strong></span></a></li>
-	    <li class="ui-state-default ui-corner-top"><a href="/MyPagePost"><span><strong>내게시물</strong></span></a></li>
+	    <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="/MyPage/MyPage"><span><strong>회원정보수정</strong></span></a></li>
+	    <li class="ui-state-default ui-corner-top"><a href="/MyPage/MyPagePost"><span><strong>내게시물</strong></span></a></li>
     </ul>
 </div>
 
 <div class="container">
 	<div class="row mt-5">
 		<div class="col-md-12">
-		<form action="/updateMember.do">
+		<form action="/MyPage/updateMember.do" method="POST">
 	    	<div class="d-flex" id="chNickname" >
 	    		<label class="col-md-1 nickname">${user_nickname}님</label>
 	    	</div>
@@ -37,28 +37,28 @@
 	    	<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">이름 : </label>
 				<div class="col-sm-5">
-					<input type="text" name="user_name"  class="form-control-sm" value="${user_name}" disabled/>
+					<input type="text" name="user_name" id="user_name" class="form-control-sm"  value="${user_name}" disabled/>
 				</div>
 			</div>
 			
 	    	<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">아이디 : </label>
 				<div class="col-sm-5">
-					<input type="text" name="user_id"  class="form-control-sm" value="${user_id}" disabled/>
+					<input type="text" name="user_id" id="user_id" class="form-control-sm"  value="${user_id}" disabled/>
 				</div>
 			</div>
 			
 			<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">비밀번호 : </label>
 				<div class="col-sm-6">
-					<input type="password" name="user_pass"  class="form-control-sm" value="${user_pw}"/>(수정가능)
+					<input type="password" name="user_pass" id="user_pass"  class="form-control-sm"  value="${user_pass}"/>(수정가능)
 				</div>
 			</div>
 			
 			<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">이메일 : </label>
 				<div class="col-sm-6">
-					<input type="email" name="user_email"  class="form-control-sm" value="${user_email}"/>(수정가능)
+					<input type="email" name="user_email" id="user_email" class="form-control-sm"  value="${user_email}"/>(수정가능)
 				</div>
 			</div>
 			
@@ -73,7 +73,7 @@
 					<input type="text" class="form-control-sm" id="user_addr" name="user_addr" placeholder="${user_addr}">
 				</div>
 				<div class="d-flex">
-					<input type="text" class="form-control-sm" id="user_detailaddr" name="user_detailaddr" placeholder="${user_detailaddr}">
+					<input type="text" class="form-control-sm" id="user_detailaddr" name="user_detailaddr"  placeholder="${user_detailaddr}">
 					<input type="text" class="form-control-sm" id="user_extraaddr" name="user_extraaddr" placeholder="${user_extraaddr}">
 				</div>
 			</div>
