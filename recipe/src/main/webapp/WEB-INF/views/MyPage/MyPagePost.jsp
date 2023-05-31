@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <link rel="stylesheet" href="/resources/css/MyPagecustom.css"/>
   <link rel="stylesheet" href="/resources/js/popuptest.js"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

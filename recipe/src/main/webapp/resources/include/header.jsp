@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 
 	<div class="container-fluid">
@@ -38,7 +41,7 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/member/login">
+					<a class="nav-link" href="javascript:void(0);" onclick="openPopUp();">
 					MyPage
 					</a>
 				</li>
@@ -54,5 +57,20 @@
 		</div>
 		
 	</div>
-
 </nav>
+
+<script>
+
+function openPopUp() {
+    // 함수 동작 테스트 
+    //alert("팝업 테스트");
+    
+    //window.open("[팝업을 띄울 파일명 path]", "[별칭]", "[팝업 옵션]")
+     window.open("/MyPage", "target", "width=800, height=700, top=150, left=200");
+}
+
+function showHidden() {
+    alert(document.testForm.flag.value);
+}
+</script>
+</html>

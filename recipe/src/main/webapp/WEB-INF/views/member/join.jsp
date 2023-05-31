@@ -32,7 +32,7 @@
               <div class="d-flex">
               	<input type="text" class="form-control col-lg-5" id="user_id" name="user_id" required>
               	<span id="id_error"></span><br>
-              	<button class="btn btn-primary col-lg-2" id="id_Chk">중복 확인</button>
+              	<button class="btn btn-primary col-lg-2" id="id_Chk" onclick="checkUserId()">중복 확인</button>
               </div>
           </div>
           
@@ -44,15 +44,14 @@
           <div class="mb-3">
               <label for="user_pass2">비밀번호 확인</label>
               <input type="password" class="form-control col-lg-8" id="user_pass2" name="user_pass2" required>
+              <span id="pass_error" style="color: red;"></span> <!-- 비밀번호 일치 여부를 표시할 요소 -->
           </div>
           
           <div class="row">
             <div class="col-lg-5">
               <label for="user_name">이름</label>
-              <input type="text" class="form-control" id="user_name" name="user_name" required>
+              <input type="text" class="form-control-sm" id="user_name" name="user_name" required>
             </div>
-          <div class="col-lg-2">
-          </div>  
            
           <div class="col-lg-3">
             <label for="gender">성별 </label><br>
@@ -72,7 +71,7 @@
               <label for="user_nickname">닉네임</label>
               <div class="d-flex">
               	<input type="text" class="form-control col-lg-5" id="user_nickname" name="user_nickname" required>
-              	<button class="btn btn-primary col-lg-2" id="idChk" >중복 확인</button>
+              	<button class="btn btn-primary col-lg-2" id="nickname_Chk" onclick="checkUserNickname()">중복 확인</button>
               </div>
             </div>
           
@@ -111,7 +110,7 @@
             <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
           </div>
           <div class="mb-4"></div>
-          <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+          <input type="submit" class="btn btn-primary btn-lg btn-block" value="가입 완료"/>
         </form>
         
      	</div>
@@ -127,33 +126,67 @@
    
 <script>
 //아이디 중복 테스트
-$(document).ready(function(){
-    function checkUserId() {
-        var user_id = $('#user_id').val();
-        
+function checkUserId() {
+    var user_id = $('#user_id').val();
+    
+	$("#id_Chk").click(function() {
         $.ajax({
             url: '/member/idChk',
             type: 'post',
             data: {user_id: user_id},
             success: function(response){
-                if(response){
-                    $('#id_error').text('이미 사용중인 아이디입니다.');
-                } else{
-                    $('#id_error').text('사용가능한 아이디입니다.');
-                }	
+            	if(response === "fail") {
+            		alert("이미 사용중인 아이디입니다.");
+            	}else if(response === "success") {
+            		alert("사용 가능한 아이디입니다.");
+            	}else {
+            		alert("잘못된 값 전달");
+            	}
             }
         });
+	});
+};
+
+//닉네임 중복 테스트
+function checkUserNickname() {
+    var user_nickname = $('#user_nickname').val();
+    
+	$("#nickname_Chk").click(function() {
+        $.ajax({
+            url: '/member/nicknameChk',
+            type: 'post',
+            data: {user_nickname: user_nickname},
+            success: function(response){
+            	if(response === "fail") {
+            		alert("이미 사용중인 닉네임입니다.");
+            	}else if(response === "success") {
+            		alert("사용 가능한 닉네임입니다.");
+            	}else {
+            		alert("잘못된 값 전달");
+            	}
+            }
+        });
+	});
+};
+
+//비밀번호 확인
+function checkUserpass() {
+    var user_pass = $('#user_pass').val();
+    var user_pass2 = $('#user_pass2').val();
+
+    if (user_pass === user_pass2) {
+        $('#pass_error').text('비밀번호가 일치합니다');
+        $('#pass_error').css('color', 'green');
+    }else {
+        $('#pass_error').text('비밀번호가 일치하지 않습니다');
+        $('#pass_error').css('color', 'red');
     }
+}
 
-    $('#id_Chk').on('click', function(){
-        checkUserId();
-    });
-
-    $('#user_id').on('blur', function(){
-        checkUserId();
-    });
+$(document).ready(function() {
+    // 비밀번호 입력란 또는 비밀번호 확인 입력란에서 포커스가 해제될 때 비밀번호 확인 함수 호출
+    $('#user_pass, #user_pass2').blur(checkUserpass);
 });
-
 
 </script>
 

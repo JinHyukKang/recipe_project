@@ -90,9 +90,28 @@ public class MemberController {
 	
 	// 아이디 중복검사
 	@PostMapping("/idChk")
-    public ResponseEntity<Boolean> idChk(@RequestParam String user_id) throws Exception {
-        boolean result = memberservice.idChk(user_id);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<String> idChk(@RequestParam String user_id) throws Exception {
+		int cnt = memberservice.idChk(user_id);
+        
+		if(cnt > 0) {
+			return ResponseEntity.ok("fail");
+		}else {
+			return ResponseEntity.ok("success");
+		}
+        
+    }
+	
+	//닉네임 중복검사
+	@PostMapping("/nicknameChk")
+    public ResponseEntity<String> nicknameChk(@RequestParam String user_nickname) throws Exception {
+		int cnt = memberservice.nicknameChk(user_nickname);
+        
+		if(cnt > 0) {
+			return ResponseEntity.ok("fail");
+		}else {
+			return ResponseEntity.ok("success");
+		}
+        
     }
 	
 	

@@ -22,9 +22,15 @@ public class MemberServiceImple implements MemberService{
 	
 	//아이디 중복확인
 	@Override
-    public boolean idChk(String user_id) throws Exception {
+    public int idChk(String user_id) throws Exception {
         return membermapper.idChk(user_id);
     }
+	
+	//닉네임 중복확인
+	@Override
+	public int nicknameChk(String user_nickname)throws Exception{
+		return membermapper.nicknameChk(user_nickname);
+	}
 	
 	//로그인 mapper 접근
 	@Override
