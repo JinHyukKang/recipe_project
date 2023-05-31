@@ -29,60 +29,62 @@
 <div class="container">
 	<div class="row mt-5">
 		<div class="col-md-12">
-			
+		<form action="/updateMember.do">
 	    	<div class="d-flex" id="chNickname" >
-	    	<label class="col-md-1 nickname">${nickname}</label>(수정가능)
+	    		<label class="col-md-1 nickname">${user_nickname}님</label>
 	    	</div>
 	    	
 	    	<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">이름 : </label>
 				<div class="col-sm-5">
-					<input type="text" name="user_name"  class="form-control-sm" value="${name}" disabled/>
+					<input type="text" name="user_name"  class="form-control-sm" value="${user_name}" disabled/>
 				</div>
 			</div>
 			
 	    	<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">아이디 : </label>
 				<div class="col-sm-5">
-					<input type="text" name="user_id"  class="form-control-sm" value="${id}" disabled/>
+					<input type="text" name="user_id"  class="form-control-sm" value="${user_id}" disabled/>
 				</div>
 			</div>
 			
 			<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">비밀번호 : </label>
-				<div class="col-sm-5">
-					<input type="password" name="user_pass"  class="form-control-sm" value="${pw}"/>
-					<button type="submit" class="btn btn-primary btn-xs" value="password">수정 </button>
+				<div class="col-sm-6">
+					<input type="password" name="user_pass"  class="form-control-sm" value="${user_pw}"/>(수정가능)
 				</div>
 			</div>
 			
 			<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">이메일 : </label>
 				<div class="col-sm-6">
-					<input type="email" name="email"  class="form-control-sm" value="${email}"/>(수정가능)
+					<input type="email" name="user_email"  class="form-control-sm" value="${user_email}"/>(수정가능)
 				</div>
 			</div>
 			
 			
 			<div class="form-group row mt-3 mx-3">
 			<label for="address">주소</label><br>
-				<div class="col-sm-5">
-			        <input type="text" class="form-control-sm" id="user_postcode" name="user_postcode" placeholder="${postcode}">
-			        <input type="button" class="btn btn-primary btn-xs" onclick="sample6_execDaumPostcode()" value="수정"><br>
+				<div class="col-lg-4">
+			        <input type="text" class="form-control-sm" id="user_postcode" name="user_postcode" placeholder="${user_postcode}">
+			        <input type="button" class="btn btn-primary col-lg-1" onclick="sample6_execDaumPostcode()" value="주소 수정"><br>
 		        </div>
 		        <div class="mb-1">
-					<input type="text" class="form-control-sm" id="user_addr" name="user_addr" placeholder="${addr}">
+					<input type="text" class="form-control-sm" id="user_addr" name="user_addr" placeholder="${user_addr}">
 				</div>
 				<div class="d-flex">
-					<input type="text" class="form-control-sm" id="user_detailaddr" name="user_detailaddr" placeholder="${detailaddr}">
-					<input type="text" class="form-control-sm" id="user_extraaddr" name="user_extraaddr" placeholder="${extraaddr}">
+					<input type="text" class="form-control-sm" id="user_detailaddr" name="user_detailaddr" placeholder="${user_detailaddr}">
+					<input type="text" class="form-control-sm" id="user_extraaddr" name="user_extraaddr" placeholder="${user_extraaddr}">
 				</div>
-		</div>
-			
-			
+			</div>
+			<div class="form-group row mt-3 mx-3">
+				<input type="submit" class="btn btn-success" value="수정완료"/>
+			</div>
+		</form>
 		</div>
 	</div>
-</div>    
+</div>
+
 <script>
 function sample6_execDaumPostcode() {
     new daum.Postcode({
