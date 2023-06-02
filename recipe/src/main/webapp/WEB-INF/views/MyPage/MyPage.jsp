@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="false"%>
 <%@ page import="com.recipe.model.MemberVO" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -29,36 +31,38 @@
 <div class="container">
 	<div class="row mt-5">
 		<div class="col-md-12">
-		<form action="/MyPage/updateMember.do" method="POST">
+		
+		<form action="/MyPage/updateMember.do" method="post">
+		<c:forEach items="${findUser}" var="findUser">
 	    	<div class="d-flex" id="chNickname" >
-	    		<label class="col-md-1 nickname">${user_nickname}님</label>
+	    		<label class="col-md-1 nickname">${findUser.user_nickname}님</label>
 	    	</div>
 	    	
 	    	<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">이름 : </label>
 				<div class="col-sm-5">
-					<input type="text" name="user_name" id="user_name" class="form-control-sm"  value="${user_name}" disabled/>
+					<input type="text" name="user_name" id="user_name" class="form-control-sm"  value="${findUser.user_name}" disabled/>
 				</div>
 			</div>
 			
 	    	<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">아이디 : </label>
 				<div class="col-sm-5">
-					<input type="text" name="user_id" id="user_id" class="form-control-sm"  value="${user_id}" disabled/>
+					<input type="text" name="user_id" id="user_id" class="form-control-sm"  value="${findUser.user_id}" disabled/>
 				</div>
 			</div>
 			
 			<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">비밀번호 : </label>
 				<div class="col-sm-6">
-					<input type="password" name="user_pass" id="user_pass"  class="form-control-sm"  value="${user_pass}"/>(수정가능)
+					<input type="password" name="user_pass" id="user_pass"  class="form-control-sm"  value="${findUser.user_pass}"/>(수정가능)
 				</div>
 			</div>
 			
 			<div class="form-group row mt-3 mx-3">
 				<label class="col-sm-3">이메일 : </label>
 				<div class="col-sm-6">
-					<input type="email" name="user_email" id="user_email" class="form-control-sm"  value="${user_email}"/>(수정가능)
+					<input type="email" name="user_email" id="user_email" class="form-control-sm"  value="${findUser.user_email}"/>(수정가능)
 				</div>
 			</div>
 			
@@ -66,20 +70,21 @@
 			<div class="form-group row mt-3 mx-3">
 			<label for="address">주소</label><br>
 				<div class="col-lg-4">
-			        <input type="text" class="form-control-sm" id="user_postcode" name="user_postcode" placeholder="${user_postcode}">
+			        <input type="text" class="form-control-sm" id="user_postcode" name="user_postcode" value="${findUser.user_postcode}" readonly>
 			        <input type="button" class="btn btn-primary col-lg-1" onclick="sample6_execDaumPostcode()" value="주소 수정"><br>
 		        </div>
 		        <div class="mb-1">
-					<input type="text" class="form-control-sm" id="user_addr" name="user_addr" placeholder="${user_addr}">
+					<input type="text" class="form-control-sm" id="user_addr" name="user_addr" value="${findUser.user_addr}" readonly>
 				</div>
 				<div class="d-flex">
-					<input type="text" class="form-control-sm" id="user_detailaddr" name="user_detailaddr"  placeholder="${user_detailaddr}">
-					<input type="text" class="form-control-sm" id="user_extraaddr" name="user_extraaddr" placeholder="${user_extraaddr}">
+					<input type="text" class="form-control-sm" id="user_detailaddr" name="user_detailaddr"  value="${findUser.user_detailaddr}">
+					<input type="text" class="form-control-sm" id="user_extraaddr" name="user_extraaddr" value="${findUser.user_extraaddr}" readonly>
 				</div>
 			</div>
 			<div class="form-group row mt-3 mx-3">
 				<input type="submit" class="btn btn-success" value="수정완료"/>
 			</div>
+		</c:forEach>
 		</form>
 		</div>
 	</div>

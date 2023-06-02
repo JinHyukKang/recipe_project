@@ -11,7 +11,6 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   
   <link href="${path}/resources/css/custome.css" rel="stylesheet" type="text/css">
-  <script type="text/javascript" src="${path}/resources/js/join.js"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,10 +54,10 @@
            
           <div class="col-lg-3">
             <label for="gender">성별 </label><br>
-               <input type="radio" id="user_gender"  name="user_gender" value="남">
+               <input type="radio" id="user_gender"  name="user_gender" value="남" required>
                <label for="option1">남</label>
              
-               <input type="radio" id="user_gender" name="user_gender" value="여">
+               <input type="radio" id="user_gender" name="user_gender" value="여" required>
                <label for="option2">여</label>             
          </div><br>
           </div>
@@ -128,45 +127,49 @@
 //아이디 중복 테스트
 function checkUserId() {
     var user_id = $('#user_id').val();
-    
-	$("#id_Chk").click(function() {
-        $.ajax({
-            url: '/member/idChk',
-            type: 'post',
-            data: {user_id: user_id},
-            success: function(response){
-            	if(response === "fail") {
-            		alert("이미 사용중인 아이디입니다.");
-            	}else if(response === "success") {
-            		alert("사용 가능한 아이디입니다.");
-            	}else {
-            		alert("잘못된 값 전달");
-            	}
-            }
-        });
-	});
+    if(user_id === ''){
+    	alert('아이디를 입력해주세요')
+    }else{
+   	 $.ajax({
+   	        url: '/member/idChk',
+   	        type: 'post',
+   	        data: {user_id: user_id},
+   	        success: function(response){
+   	        	if(response === "fail") {
+   	        		alert("이미 사용중인 아이디입니다.");
+   	        		$("#user_id").val("");
+   	        		$("#user_id").focus();
+   	        	}else if(response === "success") {
+   	        		alert("사용 가능한 아이디입니다.");
+   	        	}else {
+   	        		alert("잘못된 값 전달");
+   	        	}
+   	        }
+   	    });
+    }
+   
 };
 
 //닉네임 중복 테스트
 function checkUserNickname() {
     var user_nickname = $('#user_nickname').val();
     
-	$("#nickname_Chk").click(function() {
-        $.ajax({
-            url: '/member/nicknameChk',
-            type: 'post',
-            data: {user_nickname: user_nickname},
-            success: function(response){
-            	if(response === "fail") {
-            		alert("이미 사용중인 닉네임입니다.");
-            	}else if(response === "success") {
-            		alert("사용 가능한 닉네임입니다.");
-            	}else {
-            		alert("잘못된 값 전달");
-            	}
-            }
-        });
-	});
+    $.ajax({ 
+        url: '/member/nicknameChk',
+        type: 'post',
+        data: {user_nickname: user_nickname},
+        success: function(response){
+        	if(response === "fail") {
+        		alert("이미 사용중인 닉네임입니다.");
+        		$("#user_nickname").val("");
+        		$("#user_nickname").focus();
+        	}else if(response === "success") {
+        		alert("사용 가능한 닉네임입니다.");
+        	}else {
+        		alert("잘못된 값 전달");
+        	}
+        }
+    });
 };
 
 //비밀번호 확인
@@ -174,12 +177,14 @@ function checkUserpass() {
     var user_pass = $('#user_pass').val();
     var user_pass2 = $('#user_pass2').val();
 
-    if (user_pass === user_pass2) {
+    if (user_pass === user_pass2 && user_pass !== '') {
         $('#pass_error').text('비밀번호가 일치합니다');
         $('#pass_error').css('color', 'green');
-    }else {
+    }else if(user_pass !== user_pass2){
         $('#pass_error').text('비밀번호가 일치하지 않습니다');
         $('#pass_error').css('color', 'red');
+    }else{
+    	$('#pass_error').text('');
     }
 }
 
@@ -187,6 +192,55 @@ $(document).ready(function() {
     // 비밀번호 입력란 또는 비밀번호 확인 입력란에서 포커스가 해제될 때 비밀번호 확인 함수 호출
     $('#user_pass, #user_pass2').blur(checkUserpass);
 });
+
+
+function sample6_execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                // 조합된 참고항목을 해당 필드에 넣는다.
+                document.getElementById("user_extraaddr").value = extraAddr;
+            
+            } else {
+                document.getElementById("user_extraaddr").value = '';
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('user_postcode').value = data.zonecode;
+            document.getElementById("user_addr").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("user_detailaddr").focus();
+        }
+    }).open();
+}
 
 </script>
 

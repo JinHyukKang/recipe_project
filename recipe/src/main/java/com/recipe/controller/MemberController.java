@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.recipe.model.MemberVO;
 import com.recipe.service.MemberService;
@@ -38,23 +37,36 @@ public class MemberController {
 	}
 	
 	//로그인 기능
-	@PostMapping(value="/login.do")
-	public String Login(MemberVO vo, HttpSession session) throws Exception {
+	@RequestMapping(value = "/login.do", method=RequestMethod.POST)
+	public ModelAndView Login(
+			@RequestParam("user_id") String user_id,
+			@RequestParam("user_pass") String user_pass,
+			MemberVO vo,
+			HttpSession session,
+			ModelAndView mav) throws Exception {
 		
-		MemberVO Login = memberservice.Login(vo);
+		int cnt = memberservice.Login(user_id, user_pass, vo, session);
+		String result = "";
 		
-		if(Login != null) {
-			session.setAttribute("LoginVo", Login);
-			logger.info("로그인 성공!");
-			return "redirect:/";
-		}else {
-			//session.setAttribute("LoginVo", null);
-			logger.info("로그인 실패!");
-			return"redirect:/member/login";
+		if(cnt > 0) {
+			result = "success";
+			mav.setViewName("redirect:/");
+			mav.addObject("result", result);
+		}else if (cnt == 0) {
+			result = "fail";
+			mav.setViewName("redirect:/member/login");
+			mav.addObject("result", result);
+		}else if (cnt == -1) {
+			result = "null";
+			mav.setViewName("redirect:/member/login");
+			mav.addObject("result", result);
 		}
 		
 		
+		
+		return mav;
 	}
+	
 	
 	//로그아웃 기능
 	@GetMapping("/logout.do")
@@ -75,14 +87,14 @@ public class MemberController {
 		
 	}
 	
-	//회원가입 기능 추가 
+	//회원가입 기능
 	@RequestMapping(value="/join.do", method=RequestMethod.POST)
 	public String joinPOST(MemberVO member) throws Exception{
 		
 		
 		memberservice.memberJoin(member);
 		
-		logger.info("join Service 작업완료");
+		logger.info("회원가입 작업완료");
 		
 		return "redirect:/member/login";
 		

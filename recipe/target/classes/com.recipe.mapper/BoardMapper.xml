@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.recipe.mapper.BoardMapper">
+
+<insert id="boardWrite">
+  INSERT INTO recipe (recipe_title, recipe_content, user_nickname, insert_date, view_count, good_count, recipe_filename, user_num, comment_count) 
+  SELECT #{recipe_title}, #{recipe_content}, user_nickname, #{insert_date}, #{view_count}, #{good_count}, #{recipe_filename}, user_num, #{comment_count}
+  FROM users
+  WHERE user_nickname = #{user_nickname}
+</insert>
+
+</mapper>

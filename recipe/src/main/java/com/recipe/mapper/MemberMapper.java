@@ -1,6 +1,8 @@
 package com.recipe.mapper;
 
 
+import org.apache.ibatis.annotations.Param;
+
 import com.recipe.model.MemberVO;
 
 public interface MemberMapper {
@@ -15,5 +17,5 @@ public interface MemberMapper {
 	public int nicknameChk(String user_nickname)throws Exception;
 	
 	//·Î±×ÀÎ 
-	public MemberVO MemberLogin(MemberVO vo)throws Exception;
+	public int MemberLogin(@Param("user_id") String user_id, @Param("user_pass") String user_pass)throws Exception;
 }

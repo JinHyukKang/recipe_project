@@ -1,8 +1,8 @@
 package com.recipe.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.recipe.mapper.MemberMapper;
@@ -13,6 +13,7 @@ public class MemberServiceImple implements MemberService{
 	@Autowired
 	MemberMapper membermapper;
 	
+	//회원가입
 	@Override
 	public void memberJoin(MemberVO member) throws Exception {
 		
@@ -34,11 +35,18 @@ public class MemberServiceImple implements MemberService{
 	
 	//로그인 mapper 접근
 	@Override
-	public MemberVO Login(MemberVO vo) throws Exception {
-	MemberVO VO = membermapper.MemberLogin(vo);
-	
-	return VO;	
+	public int Login(String user_id, String user_pass, MemberVO vo, HttpSession session) throws Exception {
+		int cnt = membermapper.MemberLogin(user_id, user_pass);
+		
+		if(cnt > 0) {
+			session.setAttribute("user_id", vo.getUser_id());
+			session.setAttribute("user_pass", vo.getUser_pass());
+		}else if(user_id == null || user_pass == null) {
+			cnt = -1;
 		}
+		
+		return cnt;
+	}
 	
 	
 	

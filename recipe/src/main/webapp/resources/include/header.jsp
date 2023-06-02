@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
 
 	<div class="container-fluid">
 	
@@ -20,7 +20,7 @@
 		<div class="collapse navbar-collapse" id="mynavbar">
 			<ul class="navbar-nav me-auto">
 				<!-- 로그아웃 시 헤더 카테고리 -->
-				<c:if test="${sessionScope.LoginVo == null}">
+				<c:if test="${user_id eq null}">
 				<li class="nav-item">
 					<a class="nav-link" href="/member/login">
 					login
@@ -34,7 +34,7 @@
 				</c:if>
 	
 				<!-- 로그인 후 헤더 카테고리 -->
-				<c:if test="${sessionScope.LoginVo != null}">
+				<c:if test="${user_id ne null}">
 				<li class="nav-item">
 					<a class="nav-link" href="/member/logout.do">
 					logout
@@ -58,7 +58,31 @@
 		
 	</div>
 </nav>
-
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+	<div class="container-fluid">
+		<div class="collapse navbar-collapse" id="mynavbar">
+			<ul class="navbar-nav me-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/board/board">
+					레시피게시판
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="">
+					먹거리 정보
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="">
+					공지사항
+					</a>
+				</li>
+			
+			</ul>
+		</div>
+	
+	</div>
+</nav>
 <script>
 
 function openPopUp() {

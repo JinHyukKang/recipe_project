@@ -1,6 +1,8 @@
 package com.recipe.service;
 
 
+import javax.servlet.http.HttpSession;
+
 import com.recipe.model.MemberVO;
 
 public interface MemberService {
@@ -15,6 +17,6 @@ public interface MemberService {
 	public int nicknameChk(String user_nickname)throws Exception;
 	
 	//로그인 기능
-	public MemberVO Login(MemberVO vo)throws Exception;
+	public int Login(String user_id, String user_pass, MemberVO vo, HttpSession session)throws Exception;
 	
 }

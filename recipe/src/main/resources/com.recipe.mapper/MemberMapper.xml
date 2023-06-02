@@ -25,8 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 로그인 -->
-	<select id="MemberLogin" resultType="com.recipe.model.MemberVO">
-		Select * from users 
+	<select id="MemberLogin" resultType="int">
+		Select count(*) from users 
 		where user_id=#{user_id} and user_pass=#{user_pass}
 	</select>
 
