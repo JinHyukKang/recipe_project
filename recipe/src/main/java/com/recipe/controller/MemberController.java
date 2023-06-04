@@ -1,6 +1,8 @@
 package com.recipe.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.recipe.model.MemberVO;
 import com.recipe.service.MemberService;
+import com.recipe.service.MypageService;
 
 @Controller
 @RequestMapping(value= "/member/*")
@@ -25,6 +28,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberservice;
+	@Autowired
+	private MypageService mypageservice;
 	
 	
 	//로그인 페이지 이동
@@ -45,13 +50,29 @@ public class MemberController {
 			HttpSession session,
 			ModelAndView mav) throws Exception {
 		
-		int cnt = memberservice.Login(user_id, user_pass, vo, session);
+		int cnt = memberservice.Login(user_id, user_pass,vo, session);
 		String result = "";
 		
 		if(cnt > 0) {
 			result = "success";
-			mav.setViewName("redirect:/");
-			mav.addObject("result", result);
+			//로그인된 user의 정보 가져오기
+			List<MemberVO> findUser = mypageservice.findUser(user_id);
+			if (!findUser.isEmpty()) {
+	            // 로그인된 user의 user_nickname과 user_num 불러오기
+	            String user_nickname = findUser.get(0).getUser_nickname();
+	            int user_num = findUser.get(0).getUser_num();
+	            
+	            //session에 user_num과 user_nickname 저장
+	            session.setAttribute("user_num", user_num);
+	            session.setAttribute("user_nickname", user_nickname);
+	            
+	            mav.setViewName("redirect:/");
+	            mav.addObject("result", result);
+	        } else {
+	            result = "fail";
+	            mav.setViewName("redirect:/member/login");
+	            mav.addObject("result", result);
+	        }
 		}else if (cnt == 0) {
 			result = "fail";
 			mav.setViewName("redirect:/member/login");

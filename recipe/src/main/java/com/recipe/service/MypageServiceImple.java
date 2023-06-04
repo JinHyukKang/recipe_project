@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.recipe.mapper.MypageMapper;
+import com.recipe.model.BoardVO;
 import com.recipe.model.MemberVO;
 
 @Service
@@ -36,4 +37,10 @@ public class MypageServiceImple implements MypageService{
 		
         mypagemapper.updateMember(map);
     }
+	
+	//user의 게시글 조회
+	@Override
+	public List<BoardVO> findWrite(int user_num) throws Exception{
+		return mypagemapper.findWrite(user_num);
+	}
 }

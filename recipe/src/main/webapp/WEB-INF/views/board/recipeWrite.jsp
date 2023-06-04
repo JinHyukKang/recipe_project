@@ -26,7 +26,7 @@
 		        </div>
 		        <div class="form-group mx-3 mb-3">
 		            <label for="recipe_filename">이미지파일 업로드</label><br>
-		            <input type="file" name="recipe_filename" id="recipe_filename" >
+		            <input type="file" name="recipe_filename" id="recipe_filename">
 		        </div>
 		        
 		        <div class="form-group row mt-3 mx-3">

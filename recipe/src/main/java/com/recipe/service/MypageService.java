@@ -2,6 +2,7 @@ package com.recipe.service;
 
 import java.util.List;
 
+import com.recipe.model.BoardVO;
 import com.recipe.model.MemberVO;
 
 public interface MypageService {
@@ -10,4 +11,7 @@ public interface MypageService {
 	
 	//마이페이지 회원정보 수정
 	public void updateMember(String user_pass, String user_email, String user_postcode, String user_addr, String user_detailaddr, String user_extraaddr, String user_id)throws Exception;
+
+	//user의 게시글 조회
+	public List<BoardVO> findWrite(int user_num) throws Exception;
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.recipe.model.BoardVO;
 import com.recipe.model.MemberVO;
 import com.recipe.service.MypageService;
 
@@ -44,9 +45,14 @@ public class MypageController {
    //마이페이지(내게시물) 이동
    @RequestMapping(value="/MyPagePost", method = RequestMethod.GET)
    public  String MyPagePost(HttpSession session, Model model) throws Exception {
-      logger.info("내게시물 진입");
-      
-      return "/MyPage/MyPagePost";
+		logger.info("내게시물 진입");
+		
+		int user_num =(int)session.getAttribute("user_num");
+		List<BoardVO> findWrite = mypageservice.findWrite(user_num);
+		
+		model.addAttribute("findWrite",findWrite);
+
+		return "/MyPage/MyPagePost";
    }
 
    //마이페이지 정보수정
@@ -75,5 +81,7 @@ public class MypageController {
 	   mypageservice.updateMember(user_pass, user_email, user_postcode, user_addr, user_detailaddr, user_extraaddr, user_id);
        return "redirect:/MyPage/MyPage"; //
    }
+   
+
    
 }

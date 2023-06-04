@@ -23,5 +23,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE
             user_id = #{user_id}
     </update>
+    
+    <!-- 로그인한 user가 작성한 게시글 조회 -->
+	<select id="findWrite" resultType="com.recipe.model.BoardVO">
+		select * from recipe
+		where user_num = #{user_num}
+	</select>
 
 </mapper>

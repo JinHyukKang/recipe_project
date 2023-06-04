@@ -3,6 +3,6 @@ package com.recipe.service;
 import com.recipe.model.BoardVO;
 
 public interface BoardService {
-	//글작성
-		public void boardWrite(BoardVO board) throws Exception;
+	// 글작성
+	public void boardWrite(BoardVO board) throws Exception;
 }

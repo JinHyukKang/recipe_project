@@ -5,11 +5,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.recipe.mapper.BoardMapper">
 
+<!-- 레시피 글작성 -->
 <insert id="boardWrite">
-  INSERT INTO recipe (recipe_title, recipe_content, user_nickname, insert_date, view_count, good_count, recipe_filename, user_num, comment_count) 
-  SELECT #{recipe_title}, #{recipe_content}, user_nickname, #{insert_date}, #{view_count}, #{good_count}, #{recipe_filename}, user_num, #{comment_count}
-  FROM users
-  WHERE user_nickname = #{user_nickname}
+  INSERT INTO recipe (recipe_title, recipe_content, user_nickname, recipe_filename, user_num) 
+  VALUES (#{recipe_title},
+  		  #{recipe_content},
+  		  #{user_nickname},
+  		  #{recipe_filename},
+  		  #{user_num}
+  		  )
 </insert>
+
 
 </mapper>

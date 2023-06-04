@@ -2,6 +2,7 @@ package com.recipe.model;
 
 import java.util.Date;
 
+
 public class BoardVO {
 	private int recipe_num;
 	private String recipe_title;
