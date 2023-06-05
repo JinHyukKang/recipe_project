@@ -1,96 +1,112 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" session="false"%>
-<%@ page import="com.recipe.model.MemberVO" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<meta charset="UTF-8">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <link rel="stylesheet" href="${path}/resources/css/MyPagecustom.css"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
 <meta charset="UTF-8">
-<title>MyPage</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+  <link href="${path}/resources/css/custome.css" rel="stylesheet" type="text/css">
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>마이페이지</title>
 </head>
 <body>
-
-
-
-<!-- 마이페이지 헤더 -->
-<div id="change-mod" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-	<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-	    <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="/MyPage/MyPage"><span><strong>회원정보수정</strong></span></a></li>
-	    <li class="ui-state-default ui-corner-top"><a href="/MyPage/MyPagePost"><span><strong>내게시물</strong></span></a></li>
-    </ul>
-</div>
+<%@ include file="/resources/include/header.jsp" %>
 
 <div class="container">
-	<div class="row mt-5">
-		<div class="col-md-12">
-		
-		<form action="/MyPage/updateMember.do" method="post">
-		<c:forEach items="${findUser}" var="findUser">
-	    	<div class="d-flex" id="chNickname" >
-	    		<label class="col-md-1 nickname">${findUser.user_nickname}님</label>
-	    	</div>
-	    	
-	    	<div class="form-group row mt-3 mx-3">
-				<label class="col-sm-3">이름 : </label>
-				<div class="col-sm-5">
-					<input type="text" name="user_name" id="user_name" class="form-control-sm"  value="${findUser.user_name}" disabled/>
-				</div>
-			</div>
-			
-	    	<div class="form-group row mt-3 mx-3">
-				<label class="col-sm-3">아이디 : </label>
-				<div class="col-sm-5">
-					<input type="text" name="user_id" id="user_id" class="form-control-sm"  value="${findUser.user_id}" disabled/>
-				</div>
-			</div>
-			
-			<div class="form-group row mt-3 mx-3">
-				<label class="col-sm-3">비밀번호 : </label>
-				<div class="col-sm-6">
-					<input type="password" name="user_pass" id="user_pass"  class="form-control-sm"  value="${findUser.user_pass}"/>(수정가능)
-				</div>
-			</div>
-			
-			<div class="form-group row mt-3 mx-3">
-				<label class="col-sm-3">이메일 : </label>
-				<div class="col-sm-6">
-					<input type="email" name="user_email" id="user_email" class="form-control-sm"  value="${findUser.user_email}"/>(수정가능)
-				</div>
-			</div>
-			
-			
-			<div class="form-group row mt-3 mx-3">
-			<label for="address">주소</label><br>
-				<div class="col-lg-4">
-			        <input type="text" class="form-control-sm" id="user_postcode" name="user_postcode" value="${findUser.user_postcode}" readonly>
-			        <input type="button" class="btn btn-primary col-lg-1" onclick="sample6_execDaumPostcode()" value="주소 수정"><br>
+    <div class="input-form-backgroud row">
+    <a href="/MyPage/MyPagePost">내 게시물</a>
+    <a href="/MyPage/MyPage">마이페이지</a>
+      <div class="input-form col-md-12 mx-auto">
+      <form action="/MyPage/updateMember.do" method="post">
+      <c:forEach items="${findUser}" var="findUser">
+      
+        <h4 class="mb-3">${findUser.getUser_nickname()}님</h4>
+        
+        
+          <div class="mb-3">
+              <label for="user_id">아이디</label>
+              <div class="d-flex">
+              
+              	<input type="text" class="form-control col-lg-5" id="user_id" name="user_id" value="${findUser.user_id}" disabled>
+             
+              </div>
+          </div>
+          
+          <div class="mb-3">
+              <label for="user_pass">비밀번호</label>
+              <div class="d-flex">
+              <input type="password" class="form-control col-lg-6" id="user_pass" name="user_pass" value="${findUser.user_pass}">(수정가능)
+              </div>
+          </div>
+
+          
+          <div class="row mb-3">
+            <div class="col-lg-5">
+              <label for="user_name">이름</label>
+              <input type="text" class="form-control-sm" id="user_name" name="user_name" value="${findUser.user_name}" disabled>
+            </div>
+          </div>
+          
+
+          <div class="mb-3">
+            <label for="user_email">이메일</label>
+            <div class="d-flex">
+            <input type="email" class="form-control col-lg-6" id="user_email" name="user_email" value="${findUser.user_email}">(수정가능)
+            <button class="btn btn-primary col-lg-3">이메일 인증</button>
+            </div>
+          </div>
+          
+          
+         
+         
+		<div class="form-group mb-3">
+			<label for="address">주소</label>(수정가능)<br>
+				<div class="d-flex mb-1">
+			        <input type="text" class="form-control col-lg-4" id="user_postcode" name="user_postcode" value="${findUser.user_postcode}" readonly>
+			        <input type="button" class="form-control btn btn-success col-lg-3" onclick="sample6_execDaumPostcode()" value="주소수정"><br>
 		        </div>
 		        <div class="mb-1">
-					<input type="text" class="form-control-sm" id="user_addr" name="user_addr" value="${findUser.user_addr}" readonly>
+					<input type="text" class="form-control col-lg-4" id="user_addr" name="user_addr" value="${findUser.user_addr}" readonly>
 				</div>
 				<div class="d-flex">
-					<input type="text" class="form-control-sm" id="user_detailaddr" name="user_detailaddr"  value="${findUser.user_detailaddr}">
-					<input type="text" class="form-control-sm" id="user_extraaddr" name="user_extraaddr" value="${findUser.user_extraaddr}" readonly>
+					<input type="text" class="form-control col-lg-4" id="user_detailaddr" name="user_detailaddr" value="${findUser.user_detailaddr}">
+					<input type="text" class="form-control col-lg-4" id="user_extraaddr" name="user_extraaddr" value="${findUser.user_extraaddr}" readonly>
 				</div>
-			</div>
-			<div class="form-group row mt-3 mx-3">
-				<input type="submit" class="btn btn-success" value="수정완료"/>
-			</div>
-		</c:forEach>
-		</form>
 		</div>
-	</div>
+		
+		
+          
+          <hr class="mb-4">
+          
+          <div class="mb-4"></div>
+          <input type="submit" class="btn btn-primary btn-lg btn-block" onclick="updateSuccess()" value="수정 완료"/>
+          </c:forEach>
+        </form>
+        
+     	</div>
+  	</div>
 </div>
+   <br>
+   
 
+<footer class="footer">
+<%@ include file="/resources/include/footer.jsp" %>
+</footer>
+
+   
 <script>
+
+function updateSuccess() {
+    alert('회원정보 수정이 완료되었습니다!');
+  }
+
 function sample6_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -138,10 +154,11 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
+
 </script>
-			
-		
-		
-		
+
+
+
+
 </body>
 </html>

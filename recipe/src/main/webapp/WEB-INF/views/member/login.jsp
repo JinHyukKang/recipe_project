@@ -51,7 +51,9 @@
 <footer class="footer_login">
 <%@ include file="/resources/include/footer.jsp" %>
 </footer>
+<script>
 
+</script>
 
 
 

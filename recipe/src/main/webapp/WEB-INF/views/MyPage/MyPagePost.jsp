@@ -13,12 +13,13 @@
 <link rel="stylesheet" href="/resources/css/MyPagecustom.css"/>
 </head>
 <body>
+
+<%@ include file="/resources/include/header.jsp" %>
+
 <!-- 마이페이지 헤더 -->
-<div id="change-mod" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-        <li class="ui-state-default ui-corner-top"><a href="/MyPage/MyPage"><span><strong>회원정보수정</strong></span></a></li>
-        <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="/MyPage/MyPagePost"><span><strong>내게시물</strong></span></a></li>
-    </ul>
+<div id="change-mod" class="d-flex">
+    <a href="/MyPage/MyPage"><span><strong>회원정보수정</strong></span></a>
+    <a href="/MyPage/MyPagePost"><span><strong>내게시물</strong></span></a>
 </div>
 <div class="container">
     <div class="row mt-5">
@@ -49,5 +50,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/resources/js/popuptest.js"></script>
+
+<footer class="footer">
+<%@ include file="/resources/include/footer.jsp" %>
+</footer>
+
 </body>
 </html>

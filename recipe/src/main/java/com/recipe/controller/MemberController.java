@@ -52,6 +52,7 @@ public class MemberController {
 		
 		int cnt = memberservice.Login(user_id, user_pass,vo, session);
 		String result = "";
+		String message = "";
 		
 		if(cnt > 0) {
 			result = "success";
@@ -82,7 +83,6 @@ public class MemberController {
 			mav.setViewName("redirect:/member/login");
 			mav.addObject("result", result);
 		}
-		
 		
 		
 		return mav;

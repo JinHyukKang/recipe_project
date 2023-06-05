@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.recipe.mapper.BoardMapper;
 import com.recipe.model.MemberVO;
-import com.recipe.model.UploadVO;
 import com.recipe.model.BoardVO;
 
 
@@ -20,10 +19,6 @@ public class BoardServiceImple implements BoardService {
 		boardmapper.boardWrite(board);
 	}
 	
-	//이미지 파일 DB에 저장
-	public void insertFile(UploadVO upload, int recipe_num) throws Exception{
-		upload.setRecipe_num(recipe_num);
-		boardmapper.insertFile(upload);
-	}
+	
 
 }

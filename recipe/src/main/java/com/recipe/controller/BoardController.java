@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.recipe.model.BoardVO;
 import com.recipe.model.MemberVO;
-import com.recipe.model.UploadVO;
 import com.recipe.service.BoardService;
 import com.recipe.service.MypageService;
 
@@ -55,7 +54,6 @@ public class BoardController {
 	// 레시피 글작성
 	@RequestMapping(value = "/write.do", method = RequestMethod.POST)
 	public String boardWrite(BoardVO board,
-							 UploadVO upload,
 							 @RequestParam("recipeFile") MultipartFile file,
 							 HttpSession session, 
 							 Model model)throws Exception {
@@ -77,10 +75,10 @@ public class BoardController {
 	      //임으로 파일 이름 변경(동일한 파일명 충돌을 피하기 위해 설정)
 	      UUID uuid = UUID.randomUUID();
 	      String[] uuids = uuid.toString().split("-");
-	      String fileName = uuids[0] + fileExtension;
+	      String fileName = uuids[0];
 	      
 	      // 파일을 저장할 경로 설정
-	      String uploadPath = "D:/kjh_spring/recipe/recipe/src/main/webapp/resources/upload/";
+	      String uploadPath = "C:/workspace/recipe/recipe/src/main/webapp/resources/upload/";
 	      String filePath = uploadPath + fileName + fileExtension;
 	      //설정한 경로에 파일 저장
 	      file.transferTo(new File(filePath));
@@ -91,22 +89,6 @@ public class BoardController {
 	      board.setFile_path(filePath);
 	      
 	      boardservice.boardWrite(board);
-	      
-	      // 방금 생성된 recipe_num 값 추출
-	      int recipe_num = board.getRecipe_num();
-	      
-	      //UploadVO에 업로드한 이미지파일 데이터 저장
-	      upload.setUser_num(user_num);
-	      upload.setRecipe_num(recipe_num);
-	      upload.setFile_name(fileName);
-	      upload.setFile_realname(real_fileName);
-	      upload.setFile_path(filePath);
-	      upload.setFile_size(size);
-	      upload.setFile_extension(fileExtension);
-	      
-	      boardservice.insertFile(upload, recipe_num);
-	      
-	      
 
 		  logger.info("글 작성 완료!");
 

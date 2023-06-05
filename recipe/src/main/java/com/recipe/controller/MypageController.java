@@ -35,11 +35,11 @@ public class MypageController {
       logger.info("마이 페이지 진입");
 
       String user_id = (String) session.getAttribute("user_id");
+      System.out.println(user_id);
       
       List<MemberVO> findUser = mypageservice.findUser(user_id);
-      
+   
       model.addAttribute("findUser", findUser);
-      
       return "/MyPage/MyPage";
    }
    //마이페이지(내게시물) 이동
