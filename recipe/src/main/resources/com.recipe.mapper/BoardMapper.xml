@@ -7,13 +7,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 레시피 글작성 -->
 <insert id="boardWrite">
-  INSERT INTO recipe (recipe_title, recipe_content, user_nickname, recipe_filename, user_num) 
+  INSERT INTO recipe (recipe_title, recipe_content, user_nickname, recipe_realname, recipe_filename, file_path, user_num) 
   VALUES (#{recipe_title},
   		  #{recipe_content},
   		  #{user_nickname},
+  		  #{recipe_realname},
   		  #{recipe_filename},
+  		  #{file_path},
   		  #{user_num}
   		  )
+</insert>
+
+<!-- 업로드한 이미지 파일 DB에 저장 -->
+<insert id="insertFile">
+      insert into uploadfile(user_num, recipe_num, file_name, file_realname, file_path, file_size, file_extension) 
+      values(#{user_num}, #{recipe_num}, #{file_name}, 
+      		  #{file_realname}, #{file_path}, #{file_size}, #{file_extension})
 </insert>
 
 

@@ -12,8 +12,22 @@ public class BoardVO {
 	private int view_count;
 	private int good_count;
 	private String recipe_filename;
+	private String recipe_realname;
+	private String file_path;
 	private int user_num;
 	private int comment_count;
+	public String getRecipe_realname() {
+		return recipe_realname;
+	}
+	public void setRecipe_realname(String recipe_realname) {
+		this.recipe_realname = recipe_realname;
+	}
+	public String getFile_path() {
+		return file_path;
+	}
+	public void setFile_path(String file_path) {
+		this.file_path = file_path;
+	}
 	public int getRecipe_num() {
 		return recipe_num;
 	}
