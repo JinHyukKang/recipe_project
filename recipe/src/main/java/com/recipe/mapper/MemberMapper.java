@@ -18,4 +18,7 @@ public interface MemberMapper {
 	
 	//로그인 
 	public int MemberLogin(@Param("user_id") String user_id, @Param("user_pass") String user_pass)throws Exception;
+	
+	//비밀번호 찾기
+	public MemberVO findpw(@Param("user_id") String user_id, @Param("user_email") String user_email)throws Exception;
 }

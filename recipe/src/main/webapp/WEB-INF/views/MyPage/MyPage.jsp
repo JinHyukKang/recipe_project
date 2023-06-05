@@ -27,7 +27,7 @@
       <form action="/MyPage/updateMember.do" method="post">
       <c:forEach items="${findUser}" var="findUser">
       
-        <h4 class="mb-3">${findUser.getUser_nickname()}님</h4>
+        <h4 class="mb-3">${findUser.getUser_nickname()}님의 회원정보</h4>
         
         
           <div class="mb-3">

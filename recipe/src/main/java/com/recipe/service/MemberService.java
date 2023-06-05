@@ -3,6 +3,8 @@ package com.recipe.service;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.recipe.model.MemberVO;
 
 public interface MemberService {
@@ -18,5 +20,8 @@ public interface MemberService {
 	
 	//로그인 기능
 	public int Login(String user_id, String user_pass, MemberVO vo, HttpSession session)throws Exception;
+	
+	//비밀번호 찾기
+	public MemberVO findpw(String user_id, String user_email) throws Exception;
 	
 }

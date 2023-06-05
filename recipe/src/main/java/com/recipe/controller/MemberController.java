@@ -52,7 +52,6 @@ public class MemberController {
 		
 		int cnt = memberservice.Login(user_id, user_pass,vo, session);
 		String result = "";
-		String message = "";
 		
 		if(cnt > 0) {
 			result = "success";
@@ -94,6 +93,30 @@ public class MemberController {
 	public String Logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	//비밀번호 찾기 이동
+	@RequestMapping(value = "/findpw", method = RequestMethod.GET)
+	public String findPwGet() throws Exception{
+		
+		logger.info("비밀번호 찾기 창 진입!");
+		
+		return "member/findpw";
+	}
+	
+	//비밀번호 찾기
+	@PostMapping("/findpw.do")
+	public ResponseEntity<String> findpw(@RequestParam("user_id") String user_id,
+					     @RequestParam("user_email") String user_email)throws Exception{
+		
+		MemberVO findpw = memberservice.findpw(user_id, user_email);
+
+	    if (findpw == null) {
+	        return ResponseEntity.ok("fail");
+	    } else {
+	        return ResponseEntity.ok(findpw.getUser_pass());
+	    }
+		
 	}
 	
 	

@@ -2,6 +2,7 @@ package com.recipe.service;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,9 @@ public class MemberServiceImple implements MemberService{
 		return cnt;
 	}
 	
-	
+	//비밀번호 찾기
+	public MemberVO findpw(String user_id, String user_email)throws Exception{
+		return membermapper.findpw(user_id, user_email);
+	}
 	
 }
