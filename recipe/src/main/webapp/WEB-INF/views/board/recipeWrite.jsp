@@ -10,7 +10,7 @@
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   	<link href="${path}/resources/css/write.css" rel="stylesheet" type="text/css">
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>레시피 게시판</title>
+<title>게시판 글 작성</title>
 </head>
 <body>
 <%@ include file="/resources/include/header.jsp" %>
@@ -18,16 +18,18 @@
 <div class="container">
 	<div class="row mt-5">
 		<div class="col-md-12">
-			<form action="/board/write.do" method="post">
+			<form action="/board/write.do" method="post" enctype="multipart/form-data">
 			<h4>레시피 작성</h4>
 		        <div class="form-group row mx-3 mb-3">
 		            <label for="recipe_title">제목</label>
 		            <input type="text" class="form-control lg-6" style="width:70%" id="recipe_title" name="recipe_title" placeholder="제목을 작성해주세요." required>
 		        </div>
+		      
 		        <div class="form-group mx-3 mb-3">
-		            <label for="recipe_filename">이미지파일 업로드</label><br>
-		            <input type="file" name="recipe_filename" id="recipe_filename">
-		        </div>
+          			<label for="recipeFile">이미지 파일 업로드</label><br>
+          			<input type="file" name="recipeFile" id="recipeFile">
+        		</div>
+		        
 		        
 		        <div class="form-group row mt-3 mx-3">
 		            <label for="recipe_content">내용</label>

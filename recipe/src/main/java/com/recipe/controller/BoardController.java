@@ -53,8 +53,8 @@ public class BoardController {
 	
 	// 레시피 글작성
 	@RequestMapping(value = "/write.do", method = RequestMethod.POST)
-	public String boardWrite(BoardVO board, HttpSession session, Model model) throws Exception {
-	    // 로그인 session에 저장된 user_nickname, user_id 가져오기
+	public String boardWrite(BoardVO board, @RequestParam("recipeFile") MultipartFile file, HttpSession session, Model model) throws Exception {
+		// 로그인 session에 저장된 user_nickname, user_num 가져오기
 	    String user_nickname = (String) session.getAttribute("user_nickname");
 	    int user_num = (int) session.getAttribute("user_num");
 
@@ -62,10 +62,19 @@ public class BoardController {
 	    board.setUser_nickname(user_nickname);
 	    board.setUser_num(user_num);
 
+	    // 파일 업로드 처리
+	    if (!file.isEmpty()) {
+	      String fileName = file.getOriginalFilename();
+	      // 파일을 저장할 경로 설정
+	      String uploadPath = "D:/kjh_spring/recipe/recipe/src/main/webapp/resources/upload/";
+	      String filePath = uploadPath + fileName;
+	      file.transferTo(new File(filePath));
+	      board.setRecipe_filename(fileName); // BoardVO에 파일 이름 저장
+	    }
 
 	    boardservice.boardWrite(board);
 
-	    logger.info("글작성 완료!");
+	    logger.info("글 작성 완료!");
 
 	    return "redirect:/board/board";
 	}

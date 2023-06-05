@@ -13,7 +13,7 @@ public class BoardVO {
 	private int good_count;
 	private String recipe_filename;
 	private int user_num;
-	private String comment_count;
+	private int comment_count;
 	public int getRecipe_num() {
 		return recipe_num;
 	}
@@ -68,10 +68,10 @@ public class BoardVO {
 	public void setUser_num(int user_num) {
 		this.user_num = user_num;
 	}
-	public String getComment_count() {
+	public int getComment_count() {
 		return comment_count;
 	}
-	public void setComment_count(String comment_count) {
+	public void setComment_count(int comment_count) {
 		this.comment_count = comment_count;
 	}
 	
