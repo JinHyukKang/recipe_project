@@ -14,6 +14,7 @@
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>로그인</title>
+
 </head>
 <body>
 <%@ include file="/resources/include/header.jsp" %>
@@ -38,26 +39,35 @@
           <div class="mb-2">
           	<a href="/member/findpw">비밀번호를 잊으셨습니까?</a>
           </div>
+          
           <div class="mb-3">
           	<button class="btn btn-primary btn-lg btn-block col-lg-8 float-righ" type="submit">로그인</button>
           	<button class="btn btn-success btn-lg btn-block col-lg-8 float-righ" onclick="location.href='/member/join'">회원가입</button>
           </div>
+          
         </form>
-        
       </div>
    </div>
 </div>
 <br>
 
 <footer class="footer_login">
-<%@ include file="/resources/include/footer.jsp" %>
+	<%@ include file="/resources/include/footer.jsp" %>
 </footer>
-<script>
 
-</script>
-
+<c:if test="${not empty result}">
+    <script>
+        var result = '${result}';
+        if (result === 'success') {
+            alert('로그인 성공!');
+        } else if (result === 'fail') {
+            alert('잘못된 아이디 혹은 비밀번호입니다.');
+        }
+    </script>
+</c:if>
 
 
 
 </body>
+
 </html>

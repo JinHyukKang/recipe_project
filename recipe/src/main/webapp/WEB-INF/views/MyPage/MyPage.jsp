@@ -27,8 +27,10 @@
       <form action="/MyPage/updateMember.do" method="post">
       <c:forEach items="${findUser}" var="findUser">
       
-        <h4 class="mb-3">${findUser.getUser_nickname()}님의 회원정보</h4>
-        
+      	<div class="d-flex justify-content-between">
+  			<h4 class="mb-3">${findUser.getUser_nickname()}님의 회원정보</h4>
+ 			 <button type="button" class="btn btn-danger" onclick="memberoutPopup()">회원탈퇴</button>
+		</div>
         
           <div class="mb-3">
               <label for="user_id">아이디</label>
@@ -42,7 +44,7 @@
           <div class="mb-3">
               <label for="user_pass">비밀번호</label>
               <div class="d-flex">
-              <input type="password" class="form-control col-lg-6" id="user_pass" name="user_pass" value="${findUser.user_pass}">(수정가능)
+              <input type="password" class="form-control col-lg-6" id="user_pass" name="user_pass" value="${findUser.user_pass}" readonly>(수정가능)
               </div>
           </div>
 
@@ -94,7 +96,7 @@
   	</div>
 </div>
    <br>
-   
+  
 
 <footer class="footer">
 <%@ include file="/resources/include/footer.jsp" %>
@@ -106,6 +108,22 @@
 function updateSuccess() {
     alert('회원정보 수정이 완료되었습니다!');
   }
+
+
+//회원탈퇴 버튼 클릭시 비밀번호 확인 팝업
+function memberoutPopup() {
+    // 함수 동작 테스트 
+    //alert("팝업 테스트");
+    
+    //window.open("[팝업을 띄울 파일명 path]", "[별칭]", "[팝업 옵션]")
+     window.open("/MyPage/memberout", "target", "width=600, height=400, top=150, left=200");
+}
+
+function showHidden() {
+    alert(document.testForm.flag.value);
+}
+
+
 
 function sample6_execDaumPostcode() {
     new daum.Postcode({

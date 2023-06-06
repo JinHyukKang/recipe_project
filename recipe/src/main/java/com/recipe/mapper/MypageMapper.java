@@ -7,6 +7,7 @@ import com.recipe.model.BoardVO;
 import com.recipe.model.MemberVO;
 
 public interface MypageMapper {
+	
 	//사용자 조회
 	public List<MemberVO> findUser(String user_id) throws Exception;
 	
@@ -16,5 +17,6 @@ public interface MypageMapper {
 	//user의 게시글 조회
 	public List<BoardVO> findWrite(int user_num)throws Exception;
 	
-
+	//회원탈퇴
+	public List<MemberVO> deleteUser(String user_id)throws Exception;
 }

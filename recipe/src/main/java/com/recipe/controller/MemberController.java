@@ -67,22 +67,23 @@ public class MemberController {
 	            session.setAttribute("user_nickname", user_nickname);
 	            
 	            mav.setViewName("redirect:/");
-	            mav.addObject("result", result);
+	           
 	        } else {
 	            result = "fail";
 	            mav.setViewName("redirect:/member/login");
-	            mav.addObject("result", result);
+	           
 	        }
 		}else if (cnt == 0) {
 			result = "fail";
 			mav.setViewName("redirect:/member/login");
-			mav.addObject("result", result);
+			
 		}else if (cnt == -1) {
 			result = "null";
 			mav.setViewName("redirect:/member/login");
-			mav.addObject("result", result);
+			
 		}
 		
+		mav.addObject("result", result);
 		
 		return mav;
 	}

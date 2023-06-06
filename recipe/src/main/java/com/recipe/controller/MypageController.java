@@ -81,6 +81,12 @@ public class MypageController {
        return "redirect:/MyPage/MyPage"; //
    }
    
-
-   
+   //È¸¿øÅ»Åğ ÆË¾÷ ÆäÀÌÁö ÀÌµ¿
+   @RequestMapping(value="/memberout", method = RequestMethod.GET)
+   public  String memberout(HttpSession session, Model model) throws Exception{
+	   
+	   logger.info("È¸¿øÅ»Åğ ÆË¾÷!");
+	   
+	   return "/MyPage/memberout";
+   }
 }

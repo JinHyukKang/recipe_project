@@ -29,5 +29,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from recipe
 		where user_num = #{user_num}
 	</select>
-
+	
+	<!-- 회원탈퇴 -->
+	<select id="deleteUser" resultType="com.recipe.model.MemberVO">
+		DELETE from users
+		WHERE user_id = #{user_id}
+	</select>
 </mapper>

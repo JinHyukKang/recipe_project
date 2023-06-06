@@ -36,7 +36,8 @@
                 <c:forEach var="findWrite" items="${findWrite}" varStatus="loop">
                     <tr>
                         <td style="max-width: 5%;">${loop.index + 1}</td>
-                        <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 30%; display: inline-block;">${findWrite.recipe_title}</td>
+                        <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 30%; display: inline-block;">
+                        	<a href="">${findWrite.recipe_title}</a></td>
                         <td style="max-width: 10%;">${findWrite.view_count}</td>
                         <td style="max-width: 10%;">${findWrite.good_count}</td>
                         <td style="max-width: 10%;">${findWrite.comment_count}</td>
