@@ -10,12 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.recipe.model.MemberVO;
 import com.recipe.service.MemberService;
@@ -42,58 +44,52 @@ public class MemberController {
 	}
 	
 	//로그인 기능
-	@RequestMapping(value = "/login.do", method=RequestMethod.POST)
-	public ModelAndView Login(
-			@RequestParam("user_id") String user_id,
-			@RequestParam("user_pass") String user_pass,
-			MemberVO vo,
-			HttpSession session,
-			ModelAndView mav) throws Exception {
-		
-		int cnt = memberservice.Login(user_id, user_pass,vo, session);
-		String result = "";
-		
-		if(cnt > 0) {
-			result = "success";
-			//로그인된 user의 정보 가져오기
-			List<MemberVO> findUser = mypageservice.findUser(user_id);
-			if (!findUser.isEmpty()) {
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	public String login(
+	        @RequestParam("user_id") String user_id,
+	        @RequestParam("user_pass") String user_pass,
+	        MemberVO vo,
+	        HttpSession session,
+	        Model model) throws Exception {
+
+	    int cnt = memberservice.Login(user_id, user_pass, vo, session);
+	    String result = "";
+
+	    if (cnt > 0) {
+	        result = "success";
+	        // 로그인된 user의 정보 가져오기
+	        List<MemberVO> findUser = mypageservice.findUser(user_id);
+	        if (!findUser.isEmpty()) {
 	            // 로그인된 user의 user_nickname과 user_num 불러오기
 	            String user_nickname = findUser.get(0).getUser_nickname();
 	            int user_num = findUser.get(0).getUser_num();
-	            
-	            //session에 user_num과 user_nickname 저장
+
+	            // session에 user_num과 user_nickname 저장
 	            session.setAttribute("user_num", user_num);
 	            session.setAttribute("user_nickname", user_nickname);
+	            model.addAttribute("result", result);
 	            
-	            mav.setViewName("redirect:/");
-	           
 	        } else {
 	            result = "fail";
-	            mav.setViewName("redirect:/member/login");
-	           
 	        }
-		}else if (cnt == 0) {
-			result = "fail";
-			mav.setViewName("redirect:/member/login");
-			
-		}else if (cnt == -1) {
-			result = "null";
-			mav.setViewName("redirect:/member/login");
-			
-		}
-		
-		mav.addObject("result", result);
-		
-		return mav;
+	    } else if (cnt == 0) {
+	        result = "fail";
+	    } else {
+	        result = "null";
+	    }
+
+	    model.addAttribute("result", result);
+
+	    return "redirect:/member/login";
 	}
 	
 	
 	//로그아웃 기능
 	@GetMapping("/logout.do")
-	public String Logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/";
+	public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+	    session.invalidate();
+	    redirectAttributes.addFlashAttribute("message", "로그아웃하셨습니다.");
+	    return "redirect:/";
 	}
 	
 	//비밀번호 찾기 이동
@@ -134,14 +130,17 @@ public class MemberController {
 	
 	//회원가입 기능
 	@RequestMapping(value="/join.do", method=RequestMethod.POST)
-	public String joinPOST(MemberVO member) throws Exception{
+	public String joinPOST(MemberVO member, Model model) throws Exception{
 		
 		
 		memberservice.memberJoin(member);
-		
-		logger.info("회원가입 작업완료");
-		
-		return "redirect:/member/login";
+	    logger.info("회원가입 작업완료");
+
+	    String join = "joinSuccess"; // 원하는 조건에 따라 값을 설정합니다.
+
+	    model.addAttribute("join", join);
+
+	    return "redirect:/member/login";
 		
 	}
 	

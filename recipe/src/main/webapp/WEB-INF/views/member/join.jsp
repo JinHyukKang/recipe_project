@@ -79,7 +79,6 @@
             <label for="user_email">이메일</label>
             <div class="d-flex">
             <input type="email" class="form-control col-lg-6" id="user_email" name="user_email" placeholder="you@example.com" required>
-            <button class="btn btn-primary col-lg-3">이메일 인증</button>
             </div>
           </div>
           
@@ -126,7 +125,10 @@
 <script>
 //회원가입 완료 알림창 
 function joinSuccess(){
-	alert("회원가입이 정상적으로 완료되었습니다!")
+	var result = "${param.join}";
+    if (result === "joinSuccess") {
+        alert("회원가입에 성공하였습니다.");
+    }
 }
 
 //아이디 중복 테스트

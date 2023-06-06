@@ -36,7 +36,7 @@
 		            <textarea class="form-control" id="recipe_content" name="recipe_content" rows="16" required></textarea>
 		        </div>
 		        <div class="mb-3">
-		        	<button type="submit" class="btn btn-info row mt-3 mx-3">등록하기</button>
+		        	<button type="submit" class="btn btn-info row mt-3 mx-3" onclick="writeSuccess()">등록하기</button>
 		        	<button type="button" class="btn btn-secondary row mt-3 mx-3" onclick="location.href = '/board/board';">목록으로</button>
 		        </div>
 		    </form>			
@@ -46,6 +46,17 @@
 <footer class="footer_login">
 <%@ include file="/resources/include/footer.jsp" %>
 </footer>
+
+<script>
+//글작성 완료 
+function writeSuccess(){
+	<c:if test="${not empty message}">
+    	alert("${message}");
+  	</c:if>
+}
+
+</script>
+
 </body>
 
 </html>

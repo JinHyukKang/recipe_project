@@ -61,7 +61,6 @@
             <label for="user_email">이메일</label>
             <div class="d-flex">
             <input type="email" class="form-control col-lg-6" id="user_email" name="user_email" value="${findUser.user_email}">(수정가능)
-            <button class="btn btn-primary col-lg-3">이메일 인증</button>
             </div>
           </div>
           

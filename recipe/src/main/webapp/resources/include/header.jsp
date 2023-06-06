@@ -3,7 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+<body>
 
+<%--로그 아웃 Flash Messages --%>
+    <c:if test="${not empty message}">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </c:if>
+    
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
 
 	<div class="container-fluid">
@@ -49,10 +58,17 @@
 			
 			</ul>
 			<form class="d-flex">
-			<input class="form-control me-2" type="text" placeholder="Search">
-			<button class="btn btn-primary" type="button">Search</button>
-			
-			
+			    <c:if test="${user_id ne null}">
+			        <div class="col-sm-auto my-auto me-2">
+			            <h6 class="mb-0">${user_nickname}님 환영합니다.</h6>
+			        </div>
+			    </c:if>
+			    <div class="col">
+			        <input class="form-control me-2" type="text" placeholder="Search">
+			    </div>
+			    <div class="col-auto">
+			        <button class="btn btn-primary" type="button">Search</button>
+			    </div>
 			</form>
 		</div>
 		
@@ -83,4 +99,6 @@
 	
 	</div>
 </nav>
+
+</body>
 </html>

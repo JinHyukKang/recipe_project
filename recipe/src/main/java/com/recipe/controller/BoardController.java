@@ -91,6 +91,9 @@ public class BoardController {
 	      boardservice.boardWrite(board);
 
 		  logger.info("글 작성 완료!");
+		  
+		  // 알림창을 표시하기 위해 Model에 메시지를 추가
+	      model.addAttribute("message", "게시판 글 작성 완료!");
 
 		  return "redirect:/board/board";
 		  
@@ -98,6 +101,9 @@ public class BoardController {
 	    	boardservice.boardWrite(board);
 
 		    logger.info("글 작성 완료!");
+		    
+		    // 알림창을 표시하기 위해 Model에 메시지를 추가
+		    model.addAttribute("message", "게시판 글 작성 완료!");
 
 		    return "redirect:/board/board";
 	    }
