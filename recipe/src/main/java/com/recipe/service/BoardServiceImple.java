@@ -16,22 +16,22 @@ public class BoardServiceImple implements BoardService {
 	@Autowired
 	BoardMapper boardmapper;
 	
-	//±ÛÀÛ¼º
+	//ê²Œì‹œê¸€ ìž‘ì„±
 	public void boardWrite(BoardVO board) throws Exception{
 		boardmapper.boardWrite(board);
 	}
 	
-	//°Ô½Ã±Û ÀüÃ¼ Á¶È¸
+	//ê²Œì‹œê¸€ ë¶ˆëŸ¬ì˜¤ê¸°(ìµœì‹ ìˆœ)
 	public List<BoardVO> findWriteAll()throws Exception{
 		return boardmapper.findWriteAll();
 	}
 	
-	//°Ô½Ã±Û ÀüÃ¼ Á¶È¸(ÃßÃµ¼ö¼ø)
+	//ê²Œì‹œê¸€ ë¶ˆëŸ¬ì˜¤ê¸°(ì¶”ì²œìˆœ)
 	public List<BoardVO> findWriteAllGood()throws Exception{
 		return boardmapper.findWriteAllGood();
 	}
 	
-	//°Ô½Ã±Û ÀüÃ¼ Á¶È¸(Á¶È¸¼ö¼ø)
+	//ê²Œì‹œê¸€ ë¶ˆëŸ¬ì˜¤ê¸°(ì¡°íšŒìˆœ)
 	public List<BoardVO> findWriteAllView()throws Exception{
 		return boardmapper.findWriteAllView();
 	}

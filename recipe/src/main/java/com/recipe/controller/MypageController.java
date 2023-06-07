@@ -29,11 +29,11 @@ public class MypageController {
    @Autowired
    private MypageService mypageservice;
    
- //¸¶ÀÌÆäÀÌÁö ÆË¾÷ ÀÌµ¿
+ //ë§ˆì´í˜ì´ì§€ ì ‘ì†
    @RequestMapping(value="/MyPage", method = RequestMethod.GET)
    public  String MyPagepop(HttpSession session, Model model) throws Exception {
       
-      logger.info("¸¶ÀÌ ÆäÀÌÁö ÁøÀÔ");
+      logger.info("ë§ˆì´í˜ì´ì§€ ì ‘ì†");
 
       String user_id = (String) session.getAttribute("user_id");
       
@@ -42,10 +42,10 @@ public class MypageController {
       model.addAttribute("findUser", findUser);
       return "/MyPage/MyPage";
    }
-   //¸¶ÀÌÆäÀÌÁö(³»°Ô½Ã¹°) ÀÌµ¿
+   //ë‚´ ê²Œì‹œë¬¼ ì ‘ì†
    @RequestMapping(value="/MyPagePost", method = RequestMethod.GET)
    public  String MyPagePost(HttpSession session, Model model) throws Exception {
-		logger.info("³»°Ô½Ã¹° ÁøÀÔ");
+		logger.info("ë‚´ ê²Œì‹œë¬¼ ì ‘ì†");
 		
 		int user_num =(int)session.getAttribute("user_num");
 		List<BoardVO> findWrite = mypageservice.findWrite(user_num);
@@ -55,8 +55,7 @@ public class MypageController {
 		return "/MyPage/MyPagePost";
    }
 
-   //¸¶ÀÌÆäÀÌÁö Á¤º¸¼öÁ¤
-   
+   //íšŒì›ì •ë³´ ìˆ˜ì •í•˜ê¸°
    @RequestMapping(value = "/updateMember.do", method = RequestMethod.POST)
    public String updateMember(
 		   @RequestParam("user_pass") String user_pass,
@@ -67,7 +66,7 @@ public class MypageController {
 		   @RequestParam("user_extraaddr") String user_extraaddr,
 		   HttpSession session,
 		   @ModelAttribute MemberVO vo) throws Exception{
-	   logger.info("¸¶ÀÌÆäÀÌÁö ¼öÁ¤");
+	   
 	   
 	   String user_id = (String) session.getAttribute("user_id");
 	   
@@ -79,19 +78,22 @@ public class MypageController {
 	   logger.info("user_extraaddr: " + user_extraaddr);
 	   
 	   mypageservice.updateMember(user_pass, user_email, user_postcode, user_addr, user_detailaddr, user_extraaddr, user_id);
+	   
+	   logger.info("íšŒì›ì •ë³´ ìˆ˜ì • ì™„ë£Œ!");
+	   
        return "redirect:/MyPage/MyPage"; //
    }
    
-   //È¸¿øÅ»Åğ ÆË¾÷ ÆäÀÌÁö ÀÌµ¿ 
+   //íšŒì›íƒˆí‡´ íŒì—… ì´ë™
    @RequestMapping(value="/memberout", method = RequestMethod.GET)
    public  String memberoutPage() throws Exception{
 	   
-	   logger.info("È¸¿øÅ»Åğ ÆË¾÷!");
+	   logger.info("È¸ï¿½ï¿½Å»ï¿½ï¿½ ï¿½Ë¾ï¿½!");
 	   
 	   return "/MyPage/memberout";
    }
    
-   //È¸¿øÅ»Åğ 
+   //íšŒì›íƒˆí‡´
    @ResponseBody
    @RequestMapping(value="/memberout.do", produces="text/html; charset=UTF-8", method = RequestMethod.POST)
    public  String memberout(HttpSession session,
@@ -108,7 +110,7 @@ public class MypageController {
 	   if(!user_id.equals(data_user_id) || !user_pass.equals(data_user_pass)) {
 		   
 		   message = "<script>";
-		   message += "alert('Àß¸øµÈ ¾ÆÀÌµğ È¤Àº ºñ¹Ğ¹øÈ£ÀÔ´Ï´Ù!');";
+		   message += "alert('ì•„ì´ë”” í˜¹ì€ ë¹„ë°€ë²ˆí˜¸ê°€ ë§ì§€ ì•ŠìŠµë‹ˆë‹¤.');";
 		   message += "location.href='/MyPage/memberout';";
 		   message += "</script>";
 		  
@@ -116,14 +118,14 @@ public class MypageController {
 		   mypageservice.memberout(user_id, user_pass);
 		   
 		   message = "<script>";
-		   message += "alert('È¸¿øÅ»Åğ°¡ Á¤»óÀûÀ¸·Î ¿Ï·áµÇ¾ú½À´Ï´Ù!');";
+		   message += "alert('íšŒì›íƒˆí‡´ê°€ ì •ìƒì ìœ¼ë¡œ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤!');";
 		   message += "window.close();";
-		   message += "window.opener.location.href = '/';"; // ÆË¾÷À» ¿­¾ú´ø ºÎ¸ğ Ã¢À¸·Î ¸®´ÙÀÌ·ºÆ®
+		   message += "window.opener.location.href = '/';"; // ï¿½Ë¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì·ï¿½Æ®
 		   message += "</script>";
 		   
 		   session.invalidate();
 		   
-		   logger.info("È¸¿øÅ»Åğ ¼º°ø!");
+		   logger.info("íšŒì›íƒˆí‡´ ì™„ë£Œ!");
 	   }
 	   
 	   

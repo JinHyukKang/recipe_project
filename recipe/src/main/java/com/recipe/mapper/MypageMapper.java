@@ -10,15 +10,15 @@ import com.recipe.model.MemberVO;
 
 public interface MypageMapper {
 	
-	//»ç¿ëÀÚ Á¶È¸
+	//íšŒì›ì •ë³´ ì¡°íšŒ
 	public List<MemberVO> findUser(String user_id) throws Exception;
 	
-	//¸¶ÀÌÆäÀÌÁö È¸¿øÁ¤º¸ ¼öÁ¤
+	//íšŒì›ì •ë³´ ìˆ˜ì •
 	public void updateMember(Map<String, Object> map)throws Exception;
 	
-	//userÀÇ °Ô½Ã±Û Á¶È¸
+	//userê°€ ì‘ì„±í•œ ê²Œì‹œê¸€ ì¡°íšŒ
 	public List<BoardVO> findWrite(int user_num)throws Exception;
 	
-	//È¸¿øÅ»Åğ
+	//íšŒì›íƒˆí‡´
 	public void memberout(@Param("user_id") String user_id, @Param("user_pass") String user_pass)throws Exception;
 }

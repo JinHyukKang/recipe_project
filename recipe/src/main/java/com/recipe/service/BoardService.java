@@ -7,16 +7,16 @@ import com.recipe.model.BoardVO;
 
 public interface BoardService {
 	
-	// ±ÛÀÛ¼º
+	//ê²Œì‹œê¸€ ìž‘ì„±
 	public void boardWrite(BoardVO board) throws Exception;
 	
-	//°Ô½Ã±Û ÀüÃ¼ Á¶È¸(ÃÖ½Å¼ø)
+	//ê²Œì‹œê¸€ ë¶ˆëŸ¬ì˜¤ê¸°(ìµœì‹ ìˆœ)
 	public List<BoardVO> findWriteAll()throws Exception;
 	
-	//°Ô½Ã±Û ÀüÃ¼ Á¶È¸(ÃßÃµ¼ö¼ø)
+	//ê²Œì‹œê¸€ ë¶ˆëŸ¬ì˜¤ê¸°(ì¶”ì²œìˆœ)
 	public List<BoardVO> findWriteAllGood()throws Exception;
 	
-	//°Ô½Ã±Û ÀüÃ¼ Á¶È¸(Á¶È¸¼ö¼ø)
+	//ê²Œì‹œê¸€ ë¶ˆëŸ¬ì˜¤ê¸°(ì¡°íšŒìˆœ)
 	public List<BoardVO> findWriteAllView()throws Exception;
 	
 }

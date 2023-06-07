@@ -14,26 +14,26 @@ public class MemberServiceImple implements MemberService{
 	@Autowired
 	MemberMapper membermapper;
 	
-	//È¸¿ø°¡ÀÔ
+	//íšŒì›ê°€ì…
 	@Override
 	public void memberJoin(MemberVO member) throws Exception {
 		
 		membermapper.memberJoin(member);
 	}
 	
-	//¾ÆÀÌµğ Áßº¹È®ÀÎ
+	//ì•„ì´ë”” ì¤‘ë³µí™•ì¸
 	@Override
     public int idChk(String user_id) throws Exception {
         return membermapper.idChk(user_id);
     }
 	
-	//´Ğ³×ÀÓ Áßº¹È®ÀÎ
+	//ë‹‰ë„¤ì„ ì¤‘ë³µí™•ì¸
 	@Override
 	public int nicknameChk(String user_nickname)throws Exception{
 		return membermapper.nicknameChk(user_nickname);
 	}
 	
-	//·Î±×ÀÎ mapper Á¢±Ù
+	//ë¡œê·¸ì¸
 	@Override
 	public int Login(String user_id, String user_pass, MemberVO vo, HttpSession session) throws Exception {
 		int cnt = membermapper.MemberLogin(user_id, user_pass);
@@ -48,7 +48,7 @@ public class MemberServiceImple implements MemberService{
 		return cnt;
 	}
 	
-	//ºñ¹Ğ¹øÈ£ Ã£±â
+	//ë¹„ë°€ë²ˆí˜¸ í™•ì¸
 	public MemberVO findpw(String user_id, String user_email)throws Exception{
 		return membermapper.findpw(user_id, user_email);
 	}

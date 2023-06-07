@@ -7,18 +7,18 @@ import com.recipe.model.MemberVO;
 
 public interface MemberMapper {
 	
-	//È¸¿ø°¡ÀÔ
+	//íšŒì›ê°€ì…
 	public void memberJoin(MemberVO member) throws Exception;
 	 
-	//¾ÆÀÌµğ Áßº¹È®ÀÎ
+	//ì•„ì´ë”” ì¤‘ë³µí™•ì¸
 	public int idChk(String user_id)throws Exception;
 	
-	//´Ğ³×ÀÓ Áßº¹È®ÀÎ
+	//ë‹‰ë„¤ì„ ì¤‘ë³µí™•ì¸
 	public int nicknameChk(String user_nickname)throws Exception;
 	
-	//·Î±×ÀÎ 
+	//ë¡œê·¸ì¸
 	public int MemberLogin(@Param("user_id") String user_id, @Param("user_pass") String user_pass)throws Exception;
 	
-	//ºñ¹Ğ¹øÈ£ Ã£±â
+	//ë¹„ë°€ë²ˆí˜¸ì°¾ê¸°
 	public MemberVO findpw(@Param("user_id") String user_id, @Param("user_email") String user_email)throws Exception;
 }

@@ -16,13 +16,13 @@ public class MypageServiceImple implements MypageService{
 	@Autowired
 	MypageMapper mypagemapper;
 	
-	//»ç¿ëÀÚ Á¶È¸
+	//íšŒì›ì •ë³´ ì¡°íšŒ
 	@Override
 	public List<MemberVO> findUser(String user_id) throws Exception {
 		return mypagemapper.findUser(user_id);
 	}
 	
-	//È¸¿øÁ¤º¸ ¼öÁ¤
+	//íšŒì›ì •ë³´ ìˆ˜ì •
 	@Override
     public void updateMember(String user_pass, String user_email, String user_postcode, String user_addr, String user_detailaddr, String user_extraaddr, String user_id) throws Exception {
 		Map<String, Object> map = new HashMap<>();
@@ -38,13 +38,13 @@ public class MypageServiceImple implements MypageService{
         mypagemapper.updateMember(map);
     }
 	
-	//userÀÇ °Ô½Ã±Û Á¶È¸
+	//userì˜ ê²Œì‹œê¸€ ì¡°íšŒ
 	@Override
 	public List<BoardVO> findWrite(int user_num) throws Exception{
 		return mypagemapper.findWrite(user_num);
 	}
 	
-	//È¸¿øÅ»Åğ
+	//íšŒì›íƒˆí‡´
 	@Override
 	public void memberout(String user_id, String user_pass)throws Exception{
 		mypagemapper.memberout(user_id, user_pass);

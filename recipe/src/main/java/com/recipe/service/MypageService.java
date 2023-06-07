@@ -6,15 +6,15 @@ import com.recipe.model.BoardVO;
 import com.recipe.model.MemberVO;
 
 public interface MypageService {
-	//»ç¿ëÀÚ Á¶È¸
+	//íšŒì›ì •ë³´ ì¡°íšŒ
 	public List<MemberVO> findUser(String user_id) throws Exception;
 	
-	//¸¶ÀÌÆäÀÌÁö È¸¿øÁ¤º¸ ¼öÁ¤
+	//íšŒì›ì •ë³´ ìˆ˜ì •
 	public void updateMember(String user_pass, String user_email, String user_postcode, String user_addr, String user_detailaddr, String user_extraaddr, String user_id)throws Exception;
 
-	//userÀÇ °Ô½Ã±Û Á¶È¸
+	//userì˜ ê²Œì‹œê¸€ ì¡°íšŒ
 	public List<BoardVO> findWrite(int user_num) throws Exception;
 	
-	//È¸¿øÅ»Åğ
+	//íšŒì›íƒˆí‡´
 	public void memberout(String user_id, String user_pass)throws Exception;
 }
