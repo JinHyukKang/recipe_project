@@ -63,11 +63,52 @@
 
 
 <div class="container">
-   <div class="row">
-      <div class="col-md-12">
-     
-      </div>
-   </div>
+	<div class="row mt-5">
+		<div class="col-md-12">
+     	<section>
+			<h3 class="mb-3"><strong>베스트 게시물</strong></h3>
+			
+			<div class="d-flex mb-5">
+				<c:forEach var="findWriteAllGood" items="${findWriteAllGood}" varStatus="loop" begin="0" end="3">
+				<div style="margin-right: 100px;">
+					<a href="">
+						<img src ="${path}/resources/upload/${findWriteAllGood.recipe_filename}.jpg" style="width: 230px; height: 150px;">
+					</a>
+				</div>
+				</c:forEach>
+			</div>
+		</section>
+		
+		<section>
+			<h3 class="mb-3"><strong>최신 게시물</strong></h3>
+			
+			<div class="d-flex mb-5">
+				<c:forEach var="findWriteAll" items="${findWriteAll}" varStatus="loop" begin="0" end="3">
+				<div style="margin-right: 100px;">
+					<a href="">
+						<img src ="${path}/resources/upload/${findWriteAll.recipe_filename}.jpg" style="width: 230px; height: 150px;">
+					</a>
+				</div>
+				</c:forEach>
+			</div>
+		</section>
+		
+		<section>
+			<h3 class="mb-3"><strong>많이본 게시물</strong></h3>
+			
+			<div class="d-flex mb-5">
+				<c:forEach var="findWriteAllView" items="${findWriteAllView}" varStatus="loop" begin="0" end="3">
+				<div style="margin-right: 100px;">
+					<a href="">
+						<img src ="${path}/resources/upload/${findWriteAllView.recipe_filename}.jpg" style="width: 230px; height: 150px;">
+					</a>
+				</div>
+				</c:forEach>
+			</div>
+		</section>
+		
+      	</div>
+     </div>
 </div>
 
 </main>

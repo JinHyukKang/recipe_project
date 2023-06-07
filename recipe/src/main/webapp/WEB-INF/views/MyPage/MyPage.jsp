@@ -101,9 +101,9 @@
    <br>
   
 
-<footer class="footer" style="position: fixed; bottom: 0; left: 0; right: 0;">
-    <%@ include file="/resources/include/footer.jsp" %>
-  </footer>
+<footer class="footer">
+<%@ include file="/resources/include/footer.jsp" %>
+</footer>
 
    
 <script>
