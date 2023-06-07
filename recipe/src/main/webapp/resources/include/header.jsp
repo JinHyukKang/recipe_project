@@ -60,7 +60,7 @@
 			<form class="d-flex">
 			    <c:if test="${user_id ne null}">
 			        <div class="col-sm-auto my-auto me-2">
-			            <h6 class="mb-0">${user_nickname}님 환영합니다.</h6>
+			            <h6 class="mb-0"><strong>${user_nickname}님</strong> 환영합니다.</h6>
 			        </div>
 			    </c:if>
 			    <div class="col">

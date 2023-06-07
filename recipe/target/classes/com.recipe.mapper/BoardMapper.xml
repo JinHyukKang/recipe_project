@@ -18,6 +18,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		  )
 </insert>
 
+<!-- 게시판 글 정보 모아오기(최신순) -->
+<select id="findWriteAll" resultType="com.recipe.model.BoardVO">
+	SELECT * FROM recipe
+	ORDER BY insert_date DESC
+</select>
 
+<!-- 게시판 글 정보 모아오기(추천수순) -->
+<select id="findWriteAllGood" resultType="com.recipe.model.BoardVO">
+	SELECT * FROM recipe 
+	ORDER BY good_count DESC
+</select>
+
+<!-- 게시판 글 정보 모아오기(조회수순) -->
+<select id="findWriteAllView" resultType="com.recipe.model.BoardVO">
+	SELECT * FROM recipe 
+	ORDER BY view_count DESC
+</select>
 
 </mapper>

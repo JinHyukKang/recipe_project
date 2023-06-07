@@ -56,28 +56,32 @@
 		var user_id = $("#user_id").val();
 		var user_email = $("#user_email").val();
 
-		// Ajax 요청 보내기
-		$.ajax({
-			url : "/member/findpw.do", // 요청할 URL
-			type : "POST",
-			data : {
-				user_id : user_id,
-				user_email : user_email
-			},
-			success : function(response) {
-				// 서버에서의 응답 처리
-				if (response === "fail") {
-                    alert("존재하지 않는 아이디 혹은 이메일입니다.");
-                } else {
-        
-                    alert("당신의 비밀번호는 " + response + "입니다.");
-                }
-			},
-			error : function(xhr, status, error) {
-				// 에러 처리
-				console.error(error);
-			}
-		});
+		if(user_id === "" || user_email === ""){
+			alert("아이디 혹은 이메일을 입력해주세요.");
+		}else{
+			// Ajax 요청 보내기
+			$.ajax({
+				url : "/member/findpw.do", // 요청할 URL
+				type : "POST",
+				data : {
+					user_id : user_id,
+					user_email : user_email
+				},
+				success : function(response) {
+					// 서버에서의 응답 처리
+					if (response === "fail") {
+	                    alert("존재하지 않는 아이디 혹은 이메일입니다.");
+	                } else {
+	        
+	                    alert("회원님의 비밀번호는 " + response + "입니다.");
+	                }
+				},
+				error : function(xhr, status, error) {
+					// 에러 처리
+					console.error(error);
+				}
+			});
+		}
 	};
 </script>
 

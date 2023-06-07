@@ -19,11 +19,15 @@
 <body>
 <%@ include file="/resources/include/header.jsp" %>
 
+
 <div class="container">
-    <div class="input-form-backgroud row">
-    <a href="/MyPage/MyPagePost">내 게시물</a>
-    <a href="/MyPage/MyPage">마이페이지</a>
+    <div class="input-form-backgroud">
       <div class="input-form col-md-12 mx-auto">
+      <div class="d-flex mb-3">
+	  	  <button class="btn btn-light" onclick="location.href='/MyPage/MyPage'"><strong>회원정보</strong></button>
+   	  	  <button class="btn btn-light" onclick="location.href='/MyPage/MyPagePost'"><strong>내 게시물</strong></button>
+	  </div>
+      
       <form action="/MyPage/updateMember.do" method="post">
       <c:forEach items="${findUser}" var="findUser">
       
@@ -44,7 +48,7 @@
           <div class="mb-3">
               <label for="user_pass">비밀번호</label>
               <div class="d-flex">
-              <input type="password" class="form-control col-lg-6" id="user_pass" name="user_pass" value="${findUser.user_pass}" readonly>(수정가능)
+              <input type="password" class="form-control col-lg-6" id="user_pass" name="user_pass" value="${findUser.user_pass}">(수정가능)
               </div>
           </div>
 
@@ -70,15 +74,15 @@
 		<div class="form-group mb-3">
 			<label for="address">주소</label>(수정가능)<br>
 				<div class="d-flex mb-1">
-			        <input type="text" class="form-control col-lg-4" id="user_postcode" name="user_postcode" value="${findUser.user_postcode}" readonly>
+			        <input type="text" class="form-control col-lg-4" id="user_postcode" name="user_postcode" value="${findUser.user_postcode}">
 			        <input type="button" class="form-control btn btn-success col-lg-3" onclick="sample6_execDaumPostcode()" value="주소수정"><br>
 		        </div>
 		        <div class="mb-1">
-					<input type="text" class="form-control col-lg-4" id="user_addr" name="user_addr" value="${findUser.user_addr}" readonly>
+					<input type="text" class="form-control col-lg-4" id="user_addr" name="user_addr" value="${findUser.user_addr}">
 				</div>
 				<div class="d-flex">
 					<input type="text" class="form-control col-lg-4" id="user_detailaddr" name="user_detailaddr" value="${findUser.user_detailaddr}">
-					<input type="text" class="form-control col-lg-4" id="user_extraaddr" name="user_extraaddr" value="${findUser.user_extraaddr}" readonly>
+					<input type="text" class="form-control col-lg-4" id="user_extraaddr" name="user_extraaddr" value="${findUser.user_extraaddr}">
 				</div>
 		</div>
 		
@@ -97,9 +101,9 @@
    <br>
   
 
-<footer class="footer">
-<%@ include file="/resources/include/footer.jsp" %>
-</footer>
+<footer class="footer" style="position: fixed; bottom: 0; left: 0; right: 0;">
+    <%@ include file="/resources/include/footer.jsp" %>
+  </footer>
 
    
 <script>

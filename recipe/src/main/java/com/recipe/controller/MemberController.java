@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -129,18 +130,21 @@ public class MemberController {
 	}
 	
 	//회원가입 기능
-	@RequestMapping(value="/join.do", method=RequestMethod.POST)
-	public String joinPOST(MemberVO member, Model model) throws Exception{
+	@ResponseBody
+	@RequestMapping(value="/join.do", produces="text/html; charset=UTF-8", method=RequestMethod.POST)
+	public String joinPOST(MemberVO member) throws Exception{
 		
 		
 		memberservice.memberJoin(member);
 	    logger.info("회원가입 작업완료");
 
-	    String join = "joinSuccess"; // 원하는 조건에 따라 값을 설정합니다.
+	    String message = "<script>";
+	    message += "alert( '회원가입이 정상적으로 완료되었습니다!');";
+	    message += "location.href='/member/login';";
+	    message += "</script>";
 
-	    model.addAttribute("join", join);
-
-	    return "redirect:/member/login";
+	    
+	    return message;
 		
 	}
 	

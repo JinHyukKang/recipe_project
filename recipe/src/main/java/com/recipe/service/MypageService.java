@@ -14,4 +14,7 @@ public interface MypageService {
 
 	//user의 게시글 조회
 	public List<BoardVO> findWrite(int user_num) throws Exception;
+	
+	//회원탈퇴
+	public void memberout(String user_id, String user_pass)throws Exception;
 }

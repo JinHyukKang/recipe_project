@@ -19,7 +19,6 @@ public class MemberServiceImple implements MemberService{
 	public void memberJoin(MemberVO member) throws Exception {
 		
 		membermapper.memberJoin(member);
-		
 	}
 	
 	//아이디 중복확인
