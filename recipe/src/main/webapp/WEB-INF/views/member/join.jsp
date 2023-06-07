@@ -125,8 +125,8 @@
 <script>
 //회원가입 완료 알림창 
 function joinSuccess(){
-	var result = "${param.join}";
-    if (result === "joinSuccess") {
+	var join = "${param.join}";
+    if (join === "joinSuccess") {
         alert("회원가입에 성공하였습니다.");
     }
 }
