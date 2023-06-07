@@ -108,7 +108,7 @@
             <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
           </div>
           <div class="mb-4"></div>
-          <input type="submit" class="btn btn-primary btn-lg btn-block" onclick="joinSuccess()" value="가입 완료"/>
+          <input type="submit" class="btn btn-primary btn-lg btn-block" value="가입 완료"/>
         </form>
         
      	</div>
@@ -123,13 +123,6 @@
 
    
 <script>
-//회원가입 완료 알림창 
-function joinSuccess(){
-	var result = "${param.join}";
-    if (result === "joinSuccess") {
-        alert("회원가입에 성공하였습니다.");
-    }
-}
 
 //아이디 중복 테스트
 function checkUserId() {

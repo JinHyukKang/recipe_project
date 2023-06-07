@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.recipe.model.BoardVO;
@@ -33,79 +34,84 @@ public class BoardController {
 	private BoardService boardservice;
 	
 	
-	//·¹½ÃÇÇ °Ô½ÃÆÇ ÀÌµ¿
+	//ë ˆì‹œí”¼ ê²Œì‹œíŒ ì´ë™
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
 	public String Board() throws Exception{
 		
-		logger.info("·Î±×ÀÎ ÁøÀÔ!");
+		logger.info("ê¸€ì‘ì„± í˜ì´ì§€ ì´ë™!");
 		
 		return "board/board";
 	}
 	
-	//·¹½ÃÇÇ ÀÛ¼ºÀÌµ¿
+	//ê²Œì‹œíŒ ê¸€ ì‘ì„± í˜ì´ì§€ ì´ë™
 	@RequestMapping(value = "/recipeWrite", method = RequestMethod.GET)
 	public String recipeWrite() throws Exception{
 		
-		logger.info("·Î±×ÀÎ ÁøÀÔ!");
+		logger.info("ê¸€ì‘ì„± í˜ì´ì§€ ì´ë™!");
 		
 		return "board/recipeWrite";
 	}
 	
-	// ·¹½ÃÇÇ ±ÛÀÛ¼º
-	@RequestMapping(value = "/write.do", method = RequestMethod.POST)
+	// ê¸€ì‘ì„± controller
+	@ResponseBody
+	@RequestMapping(value = "/write.do", produces="text/html; charset=UTF-8", method = RequestMethod.POST)
 	public String boardWrite(BoardVO board,
 							 @RequestParam("recipeFile") MultipartFile file,
-							 HttpSession session, 
-							 Model model)throws Exception {
+							 HttpSession session
+							 )throws Exception {
 		
-		// ·Î±×ÀÎ session¿¡ ÀúÀåµÈ user_nickname, user_num °¡Á®¿À±â
+		// ì„¸ì…˜ì—ì„œ user_nickname, user_num ë°›ì•„ì˜¤ê¸°
 	    String user_nickname = (String) session.getAttribute("user_nickname");
 	    int user_num = (int) session.getAttribute("user_num");
 
-	    // user_nickname°ú user_num BoardVO¿¡ ³Ö¾îÁÖ±â
+	    // user_nickname, user_num BoardVOì— ë„£ê¸°
 	    board.setUser_nickname(user_nickname);
 	    board.setUser_num(user_num);
 
-	    // ÆÄÀÏ ¾÷·Îµå Ã³¸®
+	    // ì´ë¯¸ì§€ íŒŒì¼ ì—…ë¡œë“œ
 	    if (!file.isEmpty()) {
-	      String real_fileName = file.getOriginalFilename();//»ç¿ëÀÚ°¡ ¾÷·ÎµåÇÑ ÆÄÀÏ¸í
-	      long size = file.getSize(); //ÆÄÀÏ »çÀÌÁî
-	      String fileExtension = real_fileName.substring(real_fileName.lastIndexOf("."),real_fileName.length());//È®ÀåÀÚ¸í ÃßÃâ
+	      String real_fileName = file.getOriginalFilename();//ì—…ë¡œë“œí•œ íŒŒì¼ ì´ë¦„ ë°›ì•„ì˜¤ê¸°
+	      long size = file.getSize(); //ì—…ë¡œë“œí•œ íŒŒì¼ í¬ê¸° ë°›ì•„ì˜¤ê¸°
+	      String fileExtension = real_fileName.substring(real_fileName.lastIndexOf("."),real_fileName.length());//íŒŒì¼ í™•ì¥ì ì €ì¥
 	      
-	      //ÀÓÀ¸·Î ÆÄÀÏ ÀÌ¸§ º¯°æ(µ¿ÀÏÇÑ ÆÄÀÏ¸í Ãæµ¹À» ÇÇÇÏ±â À§ÇØ ¼³Á¤)
+	      //ì—…ë¡œë“œ íŒŒì¼ëª… ì¤‘ë³µì„ ë°©ì§€í•˜ê¸° ìœ„í•´ ì„ì˜ì˜ íŒŒì¼ëª… ë¶€ì—¬
 	      UUID uuid = UUID.randomUUID();
 	      String[] uuids = uuid.toString().split("-");
 	      String fileName = uuids[0];
 	      
-	      // ÆÄÀÏÀ» ÀúÀåÇÒ °æ·Î ¼³Á¤
-	      String uploadPath = "C:/workspace/recipe/recipe/src/main/webapp/resources/upload/";
+	      //íŒŒì¼ ì €ì¥ ê²½ë¡œ ì„¤ì •
+	      String uploadPath = "D:/kjh_spring/recipe/recipe/src/main/webapp/resources/upload/";
 	      String filePath = uploadPath + fileName + fileExtension;
-	      //¼³Á¤ÇÑ °æ·Î¿¡ ÆÄÀÏ ÀúÀå
+	      //ì„¤ì •í•œ ê²½ë¡œë¡œ ì´ë¯¸ì§€ íŒŒì¼ ì €ì¥
 	      file.transferTo(new File(filePath));
 	      
-	      //BoadVO¿¡ user°¡ ¼³Á¤ÇÑ ÆÄÀÏ¸í°ú ÀÓÀÇ·Î ¼³Á¤ÇÑ ÆÄÀÏ¸í ±×¸®°í ÆÄÀÏ ÀúÀå°æ·Î ÀúÀå
-	      board.setRecipe_realname(real_fileName); // BoardVO¿¡ ÆÄÀÏ ÀÌ¸§ ÀúÀå
-	      board.setRecipe_filename(fileName);// BoardVO¿¡ ÀÓÀÇ·Î ¼³Á¤ÇÑ ÆÄÀÏ ÀÌ¸§ ÀúÀå
+	      //BoadVOì— userê°€ ì„¤ì •í•œ íŒŒì¼ëª…, ì„ì˜ë¡œ ë¶€ê°€í•œ íŒŒì¼ëª…, íŒŒì¼ ì €ì¥ ê²½ë¡œ ì„¤ì •
+	      board.setRecipe_realname(real_fileName); 
+	      board.setRecipe_filename(fileName);
 	      board.setFile_path(filePath);
 	      
 	      boardservice.boardWrite(board);
 
-		  logger.info("±Û ÀÛ¼º ¿Ï·á!");
+		  logger.info("ê²Œì‹œíŒ ê¸€ ì‘ì„± ì™„ë£Œ!");
 		  
-		  // ¾Ë¸²Ã¢À» Ç¥½ÃÇÏ±â À§ÇØ Model¿¡ ¸Ş½ÃÁö¸¦ Ãß°¡
-	      model.addAttribute("message", "°Ô½ÃÆÇ ±Û ÀÛ¼º ¿Ï·á!");
+		  String message = "<script>";
+		  message += "alert( 'ê¸€ì‘ì„±ì´ ì •ìƒì ìœ¼ë¡œ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤!');";
+		  message += "location.href='/board/board';";
+		  message += "</script>";
 
-		  return "redirect:/board/board";
+		  return message;
 		  
 	    }else {
 	    	boardservice.boardWrite(board);
 
-		    logger.info("±Û ÀÛ¼º ¿Ï·á!");
+		    logger.info("ê²Œì‹œíŒ ê¸€ ì‘ì„± ì™„ë£Œ!");
 		    
-		    // ¾Ë¸²Ã¢À» Ç¥½ÃÇÏ±â À§ÇØ Model¿¡ ¸Ş½ÃÁö¸¦ Ãß°¡
-		    model.addAttribute("message", "°Ô½ÃÆÇ ±Û ÀÛ¼º ¿Ï·á!");
+		    String message = "<script>";
+			message += "alert( 'ê¸€ì‘ì„±ì´ ì •ìƒì ìœ¼ë¡œ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤!');";
+			message += "location.href='/board/board';";
+			message += "</script>";
 
-		    return "redirect:/board/board";
+		    return message;
 	    }
 
 	    

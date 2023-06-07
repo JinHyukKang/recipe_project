@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.recipe.model.BoardVO;
 import com.recipe.model.MemberVO;
@@ -81,12 +82,52 @@ public class MypageController {
        return "redirect:/MyPage/MyPage"; //
    }
    
-   //회원탈퇴 팝업 페이지 이동
+   //회원탈퇴 팝업 페이지 이동 
    @RequestMapping(value="/memberout", method = RequestMethod.GET)
-   public  String memberout(HttpSession session, Model model) throws Exception{
+   public  String memberoutPage() throws Exception{
 	   
 	   logger.info("회원탈퇴 팝업!");
 	   
 	   return "/MyPage/memberout";
+   }
+   
+   //회원탈퇴 
+   @ResponseBody
+   @RequestMapping(value="/memberout.do", produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+   public  String memberout(HttpSession session,
+		   					@RequestParam("user_id") String user_id,
+		   					@RequestParam("user_pass") String user_pass) throws Exception{
+	   
+	   List<MemberVO> findUser = mypageservice.findUser(user_id);
+	   
+	   String data_user_id = findUser.get(0).getUser_id();
+	   String data_user_pass = findUser.get(0).getUser_pass();
+	   
+	   String message="";
+	   
+	   if(!user_id.equals(data_user_id) || !user_pass.equals(data_user_pass)) {
+		   
+		   message = "<script>";
+		   message += "alert('잘못된 아이디 혹은 비밀번호입니다!');";
+		   message += "location.href='/MyPage/memberout';";
+		   message += "</script>";
+		  
+	   }else {
+		   mypageservice.memberout(user_id, user_pass);
+		   
+		   message = "<script>";
+		   message += "alert('회원탈퇴가 정상적으로 완료되었습니다!');";
+		   message += "window.close();";
+		   message += "window.opener.location.href = '/';"; // 팝업을 열었던 부모 창으로 리다이렉트
+		   message += "</script>";
+		   
+		   session.invalidate();
+		   
+		   logger.info("회원탈퇴 성공!");
+	   }
+	   
+	   
+	 
+	   return message;
    }
 }

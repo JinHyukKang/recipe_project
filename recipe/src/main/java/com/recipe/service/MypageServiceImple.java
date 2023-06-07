@@ -43,4 +43,10 @@ public class MypageServiceImple implements MypageService{
 	public List<BoardVO> findWrite(int user_num) throws Exception{
 		return mypagemapper.findWrite(user_num);
 	}
+	
+	//È¸¿øÅ»Åð
+	@Override
+	public void memberout(String user_id, String user_pass)throws Exception{
+		mypagemapper.memberout(user_id, user_pass);
+	}
 }

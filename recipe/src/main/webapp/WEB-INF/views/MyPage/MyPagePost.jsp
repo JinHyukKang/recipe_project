@@ -7,41 +7,49 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>MyPagePost</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="/resources/css/MyPagecustom.css"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  
+<link href="${path}/resources/css/custome.css" rel="stylesheet" type="text/css">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyPagePost</title>
+
+
 </head>
 <body>
 
 <%@ include file="/resources/include/header.jsp" %>
 
 <!-- 마이페이지 헤더 -->
-<div id="change-mod" class="d-flex">
-    <a href="/MyPage/MyPage"><span><strong>회원정보수정</strong></span></a>
-    <a href="/MyPage/MyPagePost"><span><strong>내게시물</strong></span></a>
-</div>
+
 <div class="container">
-    <div class="row mt-5">
-        <div class="col-md-12">
-            <table border="1" id="tblresult">
+    <div class="input-form-backgroud">
+      <div class="input-form col-md-12 mx-auto">
+      <div class="d-flex mb-3">
+	  	  <button class="btn btn-light" onclick="location.href='/MyPage/MyPage'"><strong>회원정보</strong></button>
+   	  	  <button class="btn btn-light" onclick="location.href='/MyPage/MyPagePost'"><strong>내 게시물</strong></button>
+	  </div>
+            <table border="1" id="tblresult" style="width: 100%;">
                 <tr>
-                    <th bgcolor="silver" width="5%">No.</th>
-                    <th bgcolor="silver" width="30%" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 30%;">제목</th>
-                    <th bgcolor="silver" width="10%">조회수</th>
-                    <th bgcolor="silver" width="10%">추천수</th>
-                    <th bgcolor="silver" width="10%">댓글수</th>
-                    <th bgcolor="silver" width="35%">작성일</th>
+                    <th bgcolor="#92b5db" width="10%">No.</th>
+        			<th bgcolor="#92b5db" width="35%">제목</th>
+        			<th bgcolor="#92b5db" width="10%">조회수</th>
+        			<th bgcolor="#92b5db" width="10%">추천수</th>
+        			<th bgcolor="#92b5db" width="10%">댓글수</th>
+        			<th bgcolor="#92b5db" width="25%">작성일</th>
                 </tr>
                 <c:forEach var="findWrite" items="${findWrite}" varStatus="loop">
                     <tr>
-                        <td style="max-width: 5%;">${loop.index + 1}</td>
-                        <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 30%; display: inline-block;">
+                        <td>${loop.index + 1}</td>
+                        <td style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 60%; display: inline-block;">
                         	<a href="">${findWrite.recipe_title}</a></td>
-                        <td style="max-width: 10%;">${findWrite.view_count}</td>
-                        <td style="max-width: 10%;">${findWrite.good_count}</td>
-                        <td style="max-width: 10%;">${findWrite.comment_count}</td>
-                        <td style="max-width: 35%;"><fmt:formatDate value="${findWrite.insert_date}" pattern="yyyy-MM-dd HH:mm" /></td>
+                        <td>${findWrite.view_count}</td>
+                        <td>${findWrite.good_count}</td>
+                        <td>${findWrite.comment_count}</td>
+                        <td><fmt:formatDate value="${findWrite.insert_date}" pattern="yyyy-MM-dd HH:mm" /></td>
                     </tr>
                 </c:forEach>
             </table>
@@ -52,9 +60,10 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/resources/js/popuptest.js"></script>
 
-<footer class="footer">
-<%@ include file="/resources/include/footer.jsp" %>
+<footer class="footer" style="position: fixed; bottom: 0; left: 0; right: 0;">
+    <%@ include file="/resources/include/footer.jsp" %>
 </footer>
+
 
 </body>
 </html>

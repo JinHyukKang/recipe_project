@@ -18,7 +18,24 @@
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-12">
-        	<h4 class="mb-6">회원 탈퇴를 위해 비밀번호를 확인해주세요</h4>
+	        <form action="/MyPage/memberout.do" method="post">
+	        	<h4 class="mb-3">회원탈퇴</h4>
+	       		<h6 class="mb-4">회원 탈퇴를 위해 아이디와 비밀번호를 확인해주세요</h6>
+	        	
+	        	<div class="mb-3">
+	                 <label for="user_id">아이디</label>
+	                 <input type="text" class="form-control col-lg-5" style="max-width: 300px;" id="user_id" name="user_id" required>
+	            </div>
+	            
+	            <div class="mb-3">
+	                <label for="user_pass">비밀번호</label>
+	                <input type="password" class="form-control col-lg-5" style="max-width: 300px;" id="user_pass" name="user_pass" required>
+	            </div>
+	            
+	            <div class="mb-4">
+	                <button class="btn btn-danger btn-lg btn-block col-lg-8 float-righ" type="submit" style="max-width: 300px;" >회원탈퇴</button>            
+	            </div>
+	        </form>
         </div>
     </div>
 </div>
