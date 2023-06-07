@@ -36,7 +36,15 @@ public class BoardController {
 	
 	//레시피 게시판 이동
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
-	public String Board() throws Exception{
+	public String Board(Model model) throws Exception{
+		
+		List<BoardVO> findWriteAll = boardservice.findWriteAll();
+		List<BoardVO> findWriteAllGood = boardservice.findWriteAllGood();
+		List<BoardVO> findWriteAllView = boardservice.findWriteAllView();
+		
+		model.addAttribute("findWriteAll",findWriteAll);
+		model.addAttribute("findWriteAllGood",findWriteAllGood);
+		model.addAttribute("findWriteAllView",findWriteAllView);
 		
 		logger.info("글작성 페이지 이동!");
 		
@@ -80,7 +88,7 @@ public class BoardController {
 	      String fileName = uuids[0];
 	      
 	      //파일 저장 경로 설정
-	      String uploadPath = "D:/kjh_spring/recipe/recipe/src/main/webapp/resources/upload/";
+	      String uploadPath = "C:/workspace/recipe/recipe/src/main/webapp/resources/upload/";
 	      String filePath = uploadPath + fileName + fileExtension;
 	      //설정한 경로로 이미지 파일 저장
 	      file.transferTo(new File(filePath));
