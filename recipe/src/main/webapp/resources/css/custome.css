@@ -24,4 +24,28 @@ body {
       -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
       box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
     }
+    
+#tblresult {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+  }
 
+  #tblresult th:first-child,
+  #tblresult td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  #tblresult th:last-child,
+  #tblresult td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  /* Optional: Add border style */
+  #tblresult th,
+  #tblresult td {
+    border: 1px solid black;
+    padding: 10px;
+  }

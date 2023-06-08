@@ -31,21 +31,24 @@
       <div class="d-flex mb-3">
 	  	  <button class="btn btn-light" onclick="location.href='/MyPage/MyPage'"><strong>회원정보</strong></button>
    	  	  <button class="btn btn-light" onclick="location.href='/MyPage/MyPagePost'"><strong>내 게시물</strong></button>
-	  </div>
-            <table border="1" id="tblresult" style="width: 100%;">
+	  </div>	  
+            <table id="tblresult" style="width: 100%;">
                 <tr>
                     <th bgcolor="#92b5db" width="10%">No.</th>
-        			<th bgcolor="#92b5db" width="35%">제목</th>
+        			<th bgcolor="#92b5db" width="30%" style="max-width: 100%;">제목</th>
         			<th bgcolor="#92b5db" width="10%">조회수</th>
         			<th bgcolor="#92b5db" width="10%">추천수</th>
         			<th bgcolor="#92b5db" width="10%">댓글수</th>
-        			<th bgcolor="#92b5db" width="25%">작성일</th>
+        			<th bgcolor="#92b5db" width="30%">작성일</th>
                 </tr>
                 <c:forEach var="findWrite" items="${findWrite}" varStatus="loop">
                     <tr>
                         <td>${loop.index + 1}</td>
-                        <td style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 60%; display: inline-block;">
-                        	<a href="">${findWrite.recipe_title}</a></td>
+                        <td>
+	                        <div style="width: 250px;">
+	                        	<a href="" style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 80%; display: inline-block;">${findWrite.recipe_title}</a>
+	                       	</div>
+	                    </td>
                         <td>${findWrite.view_count}</td>
                         <td>${findWrite.good_count}</td>
                         <td>${findWrite.comment_count}</td>

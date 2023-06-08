@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.recipe.model.BoardVO;
 import com.recipe.model.MemberVO;
@@ -38,10 +39,12 @@ public class BoardController {
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
 	public String Board(Model model) throws Exception{
 		
+		//최신순, 조회순, 추천순 게시글 데이터 객체화
 		List<BoardVO> findWriteAll = boardservice.findWriteAll();
 		List<BoardVO> findWriteAllGood = boardservice.findWriteAllGood();
 		List<BoardVO> findWriteAllView = boardservice.findWriteAllView();
 		
+		//최신순, 조회순, 추천순 게시글 데이터 model에 저장
 		model.addAttribute("findWriteAll",findWriteAll);
 		model.addAttribute("findWriteAllGood",findWriteAllGood);
 		model.addAttribute("findWriteAllView",findWriteAllView);
@@ -88,7 +91,7 @@ public class BoardController {
 	      String fileName = uuids[0];
 	      
 	      //파일 저장 경로 설정
-	      String uploadPath = "C:/workspace/recipe/recipe/src/main/webapp/resources/upload/";
+	      String uploadPath = "D:/kjh_spring/recipe/recipe/src/main/webapp/resources/upload/";
 	      String filePath = uploadPath + fileName + fileExtension;
 	      //설정한 경로로 이미지 파일 저장
 	      file.transferTo(new File(filePath));
@@ -123,6 +126,42 @@ public class BoardController {
 	    }
 
 	    
+	}
+	
+	//게시글 조회(최신순)
+	@RequestMapping(value = "/ViewWriteDate", method = RequestMethod.GET)
+	public String viewWriteDate(Model model,
+							@RequestParam("recipe_num") int recipe_num
+							)throws Exception{
+		
+		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
+		model.addAttribute(viewWrite);
+		
+		return "board/ViewWriteDate";
+	}
+	
+	//게시글 조회(최신순)
+	@RequestMapping(value = "/ViewWriteGood", method = RequestMethod.GET)
+	public String viewWriteGood(Model model,
+							@RequestParam("recipe_num") int recipe_num
+							)throws Exception{
+		
+		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
+		model.addAttribute(viewWrite);
+		
+		return "board/ViewWriteGood";
+	}
+	
+	//게시글 조회(최신순)
+	@RequestMapping(value = "/ViewWriteView", method = RequestMethod.GET)
+	public String viewWriteView(Model model,
+							@RequestParam("recipe_num") int recipe_num
+							)throws Exception{
+		
+		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
+		model.addAttribute(viewWrite);
+		
+		return "board/ViewWriteView";
 	}
 	
 

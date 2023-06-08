@@ -35,5 +35,12 @@ public class BoardServiceImple implements BoardService {
 	public List<BoardVO> findWriteAllView()throws Exception{
 		return boardmapper.findWriteAllView();
 	}
+	
+	//게시글 조회
+	public List<BoardVO> viewWrite(int recipe_num)throws Exception{
+		return boardmapper.viewWrite(recipe_num);
+	}
 
+	
+	
 }
