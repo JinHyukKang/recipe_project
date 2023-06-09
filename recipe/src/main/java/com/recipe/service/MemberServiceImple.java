@@ -16,8 +16,7 @@ public class MemberServiceImple implements MemberService{
 	
 	//회원가입
 	@Override
-	public void memberJoin(MemberVO member) throws Exception {
-		
+	public void memberJoin(MemberVO member) throws Exception {		
 		membermapper.memberJoin(member);
 	}
 	

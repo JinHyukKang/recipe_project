@@ -65,7 +65,7 @@
 				</c:forEach>
 			</form>
 			<div class="mb-3">
-				<button type="button" class="btn btn-secondary row mt-3 mx-3" onclick="location.href = 'board/board';">목록으로</button>
+				<button type="button" class="btn btn-secondary row mt-3 mx-3" onclick="location.href = '/board/board';">목록으로</button>
 			</div>
 		</div>
 	</div>

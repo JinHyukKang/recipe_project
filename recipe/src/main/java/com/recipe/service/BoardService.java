@@ -27,4 +27,13 @@ public interface BoardService {
 	//게시글 조회수 증가
 	public void viewUpdate(int recipe_num)throws Exception;
 	
+	//조회수 유지하기
+	public void viewBack(int recipe_num)throws Exception;
+	
+	//추천수 증가
+	public void goodUpdate(int recipe_num)throws Exception;
+	
+	//추천수 감소
+	public void goodBack(int recipe_num)throws Exception;
+	
 }

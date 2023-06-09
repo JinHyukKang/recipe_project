@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,7 +92,7 @@ public class BoardController {
 	      String fileName = uuids[0];
 	      
 	      //파일 저장 경로 설정
-	      String uploadPath = "D:/kjh_spring/recipe/recipe/src/main/webapp/resources/upload/";
+	      String uploadPath = "C:/workspace/recipe/recipe/src/main/webapp/resources/upload/";
 	      String filePath = uploadPath + fileName + fileExtension;
 	      //설정한 경로로 이미지 파일 저장
 	      file.transferTo(new File(filePath));
@@ -139,10 +140,7 @@ public class BoardController {
 		
 		//게시글 데이터 불러오기
 		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
-		model.addAttribute("viewWrite", viewWrite);
-		
-		
-		
+		model.addAttribute("viewWrite", viewWrite);	
 		
 		
 		return "board/ViewWriteDate";
@@ -191,6 +189,37 @@ public class BoardController {
 		
 		
 		return "redirect:/board/board";
+	}
+	
+	//추천수 증가(최신순)
+	@RequestMapping(value="/Good.do", method = RequestMethod.POST)
+	public ResponseEntity<String> Good(Model model,
+						@RequestParam("recipe_num") int recipe_num,
+						@RequestParam("idValue") String idValue
+						)throws Exception{
+		System.out.println(idValue);
+		if(idValue.equals("notgood")) {		//추천을 하려는 경우
+			
+			//추천수 증가
+			boardservice.goodUpdate(recipe_num);
+			
+			//조회수 다시 감소
+			boardservice.viewBack(recipe_num);
+			
+			return ResponseEntity.ok("good");
+			
+		}else {	//추천을 취소하는 경우
+			
+			//추천수 감소
+			boardservice.goodBack(recipe_num);
+			
+			//조회수 다시 감소
+			boardservice.viewBack(recipe_num);
+			
+			return ResponseEntity.ok("notgood");
+		}
+		
+		
 	}
 	
 

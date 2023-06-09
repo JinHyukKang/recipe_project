@@ -48,4 +48,19 @@ public class BoardServiceImple implements BoardService {
 		boardmapper.viewUpdate(recipe_num);
 	}
 	
+	//조회수 유지하기
+	public void viewBack(int recipe_num)throws Exception{
+		boardmapper.viewBack(recipe_num);
+	}
+	
+	//추천수 증가
+	public void goodUpdate(int recipe_num)throws Exception{
+		boardmapper.goodUpdate(recipe_num);
+	}
+	
+	//추천수 감소
+	public void goodBack(int recipe_num)throws Exception{
+		boardmapper.goodBack(recipe_num);
+	}
+	
 }
