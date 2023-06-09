@@ -52,7 +52,7 @@
                         <td>${findWrite.view_count}</td>
                         <td>${findWrite.good_count}</td>
                         <td>${findWrite.comment_count}</td>
-                        <td><fmt:formatDate value="${findWrite.insert_date}" pattern="yyyy-MM-dd HH:mm" /></td>
+                        <td><fmt:formatDate value="${findWrite.insert_date}" pattern="yyyy-MM-dd-HH-mm" /></td>
                     </tr>
                 </c:forEach>
             </table>

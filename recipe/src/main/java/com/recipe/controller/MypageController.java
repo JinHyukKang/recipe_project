@@ -88,7 +88,7 @@ public class MypageController {
    @RequestMapping(value="/memberout", method = RequestMethod.GET)
    public  String memberoutPage() throws Exception{
 	   
-	   logger.info("ȸ��Ż�� �˾�!");
+	   logger.info("회원탈퇴 완료!");
 	   
 	   return "/MyPage/memberout";
    }

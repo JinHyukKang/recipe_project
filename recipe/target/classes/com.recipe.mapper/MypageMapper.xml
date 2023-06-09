@@ -30,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where user_num = #{user_num}
 	</select>
 	
+	
 	<!-- 회원탈퇴 -->
 	<select id="memberout">
 		DELETE FROM users

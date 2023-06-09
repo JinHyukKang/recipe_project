@@ -24,6 +24,7 @@ public interface BoardService {
 	//게시글 조회
 	public List<BoardVO> viewWrite(int recipe_num)throws Exception;
 	
-	
+	//게시글 조회수 증가
+	public void viewUpdate(int recipe_num)throws Exception;
 	
 }

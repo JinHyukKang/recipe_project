@@ -1,6 +1,8 @@
 package com.recipe.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,9 @@ public class BoardServiceImple implements BoardService {
 		return boardmapper.viewWrite(recipe_num);
 	}
 
-	
+	//게시글 정보 업데이트
+	public void viewUpdate(int recipe_num)throws Exception{
+		boardmapper.viewUpdate(recipe_num);
+	}
 	
 }

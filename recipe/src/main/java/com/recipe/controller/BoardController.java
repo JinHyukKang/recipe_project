@@ -134,34 +134,63 @@ public class BoardController {
 							@RequestParam("recipe_num") int recipe_num
 							)throws Exception{
 		
+		//조회수 증가
+		boardservice.viewUpdate(recipe_num);
+		
+		//게시글 데이터 불러오기
 		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
-		model.addAttribute(viewWrite);
+		model.addAttribute("viewWrite", viewWrite);
+		
+		
+		
+		
 		
 		return "board/ViewWriteDate";
 	}
 	
-	//게시글 조회(최신순)
+	//게시글 조회(추천순)
 	@RequestMapping(value = "/ViewWriteGood", method = RequestMethod.GET)
 	public String viewWriteGood(Model model,
 							@RequestParam("recipe_num") int recipe_num
 							)throws Exception{
 		
+		//조회수 증가
+		boardservice.viewUpdate(recipe_num);
+
+		//게시글 데이터 불러오기
 		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
-		model.addAttribute(viewWrite);
+		model.addAttribute("viewWrite", viewWrite);
 		
 		return "board/ViewWriteGood";
 	}
 	
-	//게시글 조회(최신순)
+	//게시글 조회(조회순)
 	@RequestMapping(value = "/ViewWriteView", method = RequestMethod.GET)
 	public String viewWriteView(Model model,
 							@RequestParam("recipe_num") int recipe_num
 							)throws Exception{
 		
+		//조회수 증가
+		boardservice.viewUpdate(recipe_num);
+
+		//게시글 데이터 불러오기
 		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
-		model.addAttribute(viewWrite);
+		model.addAttribute("viewWrite", viewWrite);
+		
+	
 		
 		return "board/ViewWriteView";
+	}
+	
+	//게시물 정보 업데이트
+	@RequestMapping(value="/writeUpdate.do", method = RequestMethod.POST)
+	public String writeUpdate(BoardVO board,
+						@RequestParam("recipe_num") int recipe_num
+						)throws Exception{
+		
+		
+		
+		return "redirect:/board/board";
 	}
 	
 

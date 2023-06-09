@@ -1,6 +1,7 @@
 package com.recipe.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -22,5 +23,8 @@ public interface BoardMapper {
 	
 	//게시글 조회
 	public List<BoardVO> viewWrite(@Param("recipe_num") int recipe_num)throws Exception;
+	
+	//게시글 조회증가
+	public void viewUpdate(int recipe_num)throws Exception;
 	
 }
