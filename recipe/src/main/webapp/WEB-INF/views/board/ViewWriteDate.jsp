@@ -43,12 +43,12 @@
 						<!-- 추천수 출력 및 추천하기 -->
 						<!-- 로그인 했을 경우에만 출력 가능 -->
 						<c:if test="${user_id eq null}">
-							<a id="good_count" href="#" onclick="GoodClick()">
+							<a id="good_count" href="#" onclick="GoodClick(event)">
 								<img id="notgood" src="${path}/resources/images/notgood.png" id="good_count_img" name="good_count_img" style="width: 25px; height: 20px;">
 							</a>
 						</c:if>
 						<c:if test="${user_id ne null}">
-							<a id="good_count" href="#" onclick="checkLogin()">
+							<a id="good_count" href="#" onclick="checkLoginGood(event)">
 								<img id="notgood" src="${path}/resources/images/notgood.png" id="good_count_img" name="good_count_img" style="width: 25px; height: 20px;">
 							</a>
 						</c:if>
@@ -84,11 +84,13 @@
 <%@ include file="/resources/include/footer.jsp" %>
 
 <script>
-function checkLogin(){
-	alert("로그인하셔야 작성하실수 있습니다.")
-}
+function checkLoginGood(){
+	event.preventDefault();
+	alert("로그인하셔야 추천하실 수 있습니다.")
+};
 
 function GoodClick() {
+	event.preventDefault();
     var imgElement = document.getElementById('notgood');
     var idValue = imgElement.id;
 
@@ -108,7 +110,7 @@ function GoodClick() {
             }
         }
     });
-}
+};
 </script>
 	
 </body>
