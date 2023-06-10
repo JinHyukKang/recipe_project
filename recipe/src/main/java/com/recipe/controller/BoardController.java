@@ -192,21 +192,18 @@ public class BoardController {
 	}
 	
 	//추천수 증가(최신순)
-	@RequestMapping(value="/Good.do", method = RequestMethod.POST)
+	@RequestMapping(value="/Good.do", method = RequestMethod.GET)
 	public ResponseEntity<String> Good(Model model,
-						@RequestParam("idValue") String idValue
+						@RequestParam("recipe_num") int recipe_num,
+						@RequestParam("status") String status
 						)throws Exception{
 		
-		@SuppressWarnings("unchecked")
-		List<BoardVO> viewWrite = (List<BoardVO>) model.getAttribute("viewWrite");
-	    
-	    // 게시글 데이터에서 recipe_num 가져오기
-	    int recipe_num = viewWrite.get(0).getRecipe_num();
 		
-		System.out.println(idValue);
+		
+		System.out.println(status);
 		//int num = Integer.parseInt(recipe_num);
 		
-		if(idValue.equals("notgood")) {		//추천을 하려는 경우
+		if(status.equals("notgood")) {		//추천을 하려는 경우
 			
 			//추천수 증가
 			boardservice.goodUpdate(recipe_num);

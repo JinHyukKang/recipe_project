@@ -44,12 +44,12 @@
 						<!-- 로그인 했을 경우에만 출력 가능 -->
 						<c:if test="${user_id eq null}">
 							<a id="good_count" href="#" onclick="GoodClick(event)">
-								<img id="notgood" src="${path}/resources/images/notgood.png" id="good_count_img" name="good_count_img" style="width: 25px; height: 20px;">
+								<img id="good" src="${path}/resources/images/notgood.png"  name="good_count_img" style="width: 25px; height: 20px;">
 							</a>
 						</c:if>
 						<c:if test="${user_id ne null}">
 							<a id="good_count" href="#" onclick="checkLoginGood(event)">
-								<img id="notgood" src="${path}/resources/images/notgood.png" id="good_count_img" name="good_count_img" style="width: 25px; height: 20px;">
+								<img id="notgood" src="${path}/resources/images/notgood.png"  name="good_count_img" style="width: 25px; height: 20px;">
 							</a>
 						</c:if>
 						<div style="line-height:1.4; margin-left:6px; margin-right:40px;">
@@ -91,19 +91,21 @@ function checkLoginGood(){
 
 function GoodClick() {
 	event.preventDefault();
-    var imgElement = document.getElementById('notgood');
-    var idValue = imgElement.id;
-
+	var imgElement = document.getElementById('good');
+    
+	if(imgElement.src === "${path}/resources/images/notgood.png"){
+		var status = "good";
+	}else{
+		var status = "notgood"
+	}
     $.ajax({
         url: '/board/Good.do',
-        type: 'post',
-        data: { idValue: idValue },
+        type: 'get',
+        data: { status: status },
         success: function(response) {
             if (response === "good") {
-                imgElement.id = "good";
                 imgElement.src = "${path}/resources/images/good.png";
             } else if (response === "notgood") {
-                imgElement.id = "notgood";
                 imgElement.src = "${path}/resources/images/notgood.png";
             } else {
                 alert("추천 기능 오류!");
