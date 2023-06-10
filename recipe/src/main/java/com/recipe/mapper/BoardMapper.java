@@ -36,4 +36,9 @@ public interface BoardMapper {
 	//추천수 감소
 	public void goodBack(int recipe_num)throws Exception;
 	
+	//댓글 수 증가
+	public void commentUpdate(int recipe_num)throws Exception;
+	
+	//댓글 수 감소 
+	public void commentBack(int recipe_num)throws Exception;
 }

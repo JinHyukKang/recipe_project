@@ -22,8 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.recipe.model.BoardVO;
+import com.recipe.model.CommentVO;
 import com.recipe.model.MemberVO;
 import com.recipe.service.BoardService;
+import com.recipe.service.CommentService;
 import com.recipe.service.MypageService;
 
 
@@ -36,6 +38,8 @@ public class BoardController {
 	@Autowired
 	private BoardService boardservice;
 	
+	@Autowired
+	private CommentService commentservice;
 	
 	//레시피 게시판 이동
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
@@ -147,6 +151,10 @@ public class BoardController {
 		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
 		model.addAttribute("viewWrite", viewWrite);	
 		
+		//댓글 데이터 불러오기
+		List<CommentVO> commentView = commentservice.commentView(recipe_num);
+		model.addAttribute("commentView",commentView);
+		
 		// 세션에서 추천 상태 가져오기
 	    String goodStatus = (String) session.getAttribute(sessionKey);
 	    model.addAttribute("goodStatus", goodStatus);
@@ -156,48 +164,58 @@ public class BoardController {
 	
 	//게시글 조회(추천순)
 	@RequestMapping(value = "/ViewWriteGood", method = RequestMethod.GET)
-	public String viewWriteGood(Model model,
+	public String viewWriteGood(HttpServletRequest request,
+							Model model,
 							@RequestParam("recipe_num") int recipe_num
 							)throws Exception{
 		
+		HttpSession session = request.getSession();
+	    String sessionKey = "goodStatus_" + recipe_num;
+		
 		//조회수 증가
 		boardservice.viewUpdate(recipe_num);
-
+		
 		//게시글 데이터 불러오기
 		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
-		model.addAttribute("viewWrite", viewWrite);
+		model.addAttribute("viewWrite", viewWrite);	
+		
+		//댓글 데이터 불러오기
+		List<CommentVO> commentView = commentservice.commentView(recipe_num);
+		model.addAttribute("commentView",commentView);
+		
+		// 세션에서 추천 상태 가져오기
+	    String goodStatus = (String) session.getAttribute(sessionKey);
+	    model.addAttribute("goodStatus", goodStatus);
 		
 		return "board/ViewWriteGood";
 	}
 	
 	//게시글 조회(조회순)
 	@RequestMapping(value = "/ViewWriteView", method = RequestMethod.GET)
-	public String viewWriteView(Model model,
+	public String viewWriteView(HttpServletRequest request,
+							Model model,
 							@RequestParam("recipe_num") int recipe_num
 							)throws Exception{
 		
+		HttpSession session = request.getSession();
+	    String sessionKey = "goodStatus_" + recipe_num;
+		
 		//조회수 증가
 		boardservice.viewUpdate(recipe_num);
-
+		
 		//게시글 데이터 불러오기
 		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
-		model.addAttribute("viewWrite", viewWrite);
+		model.addAttribute("viewWrite", viewWrite);	
+		
+		// 세션에서 추천 상태 가져오기
+	    String goodStatus = (String) session.getAttribute(sessionKey);
+	    model.addAttribute("goodStatus", goodStatus);
 		
 	
 		
 		return "board/ViewWriteView";
 	}
 	
-	//게시물 정보 업데이트
-	@RequestMapping(value="/writeUpdate.do", method = RequestMethod.POST)
-	public String writeUpdate(BoardVO board,
-						@RequestParam("recipe_num") int recipe_num
-						)throws Exception{
-		
-		
-		
-		return "redirect:/board/board";
-	}
 	
 	//추천수 증가(최신순)
 	@RequestMapping(value="/Good.do", method = RequestMethod.POST)
@@ -225,6 +243,147 @@ public class BoardController {
 			boardservice.goodBack(recipe_num);
 			
 			return ResponseEntity.ok("notgood");
+		}
+		
+		
+	}
+	
+	//댓글 작성(최신순)
+	@ResponseBody
+	@RequestMapping(value="/commentWriteDate.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	public String commentWriteDate(HttpSession session,
+							CommentVO comment,
+							@RequestParam("recipe_num") int recipe_num,
+							@RequestParam("comment_content") String comment_content)
+							throws Exception{
+		String message="";
+		
+		//조회수 다시 1 감소
+		boardservice.viewBack(recipe_num);
+		
+		if(!comment_content.equals("")) {
+			String user_nickname = (String) session.getAttribute("user_nickname");
+			int user_num = (int) session.getAttribute("user_num");
+			
+			comment.setUser_nickname(user_nickname);
+			comment.setUser_num(user_num);
+			comment.setRecipe_num(recipe_num);
+			comment.setComment_content(comment_content);
+			
+			commentservice.commentWrite(comment);
+			
+			//댓글 수 증가
+			boardservice.commentUpdate(recipe_num);
+			
+			message += "<script>";
+		    message += "alert( '댓글작성이 정상적으로 완료되었습니다!');";
+		    message += "location.href='/board/ViewWriteDate?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+			
+		    return message;
+		    
+		}else {
+			message += "<script>";
+		    message += "alert( '댓글을 작성해 주세요.');";
+		    message += "location.href='/member/login';";
+		    message += "location.href='/board/ViewWriteDate?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+		    
+		    return message;
+		}
+		
+		
+	}
+	
+	//댓글 작성(추천순)
+	@ResponseBody
+	@RequestMapping(value="/commentWriteGood.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	public String commentWrite(HttpSession session,
+							CommentVO comment,
+							@RequestParam("recipe_num") int recipe_num,
+							@RequestParam("comment_content") String comment_content)
+							throws Exception{
+		String message="";
+		
+		//조회수 다시 1 감소
+		boardservice.viewBack(recipe_num);
+		
+		if(!comment_content.equals("")) {
+			String user_nickname = (String) session.getAttribute("user_nickname");
+			int user_num = (int) session.getAttribute("user_num");
+			
+			comment.setUser_nickname(user_nickname);
+			comment.setUser_num(user_num);
+			comment.setRecipe_num(recipe_num);
+			comment.setComment_content(comment_content);
+			
+			commentservice.commentWrite(comment);
+			
+			//댓글 수 증가
+			boardservice.commentUpdate(recipe_num);
+			
+			message += "<script>";
+		    message += "alert( '댓글작성이 정상적으로 완료되었습니다!');";
+		    message += "location.href='/board/ViewWriteGood?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+			
+		    return message;
+		    
+		}else {
+			message += "<script>";
+		    message += "alert( '댓글을 작성해 주세요.');";
+		    message += "location.href='/member/login';";
+		    message += "location.href='/board/ViewWriteGood?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+		    
+		    return message;
+		}
+			
+			
+		}
+		
+	//댓글 작성(조회순)
+	@ResponseBody
+	@RequestMapping(value="/commentWriteView.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	public String commentWriteView(HttpSession session,
+							CommentVO comment,
+							@RequestParam("recipe_num") int recipe_num,
+							@RequestParam("comment_content") String comment_content)
+							throws Exception{
+		String message="";
+		
+		//조회수 다시 1 감소
+		boardservice.viewBack(recipe_num);
+		
+		if(!comment_content.equals("")) {
+			String user_nickname = (String) session.getAttribute("user_nickname");
+			int user_num = (int) session.getAttribute("user_num");
+			
+			comment.setUser_nickname(user_nickname);
+			comment.setUser_num(user_num);
+			comment.setRecipe_num(recipe_num);
+			comment.setComment_content(comment_content);
+			
+			commentservice.commentWrite(comment);
+			
+			//댓글 수 증가
+			boardservice.commentUpdate(recipe_num);
+			
+			message += "<script>";
+		    message += "alert( '댓글작성이 정상적으로 완료되었습니다!');";
+		    message += "location.href='/board/ViewWriteView?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+			
+		    return message;
+		    
+		}else {
+			message += "<script>";
+		    message += "alert( '댓글을 작성해 주세요.');";
+		    message += "location.href='/member/login';";
+		    message += "location.href='/board/ViewWriteView?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+		    
+		    return message;
 		}
 		
 		

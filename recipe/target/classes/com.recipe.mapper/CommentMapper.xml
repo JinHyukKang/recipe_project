@@ -5,4 +5,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.recipe.mapper.CommentMapper">
 
+<!-- 댓글작성 -->
+<insert id="commentWrite">
+  INSERT INTO comment (recipe_num, user_num, user_nickname, comment_content) 
+  VALUES (#{recipe_num},
+  		  #{user_num},
+  		  #{user_nickname},
+  		  #{comment_content}
+  		  )
+</insert>
+
+
+<!-- 댓글 정보 불러오기 -->
+<select id="commentView" resultType="com.recipe.model.CommentVO">
+	SELECT * FROM comment
+	WHERE recipe_num = #{recipe_num}
+</select>
+
+
+
 </mapper>

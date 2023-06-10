@@ -63,4 +63,16 @@ public class BoardServiceImple implements BoardService {
 		boardmapper.goodBack(recipe_num);
 	}
 	
+	//댓글 수 증가
+	public void commentUpdate(int recipe_num)throws Exception{
+		boardmapper.commentUpdate(recipe_num);
+	}
+	
+	//댓글 수 감소 
+	public void commentBack(int recipe_num)throws Exception{
+		boardmapper.commentBack(recipe_num);
+	}
+		
+	
+	
 }

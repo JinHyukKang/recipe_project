@@ -10,7 +10,7 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>게시판 조회(최신순)</title>
+<title>게시판 조회(추천순)</title>
 </head>
 <body>
 <%@ include file="/resources/include/header.jsp" %>
@@ -18,70 +18,107 @@
 <div class="container">
 	<div class="row mt-5">
 		<div class="col-md-12">
-			<form action="/board/writeUpdate.do" method="post">
-				<c:forEach items="${viewWrite}" var="viewWrite">
-				<h4><strong>[${viewWrite.recipe_title}]</strong></h4>
-				<c:set var="recipe_num" value="${viewWrite.recipe_num}" />
-				<div class="form-group row mt-3 mx-3 border" style="border-radius: 10px;">
-					<div class="d-flex mt-s">
-						<p style="font-size:17px; font-style:oblique;">작성자 : <strong>${viewWrite.user_nickname}</strong>님</p>
-						<div class="ms-auto">
-							<h6 style="font-style:oblique;">작성일 : <fmt:formatDate value="${viewWrite.insert_date}" pattern="yyyy년 MM월 dd일 HH시 mm분" /></h6>
+			
+			<c:forEach items="${viewWrite}" var="viewWrite">
+			<h4><strong>[${viewWrite.recipe_title}]</strong></h4>
+			<c:set var="recipe_num" value="${viewWrite.recipe_num}" />
+			<div class="form-group row mt-3 mx-3" style="border: 1px solid; border-radius: 10px;">
+				<div class="d-flex mt-s">
+					<p style="font-size:17px; font-style:oblique;">작성자 : <strong>${viewWrite.user_nickname}</strong>님</p>
+					<div class="ms-auto">
+						<h6 style="font-style:oblique;">작성일 : <fmt:formatDate value="${viewWrite.insert_date}" pattern="yyyy년 MM월 dd일 HH시 mm분" /></h6>
+					</div>
+				</div>
+				<div class="justify-content-center row mt-5 mb-5" style="margin-bottom:100px;">
+					<img src="${path}/resources/upload/${viewWrite.recipe_filename}.jpg" 
+					id="recipe_filename" name="recipe_filename" style="width: 600px; height: 400px;">
+				</div>
+				<div style="margin-left:100px; margin-right:100px; margin-bottom:80px;">
+					<p style="font-size:18px;">${viewWrite.recipe_content}</p>
+				</div>
+				
+				<!-- 추천수, 댓글수, 조회수 출력 -->
+				<div class="d-flex" style="margin-left:60px; margin-right:60px; margin-bottom:10px;">
+					<!-- 추천수 출력 및 추천하기 -->
+					<!-- 로그인 했을 경우에만 출력 가능 -->
+					
+					<c:if test="${user_id ne null && goodStatus eq null}">
+				        <a id="good_count_click" href="#" onclick="GoodClick(event, ${recipe_num})">
+				            <img id="good" src="${path}/resources/images/notgood.png"  name="good_count_img" style="width: 25px; height: 20px;">
+				        </a>
+				    </c:if>
+				    <c:if test="${user_id ne null && goodStatus ne null}">
+				    	<a id="good_count_click" href="#" onclick="GoodClick(event, ${recipe_num}, '${goodStatus}')">
+					        <img id="good" src="${path}/resources/images/${goodStatus}.png"  name="good_count_img" style="width: 25px; height: 20px;">
+					    </a>
+				    </c:if>
+				    <c:if test="${user_id eq null}">
+				        <a id="good_count" href="#" onclick="checkLogin(event)">
+				            <img id="good" src="${path}/resources/images/notgood.png"  name="good_count_img" style="width: 25px; height: 20px;">
+				        </a>
+				    </c:if>
+					<div style="line-height:1.4; margin-left:6px; margin-right:40px;">
+					   <p  id="good_count" style="font-size:18px;">${viewWrite.good_count}</p>
+				   </div>
+				   
+				   <!-- 댓글수 출력 -->
+				   <img src="${path}/resources/images/comment.png" id="comment_count_img" name="comment_count_img" style="width: 25px; height: 20px;">
+				   <div style="line-height:1.4; margin-left:6px; margin-right:40px;">
+					   <p style="font-size:18px;">${viewWrite.comment_count}</p>
+				   </div>
+				   <!-- 조회수 출력 -->
+				   <img src="${path}/resources/images/view.png" id="view_count_img" name="view_count_img" style="width: 25px; height: 20px;">
+				   <div style="line-height:1.4; margin-left:6px; margin-right:40px;">
+					   <p style="font-size:18px;">${viewWrite.view_count}</p>
+				   </div>
+				</div>
+			</div>	
+			
+			<!-- 댓글창 -->
+			<div class="form-group row mt-3 mx-3" style="border: 1px solid; border-radius: 10px;">
+				<!-- 댓글작성 -->
+				<c:if test="${user_id ne null}">
+					<form method="post" action="/board/commentWriteDate.do">
+					<input type="hidden" name="recipe_num" value="${viewWrite.recipe_num}">
+					<div class="d-flex mt-3 mb-3" style="margin-left:100px;">
+						<textarea class="form-control" id="comment_content" name="comment_content" style="width:900px; height: 1.5em;"></textarea>
+						<button type="submit" class="btn btn-success">댓글 작성</button>
+					</div>
+					</form>
+				</c:if>
+				<c:if test="${user_id eq null}">
+				<input type="hidden" name="recipe_num" value="${viewWrite.recipe_num}">
+					<div class="d-flex mt-3 mb-3" style="margin-left:100px;">
+						<textarea class="form-control" id="comment_content" name="comment_content" style="width:900px; height: 1.5em;"></textarea>
+						<button type="submit" class="btn btn-success" onclick="checkLoginComment()">댓글 작성</button>
+					</div>
+				</c:if>
+				<!-- 댓글 출력 -->
+				
+				<c:forEach items="${commentView}" var="commentView">
+					<div class="d-flex" style="margin-left:100px; margin-bottom:2px;">
+						<!--댓글 작성자 닉네임 출력 -->
+						<p id="comment_nickname">${commentView.user_nickname}님</p>
+						<div style="">
+							<!-- 댓글 작성일 출력 -->
+							<p><fmt:formatDate value="${commentView.comment_date}" pattern="yyyy년 MM월 dd일" /></p>
 						</div>
 					</div>
-					<div class="justify-content-center row mt-5 mb-5" style="margin-bottom:100px;">
-						<img src="${path}/resources/upload/${viewWrite.recipe_filename}.jpg" 
-						id="recipe_filename" name="recipe_filename" style="width: 600px; height: 400px;">
-					</div>
-					<div style="margin-left:100px; margin-right:100px; margin-bottom:80px;">
-						<p style="font-size:18px;">${viewWrite.recipe_content}</p>
+					<div class="border" style="margin-left:100px; margin-bottom:5px; margin-top:0px; width:900px; height: 1.5em;">
+						<p>${commentView.comment_content}</p>
 					</div>
 					
-					<!-- 추천수, 댓글수, 조회수 출력 -->
-					<div class="d-flex" style="margin-left:60px; margin-right:60px; margin-bottom:10px;">
-						<!-- 추천수 출력 및 추천하기 -->
-						<!-- 로그인 했을 경우에만 출력 가능 -->
-						
-						<c:if test="${user_id ne null && goodStatus eq null}">
-					        <a id="good_count_click" href="#" onclick="GoodClick(event, ${recipe_num})">
-					            <img id="good" src="${path}/resources/images/notgood.png"  name="good_count_img" style="width: 25px; height: 20px;">
-					        </a>
-					    </c:if>
-					    <c:if test="${user_id ne null && goodStatus ne null}">
-					    	<a id="good_count_click" href="#" onclick="GoodClick(event, ${recipe_num}, '${goodStatus}')">
-						        <img id="good" src="${path}/resources/images/${goodStatus}.png"  name="good_count_img" style="width: 25px; height: 20px;">
-						    </a>
-					    </c:if>
-					    <c:if test="${user_id eq null}">
-					        <a id="good_count" href="#" onclick="checkLogin(event)">
-					            <img id="good" src="${path}/resources/images/notgood.png"  name="good_count_img" style="width: 25px; height: 20px;">
-					        </a>
-					    </c:if>
-						<div style="line-height:1.4; margin-left:6px; margin-right:40px;">
-						   <p  id="good_count" style="font-size:18px;">${viewWrite.good_count}</p>
-					   </div>
-					   
-					   <!-- 댓글수 출력 -->
-					   <img src="${path}/resources/images/comment.png" id="comment_count_img" name="comment_count_img" style="width: 25px; height: 20px;">
-					   <div style="line-height:1.4; margin-left:6px; margin-right:40px;">
-						   <p style="font-size:18px;">${viewWrite.comment_count}</p>
-					   </div>
-					   <!-- 조회수 출력 -->
-					   <img src="${path}/resources/images/view.png" id="view_count_img" name="view_count_img" style="width: 25px; height: 20px;">
-					   <div style="line-height:1.4; margin-left:6px; margin-right:40px;">
-						   <p style="font-size:18px;">${viewWrite.view_count}</p>
-					   </div>
-					</div>
-				</div>	
-				
-				<!-- 댓글창 -->
-				<div class="form-group row mt-3 mx-3 mb-5 border" style="border-radius: 10px;">
-				</div>
 				</c:forEach>
-			</form>
+				
+			</div>
+				
+			</c:forEach>
+			
+			<!-- 목록으로 -->
 			<div class="mb-3">
 				<button type="button" class="btn btn-secondary row mt-3 mx-3" onclick="location.href = '/board/board';">목록으로</button>
 			</div>
+			
 		</div>
 	</div>
 </div>
@@ -89,11 +126,18 @@
 <%@ include file="/resources/include/footer.jsp" %>
 
 <script>
+//로그인 상태 확인
 function checkLogin(){
 	event.preventDefault();
 	alert("로그인하셔야 추천하실 수 있습니다.")
 };
 
+function checkLoginComment(){
+	event.preventDefault();
+	alert("로그인하셔야 댓글을 작성하실수 있습니다.")
+};
+
+//추천 증가 및 감소
 function GoodClick(event, recipe_num) {
     event.preventDefault();
     var imgElement = document.getElementById('good');

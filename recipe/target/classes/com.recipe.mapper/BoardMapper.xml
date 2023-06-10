@@ -78,7 +78,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      recipe_num = #{recipe_num}
 </update>
 
+<!-- 댓글수 증가 -->
+<update id="commentUpdate">
+ UPDATE recipe
+ SET
+     comment_count = comment_count + 1
+ WHERE
+     recipe_num = #{recipe_num}
+</update>
 
-
+<!-- 댓글수 증가 -->
+<update id="commentBack">
+ UPDATE recipe
+ SET
+     comment_count = comment_count - 1
+ WHERE
+     recipe_num = #{recipe_num}
+</update>
 
 </mapper>

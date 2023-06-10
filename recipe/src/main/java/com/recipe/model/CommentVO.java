@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class CommentVO {
 	private int comment_num;
-	private int wirte_num;
+	private int recipe_num;
 	private int user_num;
 	private String user_nickname;
 	private String comment_content;
@@ -15,11 +15,11 @@ public class CommentVO {
 	public void setComment_num(int comment_num) {
 		this.comment_num = comment_num;
 	}
-	public int getWirte_num() {
-		return wirte_num;
+	public int getRecipe_num() {
+		return recipe_num;
 	}
-	public void setWirte_num(int wirte_num) {
-		this.wirte_num = wirte_num;
+	public void setRecipe_num(int wirte_num) {
+		this.recipe_num = wirte_num;
 	}
 	public int getUser_num() {
 		return user_num;

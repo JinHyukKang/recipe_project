@@ -280,7 +280,6 @@
 function checkLogin(){
 	alert("로그인하셔야 작성하실수 있습니다.")
 	}
-
 //최신순으로 게시물 불러오기
 function showFindWriteAll(element) {
   var findWriteAllDiv = document.getElementById("findWriteAll");
@@ -294,6 +293,8 @@ function showFindWriteAll(element) {
 
   element.style.fontWeight = 'bold';
   element.style.fontSize = '16px';
+
+  event.preventDefault(); // 기본 동작 막기
 }
 
 // 추천순으로 게시물 불러오기
@@ -309,6 +310,8 @@ function showFindWriteAllGood(element) {
 
   element.style.fontWeight = 'bold';
   element.style.fontSize = '16px';
+
+  event.preventDefault(); // 기본 동작 막기
 }
 
 // 조회순으로 게시물 불러오기
@@ -324,6 +327,8 @@ function showFindWriteAllView(element) {
 
   element.style.fontWeight = 'bold';
   element.style.fontSize = '16px';
+
+  event.preventDefault(); // 기본 동작 막기
 }
 
 // 스타일 초기화
