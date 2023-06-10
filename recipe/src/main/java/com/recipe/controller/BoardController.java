@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -131,9 +132,13 @@ public class BoardController {
 	
 	//게시글 조회(최신순)
 	@RequestMapping(value = "/ViewWriteDate", method = RequestMethod.GET)
-	public String viewWriteDate(Model model,
+	public String viewWriteDate(HttpServletRequest request,
+							Model model,
 							@RequestParam("recipe_num") int recipe_num
 							)throws Exception{
+		
+		HttpSession session = request.getSession();
+	    String sessionKey = "goodStatus_" + recipe_num;
 		
 		//조회수 증가
 		boardservice.viewUpdate(recipe_num);
@@ -142,6 +147,9 @@ public class BoardController {
 		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
 		model.addAttribute("viewWrite", viewWrite);	
 		
+		// 세션에서 추천 상태 가져오기
+	    String goodStatus = (String) session.getAttribute(sessionKey);
+	    model.addAttribute("goodStatus", goodStatus);
 		
 		return "board/ViewWriteDate";
 	}
@@ -192,34 +200,29 @@ public class BoardController {
 	}
 	
 	//추천수 증가(최신순)
-	@RequestMapping(value="/Good.do", method = RequestMethod.GET)
-	public ResponseEntity<String> Good(Model model,
+	@RequestMapping(value="/Good.do", method = RequestMethod.POST)
+	public ResponseEntity<String> Good(HttpServletRequest request,
 						@RequestParam("recipe_num") int recipe_num,
 						@RequestParam("status") String status
 						)throws Exception{
 		
+		HttpSession session = request.getSession();
+	    String sessionKey = "goodStatus_" + recipe_num;
 		
 		
-		System.out.println(status);
-		//int num = Integer.parseInt(recipe_num);
-		
-		if(status.equals("notgood")) {		//추천을 하려는 경우
+		if(status.equals("good")) {		//추천을 하려는 경우
 			
+			session.setAttribute(sessionKey, "good");
 			//추천수 증가
 			boardservice.goodUpdate(recipe_num);
-			
-			//조회수 다시 감소
-			boardservice.viewBack(recipe_num);
 			
 			return ResponseEntity.ok("good");
 			
 		}else {	//추천을 취소하는 경우
 			
+			session.setAttribute(sessionKey, "notgood");
 			//추천수 감소
 			boardservice.goodBack(recipe_num);
-			
-			//조회수 다시 감소
-			boardservice.viewBack(recipe_num);
 			
 			return ResponseEntity.ok("notgood");
 		}

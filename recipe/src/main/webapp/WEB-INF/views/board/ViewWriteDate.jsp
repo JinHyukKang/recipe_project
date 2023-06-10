@@ -9,7 +9,6 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  	<link rel="stylesheet" href="${path}/resources/css/custom.css"/>
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>게시판 조회(최신순)</title>
 </head>
@@ -22,7 +21,7 @@
 			<form action="/board/writeUpdate.do" method="post">
 				<c:forEach items="${viewWrite}" var="viewWrite">
 				<h4><strong>[${viewWrite.recipe_title}]</strong></h4>
-				
+				<c:set var="recipe_num" value="${viewWrite.recipe_num}" />
 				<div class="form-group row mt-3 mx-3 border" style="border-radius: 10px;">
 					<div class="d-flex mt-s">
 						<p style="font-size:17px; font-style:oblique;">작성자 : <strong>${viewWrite.user_nickname}</strong>님</p>
@@ -42,18 +41,24 @@
 					<div class="d-flex" style="margin-left:60px; margin-right:60px; margin-bottom:10px;">
 						<!-- 추천수 출력 및 추천하기 -->
 						<!-- 로그인 했을 경우에만 출력 가능 -->
-						<c:if test="${user_id eq null}">
-							<a id="good_count" href="#" onclick="GoodClick(event)">
-								<img id="good" src="${path}/resources/images/notgood.png"  name="good_count_img" style="width: 25px; height: 20px;">
-							</a>
-						</c:if>
-						<c:if test="${user_id ne null}">
-							<a id="good_count" href="#" onclick="checkLoginGood(event)">
-								<img id="notgood" src="${path}/resources/images/notgood.png"  name="good_count_img" style="width: 25px; height: 20px;">
-							</a>
-						</c:if>
+						
+						<c:if test="${user_id ne null && goodStatus eq null}">
+					        <a id="good_count_click" href="#" onclick="GoodClick(event, ${recipe_num})">
+					            <img id="good" src="${path}/resources/images/notgood.png"  name="good_count_img" style="width: 25px; height: 20px;">
+					        </a>
+					    </c:if>
+					    <c:if test="${user_id ne null && goodStatus ne null}">
+					    	<a id="good_count_click" href="#" onclick="GoodClick(event, ${recipe_num}, '${goodStatus}')">
+						        <img id="good" src="${path}/resources/images/${goodStatus}.png"  name="good_count_img" style="width: 25px; height: 20px;">
+						    </a>
+					    </c:if>
+					    <c:if test="${user_id eq null}">
+					        <a id="good_count" href="#" onclick="checkLogin(event)">
+					            <img id="good" src="${path}/resources/images/notgood.png"  name="good_count_img" style="width: 25px; height: 20px;">
+					        </a>
+					    </c:if>
 						<div style="line-height:1.4; margin-left:6px; margin-right:40px;">
-						   <p style="font-size:18px;">${viewWrite.good_count}</p>
+						   <p  id="good_count" style="font-size:18px;">${viewWrite.good_count}</p>
 					   </div>
 					   
 					   <!-- 댓글수 출력 -->
@@ -84,29 +89,30 @@
 <%@ include file="/resources/include/footer.jsp" %>
 
 <script>
-function checkLoginGood(){
+function checkLogin(){
 	event.preventDefault();
 	alert("로그인하셔야 추천하실 수 있습니다.")
 };
 
-function GoodClick() {
-	event.preventDefault();
-	var imgElement = document.getElementById('good');
-    
-	if(imgElement.src === "${path}/resources/images/notgood.png"){
-		var status = "good";
-	}else{
-		var status = "notgood"
-	}
+function GoodClick(event, recipe_num) {
+    event.preventDefault();
+    var imgElement = document.getElementById('good');
+
+    var status = imgElement.src.endsWith("/notgood.png") ? "good" : "notgood";
+
     $.ajax({
         url: '/board/Good.do',
-        type: 'get',
-        data: { status: status },
+        type: 'post',
+        data: { recipe_num: recipe_num, status: status },
         success: function(response) {
             if (response === "good") {
                 imgElement.src = "${path}/resources/images/good.png";
+                var countElement = document.getElementById("good_count");
+                countElement.textContent = parseInt(countElement.textContent) + 1;
             } else if (response === "notgood") {
                 imgElement.src = "${path}/resources/images/notgood.png";
+                var countElement = document.getElementById("good_count");
+                countElement.textContent = parseInt(countElement.textContent) - 1;
             } else {
                 alert("추천 기능 오류!");
             }
