@@ -41,4 +41,5 @@ public interface BoardService {
 	
 	//댓글 수 감소 
 	public void commentBack(int recipe_num)throws Exception;
+
 }

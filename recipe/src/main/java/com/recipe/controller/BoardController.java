@@ -207,6 +207,10 @@ public class BoardController {
 		List<BoardVO> viewWrite = boardservice.viewWrite(recipe_num);
 		model.addAttribute("viewWrite", viewWrite);	
 		
+		//댓글 데이터 불러오기
+		List<CommentVO> commentView = commentservice.commentView(recipe_num);
+		model.addAttribute("commentView",commentView);
+		
 		// 세션에서 추천 상태 가져오기
 	    String goodStatus = (String) session.getAttribute(sessionKey);
 	    model.addAttribute("goodStatus", goodStatus);
@@ -379,7 +383,6 @@ public class BoardController {
 		}else {
 			message += "<script>";
 		    message += "alert( '댓글을 작성해 주세요.');";
-		    message += "location.href='/member/login';";
 		    message += "location.href='/board/ViewWriteView?recipe_num=" + recipe_num + "';";
 		    message += "</script>";
 		    
@@ -389,5 +392,170 @@ public class BoardController {
 		
 	}
 	
+	//댓글 수정(최신순)
+	@ResponseBody
+	@RequestMapping(value="/commentUpdateDate.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	public String commentUpdateDate(@RequestParam("comment_num") int comment_num,
+								@RequestParam("comment_content_update") String comment_content_update,
+								@RequestParam("recipe_num") int recipe_num,
+								CommentVO comment)throws Exception{
+		
+		String message="";
+		
+		if(!comment_content_update.equals("")) {
+			//조회수 다시 1 감소
+			boardservice.viewBack(recipe_num);
+			
+			comment.setComment_content(comment_content_update);
+			
+			//해당 댓글 수정
+			commentservice.commentUpdate(comment_num, comment_content_update);
+			
+			message += "<script>";
+		    message += "alert( '댓글 수정이 정상적으로 완료되었습니다!');";
+		    message += "location.href='/board/ViewWriteDate?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+			
+		    return message;
+			
+		}else {
+			message += "<script>";
+		    message += "alert( '수정하실 댓글을 입력해주세요.');";
+		    message += "location.href='/board/ViewWriteDate?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+			
+		    return message;
+		}
+		
+		
+		
+	}
+	//댓글 수정(추천순)
+	@ResponseBody
+	@RequestMapping(value="/commentUpdateGood.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	public String commentUpdateGood(@RequestParam("comment_num") int comment_num,
+								@RequestParam("comment_content_update") String comment_content_update,
+								@RequestParam("recipe_num") int recipe_num,
+								CommentVO comment)throws Exception{
+		
+		String message="";
+		
+		if(!comment_content_update.equals("")) {
+			//조회수 다시 1 감소
+			boardservice.viewBack(recipe_num);
+			
+			comment.setComment_content(comment_content_update);
+			
+			//해당 댓글 수정
+			commentservice.commentUpdate(comment_num, comment_content_update);
+			
+			message += "<script>";
+		    message += "alert( '댓글 수정이 정상적으로 완료되었습니다!');";
+		    message += "location.href='/board/ViewWriteGood?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+			
+		    return message;
+			
+		}else {
+			message += "<script>";
+		    message += "alert( '수정하실 댓글을 입력해주세요.');";
+		    message += "location.href='/board/ViewWriteGood?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+			
+		    return message;
+		}
+		
+		
+	}
+	
+	//댓글 수정(조회순)
+	@ResponseBody
+	@RequestMapping(value="/commentUpdateView.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	public String commentUpdateView(@RequestParam("comment_num") int comment_num,
+								@RequestParam("comment_content_update") String comment_content_update,
+								@RequestParam("recipe_num") int recipe_num,
+								CommentVO comment)throws Exception{
+		
+		String message="";
 
+		if(!comment_content_update.equals("")) {
+			//조회수 다시 1 감소
+			boardservice.viewBack(recipe_num);
+			
+			comment.setComment_content(comment_content_update);
+			
+			//해당 댓글 수정
+			commentservice.commentUpdate(comment_num, comment_content_update);
+			
+			message += "<script>";
+		    message += "alert( '댓글 수정이 정상적으로 완료되었습니다!');";
+		    message += "location.href='/board/ViewWriteView?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+			
+		    return message;
+			
+		}else {
+			message += "<script>";
+		    message += "alert( '수정하실 댓글을 입력해주세요.');";
+		    message += "location.href='/board/ViewWriteView?recipe_num=" + recipe_num + "';";
+		    message += "</script>";
+			
+		    return message;
+		}
+		
+		
+	}
+	
+	//댓글 삭제(최신순)
+	@ResponseBody
+	@RequestMapping(value="/commentDelDate.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	public ResponseEntity<String> commentDelDate(@RequestParam("comment_num") int comment_num,
+												@RequestParam("recipe_num") int recipe_num)
+														throws Exception{
+		
+	
+		
+		//댓글 삭제 메서드 호출 
+		commentservice.commentDel(comment_num);
+		
+	    //조회수 1 줄이기
+		boardservice.commentBack(recipe_num);
+		
+	    return ResponseEntity.ok("success");
+		
+	}
+	
+	//댓글 삭제(추천순)
+	@ResponseBody
+	@RequestMapping(value="/commentDelGood.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	public ResponseEntity<String> commentDelGood(@RequestParam("comment_num") int comment_num,
+								@RequestParam("recipe_num") int recipe_num)
+										throws Exception{
+		
+		//댓글 삭제 메서드 호출 
+		commentservice.commentDel(comment_num);
+		
+	    //조회수 1 줄이기
+		boardservice.commentBack(recipe_num);
+		
+	    return ResponseEntity.ok("success");
+		
+	}
+	
+	//댓글 삭제(조회순)
+	@ResponseBody
+	@RequestMapping(value="/commentDelView.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	public ResponseEntity<String> commentDelView(@RequestParam("comment_num") int comment_num,
+								@RequestParam("recipe_num") int recipe_num)
+										throws Exception{
+		
+		//댓글 삭제 메서드 호출 
+		commentservice.commentDel(comment_num);
+		
+	    //조회수 1 줄이기
+		boardservice.commentBack(recipe_num);
+		
+	    return ResponseEntity.ok("success");
+			
+		}
 }

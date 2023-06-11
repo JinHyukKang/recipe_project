@@ -22,6 +22,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	WHERE recipe_num = #{recipe_num}
 </select>
 
+<!-- 댓글 수정 -->
+<update id="commentUpdate">
+UPDATE comment
+  SET
+    comment_content = #{comment_content_update}
+  WHERE
+    comment_num = #{comment_num}
+</update>
 
+<!-- 댓글 삭제 -->
+<select id="commentDel">
+DELETE  FROM comment
+WHERE comment_num = #{comment_num}
 
+</select>
 </mapper>
