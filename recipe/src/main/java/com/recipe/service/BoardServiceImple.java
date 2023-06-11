@@ -73,6 +73,34 @@ public class BoardServiceImple implements BoardService {
 		boardmapper.commentBack(recipe_num);
 	}
 		
+	//다음글 가져오기(최신순)
+	public List<BoardVO> nextPageDate(int recipe_num)throws Exception{
+		return boardmapper.nextPageDate(recipe_num);
+	}
 	
+	//다음글 가져오기(추천순)
+	public List<BoardVO> nextPageGood(int recipe_num)throws Exception{
+		return boardmapper.nextPageGood(recipe_num);
+	}
+	
+	//다음글 가져오기(조회순)
+	public List<BoardVO> nextPageView(int recipe_num)throws Exception{
+		return boardmapper.nextPageView(recipe_num);
+	}
+	
+	//이전글 가져오기(최신순)
+	public List<BoardVO> prevPageDate(int recipe_num)throws Exception{
+		return boardmapper.prevPageDate(recipe_num);
+	}
+	
+	//이전글 가져오기(추천순)
+	public List<BoardVO> prevPageGood(int recipe_num)throws Exception{
+		return boardmapper.prevPageGood(recipe_num);
+	}
+	
+	//이전글 가져오기(조회순)
+	public List<BoardVO> prevPageView(int recipe_num)throws Exception{
+		return boardmapper.prevPageView(recipe_num);
+	}
 	
 }

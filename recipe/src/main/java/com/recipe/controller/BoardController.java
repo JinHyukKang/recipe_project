@@ -158,6 +158,15 @@ public class BoardController {
 		// 세션에서 추천 상태 가져오기
 	    String goodStatus = (String) session.getAttribute(sessionKey);
 	    model.addAttribute("goodStatus", goodStatus);
+	    
+	    //다음글 데이터 가져오기(최신순)
+	    List<BoardVO> nextPage = boardservice.nextPageDate(recipe_num);
+	    model.addAttribute("nextPage",nextPage);
+	    
+	    //이전글 데이터 가져오기(최신순)
+	    List<BoardVO> prevPage = boardservice.prevPageDate(recipe_num);
+	    model.addAttribute("prevPage",prevPage);
+	    
 		
 		return "board/ViewWriteDate";
 	}
@@ -187,6 +196,14 @@ public class BoardController {
 	    String goodStatus = (String) session.getAttribute(sessionKey);
 	    model.addAttribute("goodStatus", goodStatus);
 		
+	    //다음글 데이터 가져오기(추천순)
+	    List<BoardVO> nextPage = boardservice.nextPageGood(recipe_num);
+	    model.addAttribute("nextPage",nextPage);
+	    
+	    //이전글 데이터 가져오기(추천순)
+	    List<BoardVO> prevPage = boardservice.prevPageGood(recipe_num);
+	    model.addAttribute("prevPage",prevPage);
+	    
 		return "board/ViewWriteGood";
 	}
 	
@@ -215,6 +232,13 @@ public class BoardController {
 	    String goodStatus = (String) session.getAttribute(sessionKey);
 	    model.addAttribute("goodStatus", goodStatus);
 		
+	    //다음글 데이터 가져오기(조회순)
+	    List<BoardVO> nextPage = boardservice.nextPageView(recipe_num);
+	    model.addAttribute("nextPage",nextPage);
+	    
+	    //이전글 데이터 가져오기(조회순)
+	    List<BoardVO> prevPage = boardservice.prevPageView(recipe_num);
+	    model.addAttribute("prevPage",prevPage);
 	
 		
 		return "board/ViewWriteView";

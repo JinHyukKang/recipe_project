@@ -96,4 +96,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      recipe_num = #{recipe_num}
 </update>
 
+<!-- 다음글 정보 가져오기(최신순) -->
+<select id="nextPageDate" resultType="com.recipe.model.BoardVO">
+	SELECT *
+	FROM recipe
+	WHERE recipe_num &lt; #{recipe_num}
+	ORDER BY recipe_num DESC
+	LIMIT 1;
+</select>
+
+<!-- 다음글 정보 가져오기(추천순) -->
+<select id="nextPageGood" resultType="com.recipe.model.BoardVO">
+	SELECT *
+	FROM recipe
+	WHERE recipe_num &lt; #{recipe_num}
+	ORDER BY good_count DESC
+	LIMIT 1;
+</select>
+
+<!-- 다음글 정보 가져오기(조회순) -->
+<select id="nextPageView" resultType="com.recipe.model.BoardVO">
+	SELECT *
+	FROM recipe
+	WHERE recipe_num &lt; #{recipe_num}
+	ORDER BY view_count DESC
+	LIMIT 1;
+</select>
+
+<!-- 이전글 정보 가져오기(최신순) -->
+<select id="prevPageDate" resultType="com.recipe.model.BoardVO">
+	SELECT *
+	FROM recipe
+	WHERE recipe_num > #{recipe_num}
+	ORDER BY recipe_num DESC
+	LIMIT 1;
+</select>
+
+<!-- 이전글 정보 가져오기(추천순) -->
+<select id="prevPageGood" resultType="com.recipe.model.BoardVO">
+	SELECT *
+	FROM recipe
+	WHERE recipe_num > #{recipe_num}
+	ORDER BY good_count DESC
+	LIMIT 1;
+</select>
+
+<!-- 이전글 정보 가져오기(조회순) -->
+<select id="prevPageView" resultType="com.recipe.model.BoardVO">
+	SELECT *
+	FROM recipe
+	WHERE recipe_num > #{recipe_num}
+	ORDER BY view_count DESC
+	LIMIT 1;
+</select>
+
 </mapper>

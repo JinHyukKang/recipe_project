@@ -42,6 +42,21 @@ public interface BoardMapper {
 	//댓글 수 감소 
 	public void commentBack(int recipe_num)throws Exception;
 	
+	//다음글 가져오기(최신순)
+	public List<BoardVO> nextPageDate(int recipe_num)throws Exception;
 	
+	//다음글 가져오기(추천순)
+	public List<BoardVO> nextPageGood(int recipe_num)throws Exception;
 	
+	//다음글 가져오기(조회순)
+	public List<BoardVO> nextPageView(int recipe_num)throws Exception;
+	
+	//이전글 가져오기(최신순)
+	public List<BoardVO> prevPageDate(int recipe_num)throws Exception;
+	
+	//이전글 가져오기(추천순)
+	public List<BoardVO> prevPageGood(int recipe_num)throws Exception;
+	
+	//이전글 가져오기(조회순)
+	public List<BoardVO> prevPageView(int recipe_num)throws Exception;
 }

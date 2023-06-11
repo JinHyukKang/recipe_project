@@ -151,11 +151,47 @@
 							</c:if>
 						
 					</c:forEach>
-
 					</div>
-				
 			</c:forEach>
+			<!-- 이전글, 다음글 이동 -->
+			<c:if test="${not empty prevPage[0].recipe_title && not empty nextPage[0].recipe_title}">
+			    <div class="d-flex">
+			        <div style="border: 1px solid; border-radius: 10px; width: 400px; margin-left:15px; margin-right:220px;">
+			            <div style="height:30px;">
+			                <p id="prePage" style="margin-left:10px;">
+			                    <a href="/board/ViewWriteDate?recipe_num=${prevPage[0].recipe_num}">이전글 ${prevPage[0].recipe_title}</a>
+			                </p>
+			            </div>
+			        </div>
+			        <div style="border: 1px solid; border-radius: 10px; width: 400px;margin-left:250px;">
+			            <div style="height:30px;">
+			                <p id="nextPage" style="margin-left:10px;">
+			                    <a href="/board/ViewWriteDate?recipe_num=${nextPage[0].recipe_num}">다음글 ${nextPage[0].recipe_title}</a>
+			                </p>
+			            </div>
+			        </div>
+			    </div>
+			</c:if>
 			
+			<c:if test="${empty prevPage[0].recipe_title && not empty nextPage[0].recipe_title}">
+			    <div style="border: 1px solid; border-radius: 10px; width: 400px; margin-left:880px;">
+			        <div style="height:30px;">
+			            <p id="nextPage" style="margin-left:10px;">
+			                <a href="/board/ViewWriteDate?recipe_num=${nextPage[0].recipe_num}">다음글 ${nextPage[0].recipe_title}</a>
+			            </p>
+			        </div>
+			    </div>
+			</c:if>
+			
+			<c:if test="${not empty prevPage[0].recipe_title && empty nextPage[0].recipe_title}">
+			    <div style="border: 1px solid; border-radius: 10px; width: 400px; margin-left:15px; margin-right:220px;">
+			        <div style="height:30px;">
+			            <p id="prePage" style="margin-left:10px;">
+			                <a href="/board/ViewWriteDate?recipe_num=${prevPage[0].recipe_num}">이전글 ${prevPage[0].recipe_title}</a>
+			            </p>
+			        </div>
+			    </div>
+			</c:if>
 			<!-- 목록으로 -->
 			<div class="mb-3">
 				<button type="button" class="btn btn-secondary row mt-3 mx-3" onclick="location.href = '/board/board';">목록으로</button>
