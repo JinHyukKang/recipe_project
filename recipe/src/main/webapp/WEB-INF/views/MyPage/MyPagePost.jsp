@@ -46,7 +46,7 @@
 			  			</div>
 			  			<div style="margin-top:5px; width:400px;">
 			  				<p >
-			  				<a href="" style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; width: 200px;display: inline-block;">
+			  				<a href="/MyPage/MyPageView?recipe_num=${findWrite.recipe_num}" style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; width: 200px;display: inline-block;">
 			  			${findWrite.recipe_title}</a></p>
 			  			</div>
 			  			<div style="margin-top:5px; width:100px;">

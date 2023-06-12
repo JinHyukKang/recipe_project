@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -103,4 +104,23 @@ public class BoardServiceImple implements BoardService {
 		return boardmapper.prevPageView(recipe_num);
 	}
 	
+	//게시물 검색결과 가져오기
+	public List<BoardVO> searchWrite(String keyword)throws Exception{
+		return boardmapper.searchWrite(keyword);
+	}
+	
+	//마이페이지 게시글 상세보기
+	public List<BoardVO> mypageView(int recipe_num, String user_id)throws Exception{
+		return boardmapper.mypageView(recipe_num, user_id);
+	}
+	
+	//마이페이지 게시글 상세보기(다음글)
+	public List<BoardVO> mypageNext(@Param("recipe_num") int recipe_num, @Param("user_id") String user_id)throws Exception{
+		return boardmapper.mypageNext(recipe_num, user_id);
+	}
+	
+	//마이페이지 게시글 상세보기(이전글)
+	public List<BoardVO> mypagePrev(@Param("recipe_num") int recipe_num, @Param("user_id") String user_id)throws Exception{
+		return boardmapper.mypagePrev(recipe_num, user_id);
+	}
 }

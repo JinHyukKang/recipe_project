@@ -64,10 +64,11 @@
 			        </div>
 			    </c:if>
 			    <div class="col">
-			        <input class="form-control me-2" type="text" placeholder="Search">
+			        <input name="keyword" id="keyword"  class="form-control me-2" type="text" placeholder="Search">
 			    </div>
 			    <div class="col-auto">
-			        <button class="btn btn-primary" type="button">Search</button>
+			        <button onclick="location.href='/board/searchWrite?keyword=' + encodeURIComponent(document.getElementById('keyword').value)" id="keywordButton" name="keywordButton" class="btn btn-primary" type="button"" id="keywordButton" name="keywordButton"
+			        class="btn btn-primary" type="button">Search</button>
 			    </div>
 			</form>
 		</div>

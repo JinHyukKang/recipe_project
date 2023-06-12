@@ -59,4 +59,17 @@ public interface BoardService {
 	
 	//이전글 가져오기(조회순)
 	public List<BoardVO> prevPageView(int recipe_num)throws Exception;
+	
+	//게시물 검색결과 가져오기
+	public List<BoardVO> searchWrite(String keyword)throws Exception;
+	
+	//마이페이지 게시글 상세보기
+	public List<BoardVO> mypageView(int recipe_num, String user_id)throws Exception;
+	
+	//마이페이지 게시글 상세보기(다음글)
+	public List<BoardVO> mypageNext(@Param("recipe_num") int recipe_num, @Param("user_id") String user_id)throws Exception;
+	
+	//마이페이지 게시글 상세보기(이전글)
+	public List<BoardVO> mypagePrev(@Param("recipe_num") int recipe_num, @Param("user_id") String user_id)throws Exception;
+	
 }

@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.recipe.model.BoardVO;
+import com.recipe.model.CommentVO;
 import com.recipe.model.MemberVO;
+import com.recipe.service.BoardService;
+import com.recipe.service.CommentService;
 import com.recipe.service.MypageService;
 
 
@@ -28,6 +31,12 @@ public class MypageController {
    
    @Autowired
    private MypageService mypageservice;
+   
+   @Autowired
+   private BoardService boardservice;
+   
+   @Autowired
+   private CommentService commentservice;
    
  //마이페이지 접속
    @RequestMapping(value="/MyPage", method = RequestMethod.GET)
@@ -128,8 +137,33 @@ public class MypageController {
 		   logger.info("회원탈퇴 완료!");
 	   }
 	   
-	   
-	 
 	   return message;
+   }
+   //마이페이지 게시글 상세보기 이동
+   @RequestMapping(value="/MyPageView", method = RequestMethod.GET)
+   public String mypageView(BoardVO board,
+		   					Model model,
+		   					@RequestParam("user_id") String user_id,
+		   					@RequestParam("recipe_num") int recipe_num) throws Exception {
+	   
+		// user가 작성한 게시글중 recipe_num과 일치하는 게시글 가져오기
+		List<BoardVO> mypageView = boardservice.mypageView(recipe_num, user_id);
+
+		// 불러온 해당 게시글 데이터 model에 저장
+		model.addAttribute("mypageView", mypageView);
+
+		// 댓글 데이터 불러오기
+		List<CommentVO> commentView = commentservice.commentView(recipe_num);
+		model.addAttribute("commentView", commentView);
+		
+		//다음글 데이터 가져오기
+		List<BoardVO> mypageNext = boardservice.mypageNext(recipe_num, user_id);
+		model.addAttribute("mypageNext",mypageNext);
+		
+		//이전글 데이터 가져오기
+		List<BoardVO> mypagePrev = boardservice.mypagePrev(recipe_num, user_id);
+		model.addAttribute("mypagePrev",mypagePrev);
+	   
+	   return "board/MyPageView";
    }
 }

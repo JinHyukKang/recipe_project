@@ -97,7 +97,7 @@ public class BoardController {
 	      String fileName = uuids[0];
 	      
 	      //파일 저장 경로 설정
-	      String uploadPath = "D:/kjh_spring/recipe/recipe/src/main/webapp/resources/upload/";
+	      String uploadPath = "C:/workspace/recipe/recipe/src/main/webapp/resources/upload/";
 	      String filePath = uploadPath + fileName + fileExtension;
 	      //설정한 경로로 이미지 파일 저장
 	      file.transferTo(new File(filePath));
@@ -582,4 +582,19 @@ public class BoardController {
 	    return ResponseEntity.ok("success");
 			
 		}
+	
+	//검색 결과 화면 이동
+	@RequestMapping(value="/searchWrite", method = RequestMethod.GET)
+	public String searchWrite(@RequestParam("keyword") String keyword,
+							 Model model)throws Exception{
+		
+		
+		List<BoardVO> searchWrite = boardservice.searchWrite(keyword);
+		
+		//검색 결과 데이터 불러오기 메소드
+		model.addAttribute("searchWrite",searchWrite);
+		
+		
+		return "board/searchWrite";
+	}
 }

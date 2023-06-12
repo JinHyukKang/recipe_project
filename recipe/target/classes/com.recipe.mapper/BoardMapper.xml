@@ -180,4 +180,55 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	);
 </select>
 
+<!-- 게시물 검색 -->
+<select id="searchWrite" resultType ="com.recipe.model.BoardVO">
+	SELECT *
+	FROM recipe
+	WHERE recipe_title LIKE CONCAT('%', #{keyword}, '%')
+
+</select>
+
+<!-- 마이페이지 내게시물 상세 검색 -->
+<select id="mypageView" resultType ="com.recipe.model.BoardVO">
+	SELECT *
+	FROM recipe
+	WHERE recipe_num = #{recipe_num}
+		AND user_id = #{user_id}
+</select>
+
+<!-- 마이페이지 내 게시물 상세 검색 (다음글 데이터 가져오기) -->
+<select id="mypageNext" resultType ="com.recipe.model.BoardVO">
+	SELECT *
+	FROM recipe
+	WHERE recipe_num =(SELECT prevDate
+	FROM (
+	SELECT *,
+	LEAD(recipe_num) OVER (ORDER BY insert_date DESC) AS prevDate
+	FROM recipe
+	) AS subquery
+	WHERE recipe_num = #{recipe_num} AND user_id = #{user_id}
+	);		
+
+</select>
+
+<!-- 마이페이지 내 게시물 상세 검색 (이전글 데이터 가져오기) -->
+<select id="mypagePrev" resultType ="com.recipe.model.BoardVO">
+	SELECT *
+	FROM recipe
+	WHERE recipe_num =(SELECT prevDate
+	FROM (
+	SELECT *,
+	LAG(recipe_num) OVER (ORDER BY insert_date DESC) AS prevDate
+	FROM recipe
+	) AS subquery
+	WHERE recipe_num = #{recipe_num} AND user_id = #{user_id}
+	);		
+
+</select>
+
+
+
+
+
+
 </mapper>
