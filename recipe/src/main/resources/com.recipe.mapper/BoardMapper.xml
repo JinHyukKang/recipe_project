@@ -100,54 +100,84 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="nextPageDate" resultType="com.recipe.model.BoardVO">
 	SELECT *
 	FROM recipe
-	WHERE recipe_num &lt; #{recipe_num}
-	ORDER BY recipe_num DESC
-	LIMIT 1;
+	WHERE recipe_num =(SELECT prevDate
+	FROM (
+	SELECT *,
+	LEAD(recipe_num) OVER (ORDER BY insert_date DESC) AS prevDate
+	FROM recipe
+	) AS subquery
+	WHERE recipe_num = #{recipe_num}
+	);						
 </select>
 
 <!-- 다음글 정보 가져오기(추천순) -->
 <select id="nextPageGood" resultType="com.recipe.model.BoardVO">
 	SELECT *
 	FROM recipe
-	WHERE recipe_num &lt; #{recipe_num}
-	ORDER BY good_count DESC
-	LIMIT 1;
+	WHERE recipe_num =(SELECT prevGood
+	FROM (
+	SELECT *,
+	LEAD(recipe_num) OVER (ORDER BY good_count DESC) AS prevGood
+	FROM recipe
+	) AS subquery
+	WHERE recipe_num = #{recipe_num}
+	);
 </select>
 
 <!-- 다음글 정보 가져오기(조회순) -->
 <select id="nextPageView" resultType="com.recipe.model.BoardVO">
 	SELECT *
 	FROM recipe
-	WHERE recipe_num &lt; #{recipe_num}
-	ORDER BY view_count DESC
-	LIMIT 1;
+	WHERE recipe_num =(SELECT prevView
+	FROM (
+	SELECT *,
+	LEAD(recipe_num) OVER (ORDER BY view_count DESC) AS prevView
+	FROM recipe
+	) AS subquery
+	WHERE recipe_num = #{recipe_num}
+	);
 </select>
 
 <!-- 이전글 정보 가져오기(최신순) -->
 <select id="prevPageDate" resultType="com.recipe.model.BoardVO">
 	SELECT *
 	FROM recipe
-	WHERE recipe_num > #{recipe_num}
-	ORDER BY recipe_num DESC
-	LIMIT 1;
+	WHERE recipe_num =(SELECT prevDate
+	FROM (
+	SELECT *,
+	LAG(recipe_num) OVER (ORDER BY insert_date DESC) AS prevDate
+	FROM recipe
+	) AS subquery
+	WHERE recipe_num = #{recipe_num}
+	);
 </select>
 
 <!-- 이전글 정보 가져오기(추천순) -->
 <select id="prevPageGood" resultType="com.recipe.model.BoardVO">
 	SELECT *
 	FROM recipe
-	WHERE recipe_num > #{recipe_num}
-	ORDER BY good_count DESC
-	LIMIT 1;
+	WHERE recipe_num =(SELECT prevGood
+	FROM (
+	SELECT *,
+	LAG(recipe_num) OVER (ORDER BY good_count DESC) AS prevGood
+	FROM recipe
+	) AS subquery
+	WHERE recipe_num = #{recipe_num}
+	);
 </select>
 
 <!-- 이전글 정보 가져오기(조회순) -->
 <select id="prevPageView" resultType="com.recipe.model.BoardVO">
 	SELECT *
 	FROM recipe
-	WHERE recipe_num > #{recipe_num}
-	ORDER BY view_count DESC
-	LIMIT 1;
+	WHERE recipe_num =(SELECT prevView
+	FROM (
+	SELECT *,
+	LAG(recipe_num) OVER (ORDER BY view_count DESC) AS prevView
+	FROM recipe
+	) AS subquery
+	WHERE recipe_num = #{recipe_num}
+	);
 </select>
 
 </mapper>

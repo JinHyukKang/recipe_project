@@ -85,11 +85,6 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="">
-					먹거리 정보
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="">
 					공지사항
 					</a>
 				</li>

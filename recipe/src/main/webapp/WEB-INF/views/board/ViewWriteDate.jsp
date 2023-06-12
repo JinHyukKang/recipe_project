@@ -15,6 +15,7 @@
 <body>
 <%@ include file="/resources/include/header.jsp" %>
 
+
 <div class="container">
 	<div class="row mt-5">
 		<div class="col-md-12">
@@ -158,14 +159,18 @@
 			        <div style="border: 1px solid; border-radius: 10px; width: 400px; margin-left:15px; margin-right:220px;">
 			            <div style="height:30px;">
 			                <p id="prePage" style="margin-left:10px;">
-			                    <a href="/board/ViewWriteDate?recipe_num=${prevPage[0].recipe_num}">이전글 ${prevPage[0].recipe_title}</a>
+			                    <a href="/board/ViewWriteDate?recipe_num=${prevPage[0].recipe_num}"
+			                    style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 80%; display: inline-block; text-decoration: none;">
+			                    <strong>이전글  [${prevPage[0].recipe_title}]</strong></a>
 			                </p>
 			            </div>
 			        </div>
 			        <div style="border: 1px solid; border-radius: 10px; width: 400px;margin-left:250px;">
 			            <div style="height:30px;">
 			                <p id="nextPage" style="margin-left:10px;">
-			                    <a href="/board/ViewWriteDate?recipe_num=${nextPage[0].recipe_num}">다음글 ${nextPage[0].recipe_title}</a>
+			                    <a href="/board/ViewWriteDate?recipe_num=${nextPage[0].recipe_num}"
+			                    style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 80%; display: inline-block; text-decoration: none;">
+			                    <strong>다음글  [${nextPage[0].recipe_title}]</strong></a>
 			                </p>
 			            </div>
 			        </div>
@@ -176,7 +181,9 @@
 			    <div style="border: 1px solid; border-radius: 10px; width: 400px; margin-left:880px;">
 			        <div style="height:30px;">
 			            <p id="nextPage" style="margin-left:10px;">
-			                <a href="/board/ViewWriteDate?recipe_num=${nextPage[0].recipe_num}">다음글 ${nextPage[0].recipe_title}</a>
+			                <a href="/board/ViewWriteDate?recipe_num=${nextPage[0].recipe_num}" 
+			                style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 80%; display: inline-block; text-decoration: none;">
+			                <strong>다음글   [${nextPage[0].recipe_title}]</strong></a>
 			            </p>
 			        </div>
 			    </div>
@@ -186,7 +193,9 @@
 			    <div style="border: 1px solid; border-radius: 10px; width: 400px; margin-left:15px; margin-right:220px;">
 			        <div style="height:30px;">
 			            <p id="prePage" style="margin-left:10px;">
-			                <a href="/board/ViewWriteDate?recipe_num=${prevPage[0].recipe_num}">이전글 ${prevPage[0].recipe_title}</a>
+			                <a href="/board/ViewWriteDate?recipe_num=${prevPage[0].recipe_num}"
+			                style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 80%; display: inline-block; text-decoration: none;">
+			                <strong>이전글  [${prevPage[0].recipe_title}]</strong></a>
 			            </p>
 			        </div>
 			    </div>
