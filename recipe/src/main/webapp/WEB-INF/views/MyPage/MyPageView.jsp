@@ -20,22 +20,22 @@
 	<div class="row mt-5">
 		<div class="col-md-12">
 			
-			<c:forEach items="${viewWrite}" var="viewWrite">
-			<h4><strong>[${viewWrite.recipe_title}]</strong></h4>
-			<c:set var="recipe_num" value="${viewWrite.recipe_num}" />
+			<c:forEach items="${mypageView}" var="mypageView">
+			<h4><strong>[${mypageView.recipe_title}]</strong></h4>
+			<c:set var="recipe_num" value="${mypageView.recipe_num}" />
 			<div class="form-group row mt-3 mx-3" style="border: 1px solid; border-radius: 10px;">
 				<div class="d-flex mt-s">
-					<p style="font-size:17px; font-style:oblique;">작성자 : <strong>${viewWrite.user_nickname}</strong>님</p>
+					<p style="font-size:17px; font-style:oblique;">작성자 : <strong>${mypageView.user_nickname}</strong>님</p>
 					<div class="ms-auto">
-						<h6 style="font-style:oblique;">작성일 : <fmt:formatDate value="${viewWrite.insert_date}" pattern="yyyy년 MM월 dd일 HH시 mm분" /></h6>
+						<h6 style="font-style:oblique;">작성일 : <fmt:formatDate value="${mypageView.insert_date}" pattern="yyyy년 MM월 dd일 HH시 mm분" /></h6>
 					</div>
 				</div>
 				<div class="justify-content-center row mt-5 mb-5" style="margin-bottom:100px;">
-					<img src="${path}/resources/upload/${viewWrite.recipe_filename}.jpg" 
+					<img src="${path}/resources/upload/${mypageView.recipe_filename}.jpg" 
 					id="recipe_filename" name="recipe_filename" style="width: 600px; height: 400px;">
 				</div>
 				<div style="margin-left:100px; margin-right:100px; margin-bottom:80px;">
-					<p style="font-size:18px;">${viewWrite.recipe_content}</p>
+					<p style="font-size:18px;">${mypageView.recipe_content}</p>
 				</div>
 				
 				<!-- 추천수, 댓글수, 조회수 출력 -->
@@ -59,18 +59,18 @@
 				        </a>
 				    </c:if>
 					<div style="line-height:1.4; margin-left:6px; margin-right:40px;">
-					   <p  id="good_count" style="font-size:18px;">${viewWrite.good_count}</p>
+					   <p  id="good_count" style="font-size:18px;">${mypageView.good_count}</p>
 				   </div>
 				   
 				   <!-- 댓글수 출력 -->
 				   <img src="${path}/resources/images/comment.png" id="comment_count_img" name="comment_count_img" style="width: 25px; height: 20px;">
 				   <div style="line-height:1.4; margin-left:6px; margin-right:40px;">
-					   <p style="font-size:18px;">${viewWrite.comment_count}</p>
+					   <p style="font-size:18px;">${mypageView.comment_count}</p>
 				   </div>
 				   <!-- 조회수 출력 -->
 				   <img src="${path}/resources/images/view.png" id="view_count_img" name="view_count_img" style="width: 25px; height: 20px;">
 				   <div style="line-height:1.4; margin-left:6px; margin-right:40px;">
-					   <p style="font-size:18px;">${viewWrite.view_count}</p>
+					   <p style="font-size:18px;">${mypageView.view_count}</p>
 				   </div>
 				</div>
 			</div>	
@@ -80,7 +80,7 @@
 				<!-- 댓글작성 -->
 				<c:if test="${user_id ne null}">
 					<form method="post" action="/board/commentWriteDate.do">
-					<input type="hidden" name="recipe_num" value="${viewWrite.recipe_num}">
+					<input type="hidden" name="recipe_num" value="${mypageView.recipe_num}">
 					<div class="d-flex mt-3 mb-3" style="margin-left:100px;">
 						<textarea class="form-control" id="comment_content" name="comment_content" style="width:900px; height: 1.5em;"></textarea>
 						<button type="submit" class="btn btn-success">댓글 작성</button>
@@ -88,8 +88,8 @@
 					</form>
 				</c:if>
 				<c:if test="${user_id eq null}">
-				<input type="hidden" name="recipe_num" value="${viewWrite.recipe_num}">
-				<input type="hidden" name="user_num" value="${viewWrite.user_num}">
+				<input type="hidden" name="recipe_num" value="${mypageView.recipe_num}">
+				<input type="hidden" name="user_num" value="${mypageView.user_num}">
 					<div class="d-flex mt-3 mb-3" style="margin-left:100px;">
 						<textarea class="form-control" id="comment_content" name="comment_content" style="width:900px; height: 1.5em;"></textarea>
 						<button type="submit" class="btn btn-success" onclick="checkLoginComment()">댓글 작성</button>
@@ -121,7 +121,7 @@
 							<!-- 댓글 수정 -->
 						    <form method="post" action="/board/commentUpdateDate.do" id="commentForm-${commentView.comment_num}">
 						        <input type="hidden" name="comment_num" value="${commentView.comment_num}">
-						        <input type="hidden" name="recipe_num" value="${viewWrite.recipe_num}">
+						        <input type="hidden" name="recipe_num" value="${mypageView.recipe_num}">
 						        <div class="d-flex" style="margin-left: 100px; line-height: 0; margin-top: 0px;">
 						            <!-- 댓글 수정 버튼 -->
 						            <textarea id="comment_content_update-${commentView.comment_num}" name="comment_content_update" class="form-control comment_content_update" style="margin-top: 0px; margin-bottom: 18px; width: 900px; height: 1em;" readonly>${commentView.comment_content}</textarea>
@@ -154,48 +154,48 @@
 					</div>
 			</c:forEach>
 			<!-- 이전글, 다음글 이동 -->
-			<c:if test="${not empty prevPage[0].recipe_title && not empty nextPage[0].recipe_title}">
+			<c:if test="${not empty mypageNext[0].recipe_title && not empty mypagePrev[0].recipe_title}">
 			    <div class="d-flex">
 			        <div style="border: 1px solid; border-radius: 10px; width: 400px; margin-left:15px; margin-right:220px;">
 			            <div style="height:30px;">
 			                <p id="prePage" style="margin-left:10px;">
-			                    <a href="/board/ViewWriteDate?recipe_num=${prevPage[0].recipe_num}"
+			                    <a href="/MyPage/MyPageView?recipe_num=${mypageNext[0].recipe_num}"
 			                    style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 80%; display: inline-block; text-decoration: none;">
-			                    <strong>이전글  [${prevPage[0].recipe_title}]</strong></a>
+			                    <strong>이전글  [${mypageNext[0].recipe_title}]</strong></a>
 			                </p>
 			            </div>
 			        </div>
 			        <div style="border: 1px solid; border-radius: 10px; width: 400px;margin-left:250px;">
 			            <div style="height:30px;">
 			                <p id="nextPage" style="margin-left:10px;">
-			                    <a href="/board/ViewWriteDate?recipe_num=${nextPage[0].recipe_num}"
+			                    <a href="/MyPage/MyPageView?recipe_num=${mypagePrev[0].recipe_num}"
 			                    style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 80%; display: inline-block; text-decoration: none;">
-			                    <strong>다음글  [${nextPage[0].recipe_title}]</strong></a>
+			                    <strong>다음글  [${mypagePrev[0].recipe_title}]</strong></a>
 			                </p>
 			            </div>
 			        </div>
 			    </div>
 			</c:if>
 			
-			<c:if test="${empty prevPage[0].recipe_title && not empty nextPage[0].recipe_title}">
+			<c:if test="${empty mypageNext[0].recipe_title && not empty mypagePrev[0].recipe_title}">
 			    <div style="border: 1px solid; border-radius: 10px; width: 400px; margin-left:880px;">
 			        <div style="height:30px;">
 			            <p id="nextPage" style="margin-left:10px;">
-			                <a href="/board/ViewWriteDate?recipe_num=${nextPage[0].recipe_num}" 
+			                <a href="/MyPage/MyPageView?recipe_num=${mypagePrev[0].recipe_num}" 
 			                style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 80%; display: inline-block; text-decoration: none;">
-			                <strong>다음글   [${nextPage[0].recipe_title}]</strong></a>
+			                <strong>다음글   [${mypagePrev[0].recipe_title}]</strong></a>
 			            </p>
 			        </div>
 			    </div>
 			</c:if>
 			
-			<c:if test="${not empty prevPage[0].recipe_title && empty nextPage[0].recipe_title}">
+			<c:if test="${not empty mypageNext[0].recipe_title && empty mypagePrev[0].recipe_title}">
 			    <div style="border: 1px solid; border-radius: 10px; width: 400px; margin-left:15px; margin-right:220px;">
 			        <div style="height:30px;">
 			            <p id="prePage" style="margin-left:10px;">
-			                <a href="/board/ViewWriteDate?recipe_num=${prevPage[0].recipe_num}"
+			                <a href="/MyPage/MyPageView?recipe_num=${mypageNext[0].recipe_num}"
 			                style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 80%; display: inline-block; text-decoration: none;">
-			                <strong>이전글  [${prevPage[0].recipe_title}]</strong></a>
+			                <strong>이전글  [${mypageNext[0].recipe_title}]</strong></a>
 			            </p>
 			        </div>
 			    </div>
@@ -203,7 +203,7 @@
 			
 			<!-- 목록으로 -->
 			<div class="mb-3">
-				<button type="button" class="btn btn-secondary row mt-3 mx-3" onclick="location.href = '/board/board';">목록으로</button>
+				<button type="button" class="btn btn-secondary row mt-3 mx-3" onclick="location.href = '/MyPage/MyPagePost';">내게시물</button>
 			</div>
 			
 		</div>

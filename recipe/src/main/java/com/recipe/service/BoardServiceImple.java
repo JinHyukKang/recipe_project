@@ -110,17 +110,26 @@ public class BoardServiceImple implements BoardService {
 	}
 	
 	//마이페이지 게시글 상세보기
-	public List<BoardVO> mypageView(int recipe_num, String user_id)throws Exception{
-		return boardmapper.mypageView(recipe_num, user_id);
+	public List<BoardVO> mypageView(int recipe_num, int user_num)throws Exception{
+		return boardmapper.mypageView(recipe_num, user_num);
 	}
 	
 	//마이페이지 게시글 상세보기(다음글)
-	public List<BoardVO> mypageNext(@Param("recipe_num") int recipe_num, @Param("user_id") String user_id)throws Exception{
-		return boardmapper.mypageNext(recipe_num, user_id);
+	public List<BoardVO> mypageNext(@Param("recipe_num") int recipe_num, @Param("user_num") int user_num)throws Exception{
+		return boardmapper.mypageNext(recipe_num, user_num);
 	}
 	
 	//마이페이지 게시글 상세보기(이전글)
-	public List<BoardVO> mypagePrev(@Param("recipe_num") int recipe_num, @Param("user_id") String user_id)throws Exception{
-		return boardmapper.mypagePrev(recipe_num, user_id);
+	public List<BoardVO> mypagePrev(@Param("recipe_num") int recipe_num, @Param("user_num") int user_num)throws Exception{
+		return boardmapper.mypagePrev(recipe_num, user_num);
+	}
+	
+	//게시글 전체 개수 불러오기
+	public int countWrite()throws Exception{
+		return boardmapper.countWrite();
+	}
+	//user가 작성한 게시글 개수 불러오기
+	public int countWriteUser(@Param("user_num") int user_num) throws Exception{
+		return boardmapper.countWriteUser(user_num);
 	}
 }

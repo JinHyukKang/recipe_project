@@ -100,10 +100,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="nextPageDate" resultType="com.recipe.model.BoardVO">
 	SELECT *
 	FROM recipe
-	WHERE recipe_num =(SELECT prevDate
+	WHERE recipe_num =(SELECT nextDate
 	FROM (
 	SELECT *,
-	LEAD(recipe_num) OVER (ORDER BY insert_date DESC) AS prevDate
+	LEAD(recipe_num) OVER (ORDER BY insert_date DESC) AS nextDate
 	FROM recipe
 	) AS subquery
 	WHERE recipe_num = #{recipe_num}
@@ -114,10 +114,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="nextPageGood" resultType="com.recipe.model.BoardVO">
 	SELECT *
 	FROM recipe
-	WHERE recipe_num =(SELECT prevGood
+	WHERE recipe_num =(SELECT nextGood
 	FROM (
 	SELECT *,
-	LEAD(recipe_num) OVER (ORDER BY good_count DESC) AS prevGood
+	LEAD(recipe_num) OVER (ORDER BY good_count DESC) AS nextGood
 	FROM recipe
 	) AS subquery
 	WHERE recipe_num = #{recipe_num}
@@ -128,10 +128,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="nextPageView" resultType="com.recipe.model.BoardVO">
 	SELECT *
 	FROM recipe
-	WHERE recipe_num =(SELECT prevView
+	WHERE recipe_num =(SELECT nextView
 	FROM (
 	SELECT *,
-	LEAD(recipe_num) OVER (ORDER BY view_count DESC) AS prevView
+	LEAD(recipe_num) OVER (ORDER BY view_count DESC) AS nextView
 	FROM recipe
 	) AS subquery
 	WHERE recipe_num = #{recipe_num}
@@ -193,20 +193,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT *
 	FROM recipe
 	WHERE recipe_num = #{recipe_num}
-		AND user_id = #{user_id}
+		AND user_num = #{user_num}
 </select>
 
 <!-- 마이페이지 내 게시물 상세 검색 (다음글 데이터 가져오기) -->
 <select id="mypageNext" resultType ="com.recipe.model.BoardVO">
 	SELECT *
 	FROM recipe
-	WHERE recipe_num =(SELECT prevDate
+	WHERE recipe_num =(SELECT nextDate
 	FROM (
 	SELECT *,
-	LEAD(recipe_num) OVER (ORDER BY insert_date DESC) AS prevDate
+	LEAD(recipe_num) OVER (ORDER BY insert_date DESC) AS nextDate
 	FROM recipe
+	WHERE user_num = #{user_num}
 	) AS subquery
-	WHERE recipe_num = #{recipe_num} AND user_id = #{user_id}
+	WHERE recipe_num = #{recipe_num}
 	);		
 
 </select>
@@ -220,15 +221,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT *,
 	LAG(recipe_num) OVER (ORDER BY insert_date DESC) AS prevDate
 	FROM recipe
+	WHERE user_num = #{user_num}
 	) AS subquery
-	WHERE recipe_num = #{recipe_num} AND user_id = #{user_id}
+	WHERE recipe_num = #{recipe_num}
 	);		
 
 </select>
 
+<!-- 게시물 전체 개수 불러오기 -->
+<select id="countWrite" resultType="int">
+	SELECT COUNT(*)
+	FROM recipe
+</select>
 
 
-
-
+<!-- user가 작성한 게시글 개수 불러오기 -->
+<select id="countWriteUser" resultType="int">
+	SELECT COUNT(*)
+	FROM recipe
+	WHERE user_num = #{user_num}
+</select>
 
 </mapper>

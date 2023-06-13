@@ -33,18 +33,18 @@
 	  		<div class="border" style="border-radius: 10px; width:1000px;">
 	  			<div class="d-flex" style="border-bottom: 1px solid black; background-color:lightgray; border-radius: 10px;">
 		  			<p style="margin-top:5px; margin-bottom: 5px; margin-left:25px; margin-right:25px;"><strong>No.</strong></p>
-		  			<p style="margin-top:5px; margin-bottom: 5px; margin-right:350px;"><strong>제목</strong></p>
+		  			<p style="margin-top:5px; margin-bottom: 5px; margin-right:250px;"><strong>제목</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px; margin-right:50px;"><strong>조회수</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px; margin-right:50px;"><strong>추천수</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px; margin-right:50px;"><strong>댓글수</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px;"><strong>작성일</strong></p>
 	  			</div>
-	  			<c:forEach var="findWrite" items="${findWrite}" varStatus="loop">
+	  			<c:forEach var="findWrite" items="${findWrite}" varStatus="loop" begin="${page.cri.startNum}" end="${page.cri.startNum + page.cri.amount - 1}">
 		  			<div class="d-flex">
 		  				<div style="margin-top:5px; margin-left:30px; width:45px;">
 			  				<p>${loop.index + 1}</p>
 			  			</div>
-			  			<div style="margin-top:5px; width:400px;">
+			  			<div style="margin-top:5px; width:300px;">
 			  				<p >
 			  				<a href="/MyPage/MyPageView?recipe_num=${findWrite.recipe_num}" style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; width: 200px;display: inline-block;">
 			  			${findWrite.recipe_title}</a></p>
@@ -58,12 +58,38 @@
 			  			<div style="margin-top:5px; width:80px;">
 			  				<p>${findWrite.comment_count}</p>
 			  			</div>
-			  			<div style="margin-top:5px; margin-bottom: 5px;">
+			  			<div style="margin-top:5px; margin-bottom: 5px; margin-right: 30px;">
 			  				<p><fmt:formatDate value="${findWrite.insert_date}" pattern="yyyy-MM-dd-HH-mm" /></p>
+			  			</div>
+			  			<div class="d-flex">
+			  				<button class="btn btn-success" style="height: 35px; margin-top:5px; margin-right:5px;">수정</button>
+			  				<button class="btn btn-danger"  style="height: 35px; margin-top:5px;">삭제</button>
 			  			</div>
 		  			</div>
 	  			</c:forEach>
 	  		</div>
+	  		<!-- 페이징 -->
+	  		<div>
+			    <ul class="pagination">
+			        <c:if test="${page.prev}">
+			            <li class="pagination_button">
+			                <a href="/MyPage/MyPagePost?pageNum=${page.cri.pageNum - 1}&amount=${page.cri.amount}">Previous</a>
+			            </li>
+			        </c:if>
+			        
+			        <c:forEach var="num" begin="${page.startPage}" end="${page.endPage}">
+			            <li class="pagination_button">
+			                <a href="/MyPage/MyPagePost?pageNum=${num}&amount=${page.cri.amount}">${num}</a>
+			            </li>
+			        </c:forEach>
+			        
+			        <c:if test="${page.next}">
+			            <li class="pagination_button">
+			                <a href="/MyPage/MyPagePost?pageNum=${page.cri.pageNum + 1}&amount=${page.cri.amount}">Next</a>
+			            </li>
+			        </c:if>
+			    </ul>
+			</div>
 
 		</div>
 	</div>

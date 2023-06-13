@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.recipe.model.BoardVO;
 import com.recipe.model.CommentVO;
+import com.recipe.model.Criteria;
 import com.recipe.model.MemberVO;
+import com.recipe.model.PageVO;
 import com.recipe.service.BoardService;
 import com.recipe.service.CommentService;
 import com.recipe.service.MypageService;
@@ -38,7 +40,7 @@ public class MypageController {
    @Autowired
    private CommentService commentservice;
    
- //마이페이지 접속
+  //마이페이지 접속
    @RequestMapping(value="/MyPage", method = RequestMethod.GET)
    public  String MyPagepop(HttpSession session, Model model) throws Exception {
       
@@ -51,17 +53,26 @@ public class MypageController {
       model.addAttribute("findUser", findUser);
       return "/MyPage/MyPage";
    }
-   //내 게시물 접속
+   
+   //내 게시물 이동
    @RequestMapping(value="/MyPagePost", method = RequestMethod.GET)
-   public  String MyPagePost(HttpSession session, Model model) throws Exception {
-		logger.info("내 게시물 접속");
-		
-		int user_num =(int)session.getAttribute("user_num");
-		List<BoardVO> findWrite = mypageservice.findWrite(user_num);
-		
-		model.addAttribute("findWrite",findWrite);
+   public String MyPagePost(HttpSession session, Model model, Criteria cri) throws Exception {
+	   
+       logger.info("내 게시물 접속");
+       
+       int user_num =(int)session.getAttribute("user_num");
+       List<BoardVO> findWrite = mypageservice.findWrite(user_num);
+       
+       model.addAttribute("findWrite",findWrite);
+       
+       // user가 작성한 게시글 개수 가져오기
+       int total = boardservice.countWriteUser(user_num);
+       
+       cri.setAmount(10); // amount 값을 10으로 설정
+       
+       model.addAttribute("page", new PageVO(cri, total));
 
-		return "/MyPage/MyPagePost";
+       return "/MyPage/MyPagePost";
    }
 
    //회원정보 수정하기
@@ -129,7 +140,7 @@ public class MypageController {
 		   message = "<script>";
 		   message += "alert('회원탈퇴가 정상적으로 완료되었습니다!');";
 		   message += "window.close();";
-		   message += "window.opener.location.href = '/';"; // �˾��� ������ �θ� â���� �����̷�Ʈ
+		   message += "window.opener.location.href = '/';"; //홈 화면으로 이동
 		   message += "</script>";
 		   
 		   session.invalidate();
@@ -139,15 +150,18 @@ public class MypageController {
 	   
 	   return message;
    }
+   
    //마이페이지 게시글 상세보기 이동
    @RequestMapping(value="/MyPageView", method = RequestMethod.GET)
    public String mypageView(BoardVO board,
 		   					Model model,
-		   					@RequestParam("user_id") String user_id,
+		   					HttpSession session,
 		   					@RequestParam("recipe_num") int recipe_num) throws Exception {
 	   
+	   int user_num = (int) session.getAttribute("user_num");
+	   
 		// user가 작성한 게시글중 recipe_num과 일치하는 게시글 가져오기
-		List<BoardVO> mypageView = boardservice.mypageView(recipe_num, user_id);
+		List<BoardVO> mypageView = boardservice.mypageView(recipe_num, user_num);
 
 		// 불러온 해당 게시글 데이터 model에 저장
 		model.addAttribute("mypageView", mypageView);
@@ -157,13 +171,13 @@ public class MypageController {
 		model.addAttribute("commentView", commentView);
 		
 		//다음글 데이터 가져오기
-		List<BoardVO> mypageNext = boardservice.mypageNext(recipe_num, user_id);
+		List<BoardVO> mypageNext = boardservice.mypageNext(recipe_num, user_num);
 		model.addAttribute("mypageNext",mypageNext);
 		
 		//이전글 데이터 가져오기
-		List<BoardVO> mypagePrev = boardservice.mypagePrev(recipe_num, user_id);
+		List<BoardVO> mypagePrev = boardservice.mypagePrev(recipe_num, user_num);
 		model.addAttribute("mypagePrev",mypagePrev);
 	   
-	   return "board/MyPageView";
+	   return "MyPage/MyPageView";
    }
 }
