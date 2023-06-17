@@ -12,13 +12,13 @@ public class PageVO {
 		this.total = total;
 		
 		//시작페이지, 마지막페이지 계산
-		this.endPage = (int)(Math.ceil(cri.getPageNum() / 10.0)) * 10;
+		this.endPage = (int) Math.ceil(cri.getPageNum() / 10.0) * 10;
 		this.startPage = this.endPage -9;
 		
-		int realEnd = (int) (Math.ceil(total * 1.0) / cri.getAmount());
+		int realEnd = (int) Math.ceil(total * 1.0 / cri.getAmount());
 		
-		if(realEnd < this.endPage) {
-			this.endPage = realEnd;
+		if (this.endPage > realEnd) {
+		    this.endPage = realEnd;
 		}
 		
 		//이전, 다음 버튼 표출 여부 결정

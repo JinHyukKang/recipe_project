@@ -14,6 +14,7 @@ public class Criteria {
 	public Criteria(int pageNum, int amount) {
 		this.pageNum = pageNum;
 		this.amount = amount;
+		this.startNum = (pageNum - 1) * amount; // 시작 번호 계산하여 설정
 	}
 
 	public int getPageNum() {

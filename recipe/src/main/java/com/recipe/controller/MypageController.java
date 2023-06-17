@@ -56,22 +56,20 @@ public class MypageController {
    
    //내 게시물 이동
    @RequestMapping(value="/MyPagePost", method = RequestMethod.GET)
-   public String MyPagePost(HttpSession session, Model model, Criteria cri) throws Exception {
-	   
+   public String MyPagePost(HttpSession session, Model model, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int amount) throws Exception {
        logger.info("내 게시물 접속");
-       
-       int user_num =(int)session.getAttribute("user_num");
+      
+       int user_num = (int) session.getAttribute("user_num");
        List<BoardVO> findWrite = mypageservice.findWrite(user_num);
-       
-       model.addAttribute("findWrite",findWrite);
-       
-       // user가 작성한 게시글 개수 가져오기
+      
+       model.addAttribute("findWrite", findWrite);
+      
        int total = boardservice.countWriteUser(user_num);
-       
-       cri.setAmount(10); // amount 값을 10으로 설정
-       
+      
+       Criteria cri = new Criteria(pageNum, amount); // pageNum과 amount 값을 설정한 Criteria 객체 생성
+      
        model.addAttribute("page", new PageVO(cri, total));
-
+      
        return "/MyPage/MyPagePost";
    }
 

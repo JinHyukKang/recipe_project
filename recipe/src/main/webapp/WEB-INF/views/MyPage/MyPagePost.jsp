@@ -40,7 +40,7 @@
 		  			<p style="margin-top:5px; margin-bottom: 5px;"><strong>작성일</strong></p>
 	  			</div>
 	  			<c:forEach var="findWrite" items="${findWrite}" varStatus="loop" begin="${page.cri.startNum}" end="${page.cri.startNum + page.cri.amount - 1}">
-		  			<div class="d-flex">
+		  			<div class="d-flex md-3">
 		  				<div style="margin-top:5px; margin-left:30px; width:45px;">
 			  				<p>${loop.index + 1}</p>
 			  			</div>
@@ -71,24 +71,24 @@
 	  		<!-- 페이징 -->
 	  		<div>
 			    <ul class="pagination">
-			        <c:if test="${page.prev}">
-			            <li class="pagination_button">
-			                <a href="/MyPage/MyPagePost?pageNum=${page.cri.pageNum - 1}&amount=${page.cri.amount}">Previous</a>
-			            </li>
-			        </c:if>
-			        
-			        <c:forEach var="num" begin="${page.startPage}" end="${page.endPage}">
-			            <li class="pagination_button">
-			                <a href="/MyPage/MyPagePost?pageNum=${num}&amount=${page.cri.amount}">${num}</a>
-			            </li>
-			        </c:forEach>
-			        
-			        <c:if test="${page.next}">
-			            <li class="pagination_button">
-			                <a href="/MyPage/MyPagePost?pageNum=${page.cri.pageNum + 1}&amount=${page.cri.amount}">Next</a>
-			            </li>
-			        </c:if>
-			    </ul>
+				    <c:if test="${page.prev}">
+				        <li class="pagination_button">
+				            <a href="/MyPage/MyPagePost?pageNum=${page.cri.pageNum - 1}&amount=${page.cri.amount}">Previous</a>
+				        </li>
+				    </c:if>
+				    
+				    <c:forEach var="num" begin="${page.startPage}" end="${page.endPage}">
+				        <li class="pagination_button">
+				            <a href="/MyPage/MyPagePost?pageNum=${num}&amount=${page.cri.amount}">${num}</a>
+				        </li>
+				    </c:forEach>
+				    
+				    <c:if test="${page.next}">
+				        <li class="pagination_button">
+				            <a href="/MyPage/MyPagePost?pageNum=${page.cri.pageNum + 1}&amount=${page.cri.amount}">Next</a>
+				        </li>
+				    </c:if>
+				</ul>
 			</div>
 
 		</div>
@@ -97,7 +97,7 @@
 
 
 
-<footer class="footer" style="position: fixed; bottom: 0; left: 0; right: 0;">
+<footer class="footer" style="position: flex; bottom: 0; left: 0; right: 0;">
     <%@ include file="/resources/include/footer.jsp" %>
 </footer>
 
