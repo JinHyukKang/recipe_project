@@ -242,4 +242,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	WHERE user_num = #{user_num}
 </select>
 
+<!-- 게시글 삭제 -->
+<select id="DeleteRecipe">
+	DELETE
+	FROM recipe
+	WHERE recipe_num = #{recipe_num}
+
+</select>
+
+
+
+
+
+
+
 </mapper>

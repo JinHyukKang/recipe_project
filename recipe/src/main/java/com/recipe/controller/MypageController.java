@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -56,16 +57,20 @@ public class MypageController {
    
    //내 게시물 이동
    @RequestMapping(value="/MyPagePost", method = RequestMethod.GET)
-   public String MyPagePost(HttpSession session, Model model, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int amount) throws Exception {
+   public String MyPagePost(HttpSession session, Model model, 
+		   @RequestParam(defaultValue = "1") int pageNum, 
+		   @RequestParam(defaultValue = "10") int amount) throws Exception {
        logger.info("내 게시물 접속");
       
        int user_num = (int) session.getAttribute("user_num");
        List<BoardVO> findWrite = mypageservice.findWrite(user_num);
       
        model.addAttribute("findWrite", findWrite);
-      
+       
+       //페이징 기능
+       //페이지에서 가져올 전체 게시글 개수
        int total = boardservice.countWriteUser(user_num);
-      
+       
        Criteria cri = new Criteria(pageNum, amount); // pageNum과 amount 값을 설정한 Criteria 객체 생성
       
        model.addAttribute("page", new PageVO(cri, total));
@@ -178,4 +183,28 @@ public class MypageController {
 	   
 	   return "MyPage/MyPageView";
    }
+   
+   //게시글 삭제
+   @ResponseBody
+   @RequestMapping(value="/DeleteRecipe.do", method = RequestMethod.POST)
+   public ResponseEntity<String> DeleteRecipe(BoardVO board,Model model,
+		   						@RequestParam("recipe_num") int recipe_num)throws Exception{
+	   
+	   //게시글 삭제 메소드 호출
+	   boardservice.DeleteRecipe(recipe_num);
+	   
+	   return ResponseEntity.ok("success");
+	   
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
 }

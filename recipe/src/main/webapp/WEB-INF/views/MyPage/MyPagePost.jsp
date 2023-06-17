@@ -62,33 +62,35 @@
 			  				<p><fmt:formatDate value="${findWrite.insert_date}" pattern="yyyy-MM-dd-HH-mm" /></p>
 			  			</div>
 			  			<div class="d-flex">
+			  				<!-- 게시글 수정 -->
 			  				<button class="btn btn-success" style="height: 35px; margin-top:5px; margin-right:5px;">수정</button>
-			  				<button class="btn btn-danger"  style="height: 35px; margin-top:5px;">삭제</button>
+			  				<!-- 게시글 삭제 -->
+					    	<button class="btn btn-danger" onclick="deleteRecipe(${findWrite.recipe_num},event)" style="height: 35px; margin-top: 5px;">삭제</button>
 			  			</div>
 		  			</div>
 	  			</c:forEach>
 	  		</div>
 	  		<!-- 페이징 -->
-	  		<div>
-			    <ul class="pagination">
-				    <c:if test="${page.prev}">
-				        <li class="pagination_button">
-				            <a href="/MyPage/MyPagePost?pageNum=${page.cri.pageNum - 1}&amount=${page.cri.amount}">Previous</a>
-				        </li>
-				    </c:if>
-				    
-				    <c:forEach var="num" begin="${page.startPage}" end="${page.endPage}">
-				        <li class="pagination_button">
-				            <a href="/MyPage/MyPagePost?pageNum=${num}&amount=${page.cri.amount}">${num}</a>
-				        </li>
-				    </c:forEach>
-				    
-				    <c:if test="${page.next}">
-				        <li class="pagination_button">
-				            <a href="/MyPage/MyPagePost?pageNum=${page.cri.pageNum + 1}&amount=${page.cri.amount}">Next</a>
-				        </li>
-				    </c:if>
-				</ul>
+	  		<div style="margin-top: 20px; text-align: center;" id="page">
+			  <ul class="pagination" style="list-style: none; display: inline-block; padding: 0;">
+			    <c:if test="${page.prev}">
+			      <li class="pagination_button" style="display: inline-block; margin-right: 5px;">
+			        <a href="/MyPage/MyPagePost?pageNum=${page.cri.pageNum - 1}&amount=${page.cri.amount}" style="padding: 5px 10px; background-color: #f2f2f2; border: 1px solid #ccc; text-decoration: none;">Previous</a>
+			      </li>
+			    </c:if>
+			
+			    <c:forEach var="num" begin="${page.startPage}" end="${page.endPage}">
+			      <li class="pagination_button" style="display: inline-block; margin-right: 5px;">
+			        <a href="/MyPage/MyPagePost?pageNum=${num}&amount=${page.cri.amount}" style="padding: 5px 10px; background-color: #f2f2f2; border: 1px solid #ccc; text-decoration: none;">${num}</a>
+			      </li>
+			    </c:forEach>
+			
+			    <c:if test="${page.next}">
+			      <li class="pagination_button" style="display: inline-block; margin-right: 5px;">
+			        <a href="/MyPage/MyPagePost?pageNum=${page.cri.pageNum + 1}&amount=${page.cri.amount}" style="padding: 5px 10px; background-color: #f2f2f2; border: 1px solid #ccc; text-decoration: none;">Next</a>
+			      </li>
+			    </c:if>
+			  </ul>
 			</div>
 
 		</div>
@@ -101,6 +103,30 @@
     <%@ include file="/resources/include/footer.jsp" %>
 </footer>
 
+<script>
+//게시글 삭제
+function deleteRecipe(recipe_num,event) {
+	event.preventDefault();
+    if (confirm("게시글을 삭제하시겠습니까?")) {
+        $.ajax({
+            url: '/MyPage/DeleteRecipe.do',
+            type: 'post',
+            data: {recipe_num: recipe_num },
+            success: function(response) {
+                alert("게시글이 삭제되었습니다.");
+                location.href = '/MyPage/MyPagePost';
+            },
+            error: function(xhr, status, error) {
+                alert("게시글 삭제에 실패했습니다.");
+            }
+        });
+    }
+}
+
+
+
+
+</script>
 
 </body>
 </html>

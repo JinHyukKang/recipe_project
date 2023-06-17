@@ -86,9 +86,9 @@
 			<div class="d-flex">
 				<h2 class="mb-3"><strong>레시피 게시물</strong></h2>
 				<div class="d-flex ms-auto">
-					<p id="orderbyDate"><a href="#" onclick="showFindWriteAll(this)" style="color: black; text-decoration: none; font-weight: bold; font-size: 16px;">최신순</a>|</p>
-					<p id="orderbyGood"><a href="#" onclick="showFindWriteAllGood(this)" style="color: black; text-decoration: none;">추천순</a>|</p>
-					<p id="orderbyView"><a href="#" onclick="showFindWriteAllView(this)" style="color: black; text-decoration: none;">조회순</a>|</p>
+					<p id="orderbyDate"><a href="#" onclick="showFindWriteAll(this,event)" style="color: black; text-decoration: none; font-weight: bold; font-size: 16px;">최신순</a>|</p>
+					<p id="orderbyGood"><a href="#" onclick="showFindWriteAllGood(this,event)" style="color: black; text-decoration: none;">추천순</a>|</p>
+					<p id="orderbyView"><a href="#" onclick="showFindWriteAllView(this,event)" style="color: black; text-decoration: none;">조회순</a>|</p>
 				</div>
 			</div>
 			<div id="findWriteAll" class="d-flex flex-wrap mb-3 ">
@@ -143,6 +143,7 @@
 			    </div>
 			  </c:forEach>
 			</div>
+			
 			
 			
 			<!-- 추천순 게시판 불러오기 -->
@@ -254,6 +255,8 @@
 			  </c:forEach>
 			</div>
 			
+			
+			
 		</section>
 		
 		<!-- 로그인 유무에 따라 글작성 이동 가능 -->	
@@ -280,11 +283,15 @@
 function checkLogin(){
 	alert("로그인하셔야 작성하실수 있습니다.")
 	}
+	
+
 //최신순으로 게시물 불러오기
-function showFindWriteAll(element) {
+function showFindWriteAll(element,event) {
+  event.preventDefault();
   var findWriteAllDiv = document.getElementById("findWriteAll");
   var findWriteAllGoodDiv = document.getElementById("findWriteAllGood");
   var findWriteAllViewDiv = document.getElementById("findWriteAllView");
+  
   findWriteAllDiv.classList.remove("d-none");
   findWriteAllGoodDiv.classList.add("d-none");
   findWriteAllViewDiv.classList.add("d-none");
@@ -294,14 +301,15 @@ function showFindWriteAll(element) {
   element.style.fontWeight = 'bold';
   element.style.fontSize = '16px';
 
-  event.preventDefault(); // 기본 동작 막기
 }
 
 // 추천순으로 게시물 불러오기
-function showFindWriteAllGood(element) {
+function showFindWriteAllGood(element,event) {
+  event.preventDefault();
   var findWriteAllGoodDiv = document.getElementById("findWriteAllGood");
   var findWriteAllDiv = document.getElementById("findWriteAll");
   var findWriteAllViewDiv = document.getElementById("findWriteAllView");
+  
   findWriteAllGoodDiv.classList.remove("d-none");
   findWriteAllDiv.classList.add("d-none");
   findWriteAllViewDiv.classList.add("d-none");
@@ -311,24 +319,27 @@ function showFindWriteAllGood(element) {
   element.style.fontWeight = 'bold';
   element.style.fontSize = '16px';
 
-  event.preventDefault(); // 기본 동작 막기
+  
 }
 
 // 조회순으로 게시물 불러오기
-function showFindWriteAllView(element) {
+function showFindWriteAllView(element,event) {
+  event.preventDefault();
   var findWriteAllViewDiv = document.getElementById("findWriteAllView");
   var findWriteAllDiv = document.getElementById("findWriteAll");
   var findWriteAllGoodDiv = document.getElementById("findWriteAllGood");
+ 
   findWriteAllViewDiv.classList.remove("d-none");
   findWriteAllDiv.classList.add("d-none");
   findWriteAllGoodDiv.classList.add("d-none");
+ 
 
   resetStyles(element);
 
   element.style.fontWeight = 'bold';
   element.style.fontSize = '16px';
 
-  event.preventDefault(); // 기본 동작 막기
+  
 }
 
 // 스타일 초기화

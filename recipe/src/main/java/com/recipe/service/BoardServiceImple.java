@@ -132,4 +132,8 @@ public class BoardServiceImple implements BoardService {
 	public int countWriteUser(@Param("user_num") int user_num) throws Exception{
 		return boardmapper.countWriteUser(user_num);
 	}
+	//게시글 삭제(마이페이지에서)
+	public void DeleteRecipe(@Param("recipe_num") int recipe_num)throws Exception{
+		boardmapper.DeleteRecipe(recipe_num);
+	}
 }

@@ -78,4 +78,6 @@ public interface BoardMapper {
 	//user가 작성한 게시글 개수 불러오기
 	public int countWriteUser(@Param("user_num") int user_num) throws Exception;
 	
+	//게시글 삭제(마이페이지에서)
+	public void DeleteRecipe(@Param("recipe_num") int recipe_num)throws Exception;
 }

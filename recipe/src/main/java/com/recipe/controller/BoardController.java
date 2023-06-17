@@ -23,7 +23,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.recipe.model.BoardVO;
 import com.recipe.model.CommentVO;
+import com.recipe.model.Criteria;
 import com.recipe.model.MemberVO;
+import com.recipe.model.PageVO;
 import com.recipe.service.BoardService;
 import com.recipe.service.CommentService;
 import com.recipe.service.MypageService;
@@ -54,6 +56,7 @@ public class BoardController {
 		model.addAttribute("findWriteAll",findWriteAll);
 		model.addAttribute("findWriteAllGood",findWriteAllGood);
 		model.addAttribute("findWriteAllView",findWriteAllView);
+		
 		
 		logger.info("글작성 페이지 이동!");
 		
