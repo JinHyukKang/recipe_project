@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.recipe.mapper.BoardMapper;
 import com.recipe.model.MemberVO;
 import com.recipe.model.BoardVO;
+import com.recipe.model.GoodVO;
 
 
 
@@ -62,6 +63,21 @@ public class BoardServiceImple implements BoardService {
 	//추천수 감소
 	public void goodBack(int recipe_num)throws Exception{
 		boardmapper.goodBack(recipe_num);
+	}
+	
+	//추천 데이터 추가
+	public void goodInsert(GoodVO good)throws Exception{
+		boardmapper.goodInsert(good);
+	}
+	
+	//추천 데이터 불러오기
+	public List<GoodVO> goodGet(@Param("recipe_num") int recipe_num,@Param("user_num") int user_num)throws Exception{
+		return boardmapper.goodGet(recipe_num,user_num);
+	}
+	
+	//추천 데이터 삭제
+	public void goodDelete(@Param("recipe_num") int recipe_num,@Param("user_num") int user_num )throws Exception{
+		boardmapper.goodDelete(recipe_num, user_num);
 	}
 	
 	//댓글 수 증가

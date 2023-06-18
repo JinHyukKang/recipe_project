@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.recipe.model.BoardVO;
+import com.recipe.model.GoodVO;
 
 
 public interface BoardService {
@@ -35,6 +36,15 @@ public interface BoardService {
 	
 	//추천수 감소
 	public void goodBack(int recipe_num)throws Exception;
+	
+	//추천 데이터 추가
+	public void goodInsert(GoodVO good)throws Exception;
+	
+	//추천 데이터 불러오기
+	public List<GoodVO> goodGet(@Param("recipe_num") int recipe_num,@Param("user_num") int user_num)throws Exception;
+	
+	//추천 데이터 삭제
+	public void goodDelete(@Param("recipe_num") int recipe_num,@Param("user_num") int user_num )throws Exception;
 	
 	//댓글 수 증가
 	public void commentUpdate(int recipe_num)throws Exception;

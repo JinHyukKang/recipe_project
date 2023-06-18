@@ -143,9 +143,7 @@
 					</div>
 			    </div>
 			  </c:forEach>
-			  <div>
-			  	<a href="">더보기</a>
-			  </div>
+			  
 			</div>
 			
 			

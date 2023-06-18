@@ -24,6 +24,7 @@
 			<div class="d-flex">
 				<h2 class="mb-3"><strong>검색결과 게시물</strong></h2>
 			</div>
+			<c:if test="${searchWrite[0].recipe_num ne null}">
 			<div id="searchWrite" class="d-flex flex-wrap mb-3 ">
 			  <c:forEach var="searchWrite" items="${searchWrite}" varStatus="loop">
 			    <div style="margin-right: 100px; margin-bottom: 40px; width: 17%;"
@@ -75,7 +76,13 @@
 					</div>
 			    </div>
 			  </c:forEach>
-			</div>									
+			</div>
+			</c:if>
+			<c:if test="${searchWrite[0].recipe_num eq null}">
+				<div style="margin-left:400px; margin-top:80px;margin-bottom:250px;">
+					<h2>검색 결과가 없습니다</h2>
+				</div>
+			</c:if>						
 		</section>
 		
 		<!-- 로그인 유무에 따라 글작성 이동 가능 -->	
@@ -95,7 +102,10 @@
 	</div>
 </div>
 
-	<%@ include file="/resources/include/footer.jsp" %>
+<footer class="footer" style="position: fixed; bottom: 0; left: 0; right: 0;">
+    <%@ include file="/resources/include/footer.jsp" %>
+  </footer>
+
 
 
 <script>

@@ -43,14 +43,14 @@
 					<!-- 추천수 출력 및 추천하기 -->
 					<!-- 로그인 했을 경우에만 출력 가능 -->
 					
-					<c:if test="${user_id ne null && goodStatus eq null}">
+					<c:if test="${user_id ne null && goodVo[0].user_num eq null}">
 				        <a id="good_count_click" href="#" onclick="GoodClick(event, ${recipe_num})">
 				            <img id="good" src="${path}/resources/images/notgood.png"  name="good_count_img" style="width: 25px; height: 20px;">
 				        </a>
 				    </c:if>
-				    <c:if test="${user_id ne null && goodStatus ne null}">
+				    <c:if test="${user_id ne null && goodVo[0].user_num ne null}">
 				    	<a id="good_count_click" href="#" onclick="GoodClick(event, ${recipe_num}, '${goodStatus}')">
-					        <img id="good" src="${path}/resources/images/${goodStatus}.png"  name="good_count_img" style="width: 25px; height: 20px;">
+					        <img id="good" src="${path}/resources/images/good.png"  name="good_count_img" style="width: 25px; height: 20px;">
 					    </a>
 				    </c:if>
 				    <c:if test="${user_id eq null}">

@@ -1,7 +1,6 @@
 package com.recipe.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,16 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.recipe.model.BoardVO;
 import com.recipe.model.CommentVO;
-import com.recipe.model.Criteria;
-import com.recipe.model.MemberVO;
-import com.recipe.model.PageVO;
+import com.recipe.model.GoodVO;
 import com.recipe.service.BoardService;
 import com.recipe.service.CommentService;
-import com.recipe.service.MypageService;
 
 
 @Controller
@@ -145,7 +140,7 @@ public class BoardController {
 							)throws Exception{
 		
 		HttpSession session = request.getSession();
-	    String sessionKey = "goodStatus_" + recipe_num;
+	    int user_num = (int) session.getAttribute("user_num");
 		
 		//조회수 증가
 		boardservice.viewUpdate(recipe_num);
@@ -158,9 +153,10 @@ public class BoardController {
 		List<CommentVO> commentView = commentservice.commentView(recipe_num);
 		model.addAttribute("commentView",commentView);
 		
-		// 세션에서 추천 상태 가져오기
-	    String goodStatus = (String) session.getAttribute(sessionKey);
-	    model.addAttribute("goodStatus", goodStatus);
+		//추천수 데이터 가져오기
+		List<GoodVO> goodVo = boardservice.goodGet(recipe_num, user_num);
+		model.addAttribute("goodVo",goodVo);
+		
 	    
 	    //다음글 데이터 가져오기(최신순)
 	    List<BoardVO> nextPage = boardservice.nextPageDate(recipe_num);
@@ -248,20 +244,28 @@ public class BoardController {
 	}
 	
 	
-	//추천수 증가(최신순)
+	//추천수 증가
 	@RequestMapping(value="/Good.do", method = RequestMethod.POST)
 	public ResponseEntity<String> Good(HttpServletRequest request,
+						GoodVO good,
 						@RequestParam("recipe_num") int recipe_num,
 						@RequestParam("status") String status
 						)throws Exception{
 		
 		HttpSession session = request.getSession();
-	    String sessionKey = "goodStatus_" + recipe_num;
+		int user_num = (int) session.getAttribute("user_num");
+		String user_nickname = (String) session.getAttribute("user_nickname");
 		
 		
 		if(status.equals("good")) {		//추천을 하려는 경우
 			
-			session.setAttribute(sessionKey, "good");
+			//추천 데이터 증가
+			good.setRecipe_num(recipe_num);
+			good.setUser_nickname(user_nickname);
+			good.setUser_num(user_num);
+			
+			boardservice.goodInsert(good);
+			
 			//추천수 증가
 			boardservice.goodUpdate(recipe_num);
 			
@@ -269,7 +273,9 @@ public class BoardController {
 			
 		}else {	//추천을 취소하는 경우
 			
-			session.setAttribute(sessionKey, "notgood");
+			//추천 데이터 삭제
+			boardservice.goodDelete(recipe_num, user_num);			
+			
 			//추천수 감소
 			boardservice.goodBack(recipe_num);
 			
@@ -587,17 +593,28 @@ public class BoardController {
 		}
 	
 	//검색 결과 화면 이동
-	@RequestMapping(value="/searchWrite", method = RequestMethod.GET)
+	@ResponseBody
+	@RequestMapping(value="/searchWrite",produces="text/html; charset=UTF-8", method = RequestMethod.GET)
 	public String searchWrite(@RequestParam("keyword") String keyword,
 							 Model model)throws Exception{
 		
+		if(keyword.equals("")) {
+			String message = "<script>";
+		    message += "alert( '검색어를 입력해주세요');";
+		    message += "location.href='/';";
+		    message += "</script>";
+		    
+		    return message;
+		}else {
+			List<BoardVO> searchWrite = boardservice.searchWrite(keyword);
+			
+			//검색 결과 데이터 불러오기 메소드
+			model.addAttribute("searchWrite",searchWrite);
+			
+			
+			return "board/searchWrite";
+		}
 		
-		List<BoardVO> searchWrite = boardservice.searchWrite(keyword);
 		
-		//검색 결과 데이터 불러오기 메소드
-		model.addAttribute("searchWrite",searchWrite);
-		
-		
-		return "board/searchWrite";
 	}
 }

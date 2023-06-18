@@ -78,6 +78,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      recipe_num = #{recipe_num}
 </update>
 
+<!-- 추천 데이터 추가 -->
+<select id="goodInsert">
+INSERT INTO good (recipe_num, user_num, user_nickname)
+VALUES (
+	#{recipe_num},
+	#{user_num},
+	#{user_nickname}
+	)
+
+</select>
+
+<!-- 추천 정보 가져오기 -->
+<select id="goodGet" resultType="com.recipe.model.GoodVO">
+SELECT * 
+FROM good
+WHERE recipe_num = #{recipe_num} AND user_num = #{user_num}
+</select>
+
+<!-- 추천 데이터 삭제 -->
+<select id ="goodDelete">
+DELETE
+FROM good
+WHERE recipe_num = #{recipe_num} AND user_num = #{user_num}
+
+</select>
+
 <!-- 댓글수 증가 -->
 <update id="commentUpdate">
  UPDATE recipe
