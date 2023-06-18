@@ -91,6 +91,7 @@
 					<p id="orderbyView"><a href="#" onclick="showFindWriteAllView(this,event)" style="color: black; text-decoration: none;">조회순</a>|</p>
 				</div>
 			</div>
+			
 			<div id="findWriteAll" class="d-flex flex-wrap mb-3 ">
 			  <c:forEach var="findWriteAll" items="${findWriteAll}" varStatus="loop">
 			    <div style="margin-right: 100px; margin-bottom: 40px; width: 17%;"
@@ -142,6 +143,9 @@
 					</div>
 			    </div>
 			  </c:forEach>
+			  <div>
+			  	<a href="">더보기</a>
+			  </div>
 			</div>
 			
 			
