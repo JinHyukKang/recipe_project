@@ -63,7 +63,7 @@
 			  			</div>
 			  			<div class="d-flex">
 			  				<!-- 게시글 수정 -->
-			  				<button class="btn btn-success" style="height: 35px; margin-top:5px; margin-right:5px;">수정</button>
+			  				<button class="btn btn-success" onclick="location.href='/MyPage/MyPageUpdate?recipe_num=${findWrite.recipe_num}'" style="height: 35px; margin-top:5px; margin-right:5px;">수정</button>
 			  				<!-- 게시글 삭제 -->
 					    	<button class="btn btn-danger" onclick="deleteRecipe(${findWrite.recipe_num},event)" style="height: 35px; margin-top: 5px;">삭제</button>
 			  			</div>

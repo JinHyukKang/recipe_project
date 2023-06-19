@@ -95,7 +95,7 @@ public class BoardController {
 	      String fileName = uuids[0];
 	      
 	      //파일 저장 경로 설정
-	      String uploadPath = "C:/workspace/recipe/recipe/src/main/webapp/resources/upload/";
+	      String uploadPath = "D:/spring_project/recipe/recipe/src/main/webapp/resources/upload/";
 	      String filePath = uploadPath + fileName + fileExtension;
 	      //설정한 경로로 이미지 파일 저장
 	      file.transferTo(new File(filePath));
@@ -178,7 +178,7 @@ public class BoardController {
 							)throws Exception{
 		
 		HttpSession session = request.getSession();
-	    String sessionKey = "goodStatus_" + recipe_num;
+	    int user_num = (int) session.getAttribute("user_num");
 		
 		//조회수 증가
 		boardservice.viewUpdate(recipe_num);
@@ -191,9 +191,9 @@ public class BoardController {
 		List<CommentVO> commentView = commentservice.commentView(recipe_num);
 		model.addAttribute("commentView",commentView);
 		
-		// 세션에서 추천 상태 가져오기
-	    String goodStatus = (String) session.getAttribute(sessionKey);
-	    model.addAttribute("goodStatus", goodStatus);
+		//추천수 데이터 가져오기
+		List<GoodVO> goodVo = boardservice.goodGet(recipe_num, user_num);
+		model.addAttribute("goodVo",goodVo);
 		
 	    //다음글 데이터 가져오기(추천순)
 	    List<BoardVO> nextPage = boardservice.nextPageGood(recipe_num);
@@ -214,7 +214,7 @@ public class BoardController {
 							)throws Exception{
 		
 		HttpSession session = request.getSession();
-	    String sessionKey = "goodStatus_" + recipe_num;
+	    int user_num = (int) session.getAttribute("user_num");
 		
 		//조회수 증가
 		boardservice.viewUpdate(recipe_num);
@@ -227,9 +227,9 @@ public class BoardController {
 		List<CommentVO> commentView = commentservice.commentView(recipe_num);
 		model.addAttribute("commentView",commentView);
 		
-		// 세션에서 추천 상태 가져오기
-	    String goodStatus = (String) session.getAttribute(sessionKey);
-	    model.addAttribute("goodStatus", goodStatus);
+		//추천수 데이터 가져오기
+		List<GoodVO> goodVo = boardservice.goodGet(recipe_num, user_num);
+		model.addAttribute("goodVo",goodVo);
 		
 	    //다음글 데이터 가져오기(조회순)
 	    List<BoardVO> nextPage = boardservice.nextPageView(recipe_num);

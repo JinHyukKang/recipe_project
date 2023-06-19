@@ -197,6 +197,25 @@ public class MypageController {
 	   
    }
    
+   //마이페이지 게시글 수정 페이지 이동
+   @RequestMapping(value = "/MyPageUpdate", method = RequestMethod.GET)
+   public String MyPageUpdate(BoardVO board,
+				Model model,
+				HttpSession session,
+				@RequestParam("recipe_num") int recipe_num)throws Exception{
+	   
+		int user_num = (int) session.getAttribute("user_num");
+
+		// user가 작성한 게시글중 recipe_num과 일치하는 게시글 가져오기
+		List<BoardVO> mypageView = boardservice.mypageView(recipe_num, user_num);
+
+		// 불러온 해당 게시글 데이터 model에 저장
+		model.addAttribute("mypageView", mypageView);
+
+		logger.info("마이페이지 수정 이동!");
+
+		return "/MyPage/MyPageUpdate";
+   }
    
    
    
