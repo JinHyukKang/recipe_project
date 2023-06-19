@@ -90,4 +90,11 @@ public interface BoardMapper {
 	
 	//게시글 삭제(마이페이지에서)
 	public void DeleteRecipe(@Param("recipe_num") int recipe_num)throws Exception;
+	
+	//마이페이지 게시글 수정(이미지 포함)
+	public void recipeUpdateImg(Map<String, Object> map)throws Exception;
+	
+	//마이페이지 게시글 수정(이미지 미포함)
+	public void recipeUpdate(Map<String, Object> map)throws Exception;
+	
 }

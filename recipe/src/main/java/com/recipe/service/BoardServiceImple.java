@@ -152,4 +152,29 @@ public class BoardServiceImple implements BoardService {
 	public void DeleteRecipe(@Param("recipe_num") int recipe_num)throws Exception{
 		boardmapper.DeleteRecipe(recipe_num);
 	}
+	
+	//마이페이지 게시글 수정(이미지 포함)
+	public void recipeUpdateImg(@Param("recipe_num") int recipe_num, @Param("user_num")int user_num,
+								String recipe_title, String recipe_filename, String recipe_realname, String file_path, String recipe_content)throws Exception{
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("recipe_title", recipe_title);
+		map.put("recipe_filename", recipe_filename);
+		map.put("recipe_realname", recipe_realname);
+		map.put("file_path", file_path);
+		map.put("recipe_content", recipe_content);
+		
+		boardmapper.recipeUpdateImg(map);
+	}
+	
+	//마이페이지 게시글 수정(이미지 미포함)
+	public void recipeUpdate(@Param("recipe_num") int recipe_num, @Param("user_num")int user_num,
+							String recipe_title, String recipe_content)throws Exception{
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("recipe_title", recipe_title);
+		map.put("recipe_content", recipe_content);
+		
+		boardmapper.recipeUpdate(map);
+	}
 }

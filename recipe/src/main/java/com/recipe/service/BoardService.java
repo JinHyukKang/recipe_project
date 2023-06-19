@@ -1,6 +1,7 @@
 package com.recipe.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -90,5 +91,14 @@ public interface BoardService {
 	
 	//게시글 삭제(마이페이지에서)
 	public void DeleteRecipe(@Param("recipe_num") int recipe_num)throws Exception;
+	
+	//마이페이지 게시글 수정(이미지 포함)
+	public void recipeUpdateImg(@Param("recipe_num") int recipe_num, @Param("user_num")int user_num,
+								String recipe_title, String recipe_filename, String recipe_realname, String file_path, String recipe_content)throws Exception;
+	
+	//마이페이지 게시글 수정(이미지 미포함)
+	public void recipeUpdate(@Param("recipe_num") int recipe_num, @Param("user_num")int user_num,
+							String recipe_title, String recipe_content)throws Exception;
+	
 	
 }

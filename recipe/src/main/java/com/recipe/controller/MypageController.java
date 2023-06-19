@@ -1,6 +1,8 @@
 package com.recipe.controller;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.recipe.model.BoardVO;
 import com.recipe.model.CommentVO;
@@ -216,6 +219,56 @@ public class MypageController {
 
 		return "/MyPage/MyPageUpdate";
    }
+   
+  //마이페이지 게시글 수정 기능
+  @ResponseBody
+  @RequestMapping(value = "/MyPageUpdate.do", produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+  public String MyPageUpdateDo(BoardVO board,
+		  						Model model,
+		  						HttpSession session,
+		  						@RequestParam("recipe_num") int recipe_num,
+		  						@RequestParam("recipeFile") MultipartFile file,
+		  						@RequestParam("recipe_title") String recipe_title,
+		  						@RequestParam("recipe_content") String recipe_content)throws Exception{
+	  	
+		int user_num = (int) session.getAttribute("user_num");
+		String message = "";
+		
+		// 이미지 파일 업로드
+		if (!file.isEmpty()) {
+			String real_fileName = file.getOriginalFilename();// 업로드한 파일 이름 받아오기
+			long size = file.getSize(); // 업로드한 파일 크기 받아오기
+			String fileExtension = real_fileName.substring(real_fileName.lastIndexOf("."), real_fileName.length());
+																													
+
+			// 업로드 파일명 중복을 방지하기 위해 임의의 파일명 부여
+			UUID uuid = UUID.randomUUID();
+			String[] uuids = uuid.toString().split("-");
+			String fileName = uuids[0];
+
+			// 파일 저장 경로 설정
+			String uploadPath = "D:/spring_project/recipe/recipe/src/main/webapp/resources/upload/";
+			String filePath = uploadPath + fileName + fileExtension;
+			// 설정한 경로로 이미지 파일 저장
+			file.transferTo(new File(filePath));
+			
+			boardservice.recipeUpdateImg(recipe_num, user_num, recipe_title,fileName, real_fileName, filePath, recipe_content);
+			
+			message = "<script>";
+			message += "alert('게시글수정이 완료되었습니다.');";
+			message += "location.href='/MyPage/MyPagePost';";
+			message += "</script>";
+		} else {
+			
+			boardservice.recipeUpdate(recipe_num, user_num, recipe_title, recipe_content);
+			
+			message = "<script>";
+			message += "alert('게시글수정이 완료되었습니다.');";
+			message += "location.href='/MyPage/MyPagePost';";
+			message += "</script>";
+		}
+	return message;
+  }
    
    
    

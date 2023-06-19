@@ -276,8 +276,30 @@ WHERE recipe_num = #{recipe_num} AND user_num = #{user_num}
 
 </select>
 
+<!-- 마이페이지 게시글 수정(이미지 수정 포함) -->
+<update id="recipeUpdateImg">
+UPDATE recipe
+SET
+	recipe_title = #{recipe_title},
+	recipe_filename = #{recipe_filename},
+	recipe_realname = #{recipe_realname},
+	file_path = #{file_path},
+	recipe_content = #{recipe_content}
+WHERE 
+	recipe_num = #{recipe_num} AND user_num = #{user_num}
 
+</update>
 
+<!-- 마이페이지 게시글 수정(이미지 수정 미포함) -->
+<update id="recipeUpdate">
+UPDATE recipe
+SET
+	recipe_title = #{recipe_title},
+	recipe_content = #{recipe_content}
+WHERE 
+	recipe_num = #{recipe_num} AND user_num = #{user_num}
+
+</update>
 
 
 

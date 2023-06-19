@@ -8,8 +8,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 회원가입 -->
 	<insert id="memberJoin">
-       insert into users(user_id, user_pass, user_name, user_gender, user_birth, user_nickname, user_email, user_postcode,user_addr,user_detailaddr,user_extraaddr) 
-       values(#{user_id}, #{user_pass}, #{user_name}, #{user_gender}, #{user_birth}, #{user_nickname}, #{user_email},#{user_postcode}, #{user_addr},#{user_detailaddr},#{user_extraaddr})
+       insert into users
+       (user_id, user_pass, user_name, user_gender, user_birth, user_nickname, 
+       user_email, user_postcode,user_addr,user_detailaddr,user_extraaddr) 
+       values
+       (#{user_id}, #{user_pass}, #{user_name}, #{user_gender}, #{user_birth}, #{user_nickname},
+        #{user_email},#{user_postcode}, #{user_addr},#{user_detailaddr},#{user_extraaddr})
     </insert>
     
 	<!-- 아이디 중복 체크 -->
