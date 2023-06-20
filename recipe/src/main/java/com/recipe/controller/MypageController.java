@@ -46,7 +46,7 @@ public class MypageController {
    
   //마이페이지 접속
    @RequestMapping(value="/MyPage", method = RequestMethod.GET)
-   public  String MyPagepop(HttpSession session, Model model) throws Exception {
+   public  String MyPage(HttpSession session, Model model) throws Exception {
       
       logger.info("마이페이지 접속");
 

@@ -43,7 +43,7 @@
 				</c:if>
 	
 				<!-- 로그인 후 헤더 카테고리 -->
-				<c:if test="${user_id ne null}">
+				<c:if test="${user_id ne null && user_id ne 'admin'}">
 				<li class="nav-item">
 					<a class="nav-link" href="/member/logout.do">
 					logout
@@ -55,6 +55,21 @@
 					</a>
 				</li>
 				</c:if>
+				
+				<!-- 관리자 헤더 카테고리 -->
+				<c:if test="${user_id eq 'admin'}">
+				<li class="nav-item">
+					<a class="nav-link" href="/member/logout.do">
+					logout
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/Admin/AdminPost">
+					Admin
+					</a>
+				</li>
+				</c:if>
+				
 			
 			</ul>
 			<form class="d-flex">

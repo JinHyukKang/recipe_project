@@ -39,5 +39,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT user_pass FROM users
     	WHERE user_id = #{user_id} AND user_email = #{user_email}
 	</select>
-
+	
+	<!-- 전체 회원정보 가져오기 -->
+	<select id="AllMember" resultType="com.recipe.model.MemberVO">
+		SELECT *
+    	FROM users
+	</select>
+	
+	<!-- 회원전체 인원수 -->
+	<select id="UserCount" resultType="int">
+	    SELECT COUNT(*)
+	    FROM users
+	    WHERE user_id &lt;&gt; 'admin';
+	</select>
+	
 </mapper>

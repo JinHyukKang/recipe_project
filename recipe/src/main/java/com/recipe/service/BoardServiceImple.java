@@ -158,6 +158,8 @@ public class BoardServiceImple implements BoardService {
 								String recipe_title, String recipe_filename, String recipe_realname, String file_path, String recipe_content)throws Exception{
 		Map<String, Object> map = new HashMap<>();
 		
+		map.put("recipe_num",recipe_num);
+		map.put("user_num",user_num);
 		map.put("recipe_title", recipe_title);
 		map.put("recipe_filename", recipe_filename);
 		map.put("recipe_realname", recipe_realname);
@@ -172,6 +174,8 @@ public class BoardServiceImple implements BoardService {
 							String recipe_title, String recipe_content)throws Exception{
 		Map<String, Object> map = new HashMap<>();
 		
+		map.put("recipe_num",recipe_num);
+		map.put("user_num",user_num);
 		map.put("recipe_title", recipe_title);
 		map.put("recipe_content", recipe_content);
 		

@@ -1,6 +1,8 @@
 package com.recipe.service;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
@@ -23,5 +25,11 @@ public interface MemberService {
 	
 	//비밀번호 찾기
 	public MemberVO findpw(String user_id, String user_email) throws Exception;
+	
+	//전체 회원정보 가져오기
+	public List<MemberVO> AllMember()throws Exception;
+	
+	//회원 전체 인원수
+	public int UserCount()throws Exception;
 	
 }

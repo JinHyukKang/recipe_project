@@ -1,5 +1,7 @@
 package com.recipe.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
@@ -52,4 +54,14 @@ public class MemberServiceImple implements MemberService{
 		return membermapper.findpw(user_id, user_email);
 	}
 	
+	//전체 회원정보 가져오기
+	public List<MemberVO> AllMember()throws Exception{
+		return membermapper.AllMember();
+	}
+	
+	//회원 전체 인원수
+	public int UserCount()throws Exception{
+		int cnt = membermapper.UserCount();
+		return cnt;
+	}
 }
