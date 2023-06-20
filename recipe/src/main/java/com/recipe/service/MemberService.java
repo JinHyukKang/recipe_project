@@ -32,4 +32,7 @@ public interface MemberService {
 	//회원 전체 인원수
 	public int UserCount()throws Exception;
 	
+	//관리자페이지(회원탈퇴)
+	public void DeleteUser(@Param("user_num") int user_num)throws Exception;
+	
 }

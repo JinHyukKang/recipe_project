@@ -53,4 +53,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    WHERE user_id &lt;&gt; 'admin';
 	</select>
 	
+	<!-- 관리자페이지(회원탈퇴) -->
+	<select id="DeleteUser">
+		DELETE FROM users
+   		WHERE user_num = #{user_num}
+	</select>
+	
+	
 </mapper>

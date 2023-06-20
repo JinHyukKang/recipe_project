@@ -9,8 +9,8 @@ public class NotifyVO {
 	private String user_nickname;
 	private int user_num;
 	private Date insert_date;
-	private String recipe_filename;
-	private String recipe_realname;
+	private String notify_filename;
+	private String notify_realname;
 	private String file_path;
 	public int getNotify_num() {
 		return notify_num;
@@ -49,16 +49,16 @@ public class NotifyVO {
 		this.insert_date = insert_date;
 	}
 	public String getRecipe_filename() {
-		return recipe_filename;
+		return notify_filename;
 	}
 	public void setRecipe_filename(String recipe_filename) {
-		this.recipe_filename = recipe_filename;
+		this.notify_filename = recipe_filename;
 	}
 	public String getRecipe_realname() {
-		return recipe_realname;
+		return notify_realname;
 	}
 	public void setRecipe_realname(String recipe_realname) {
-		this.recipe_realname = recipe_realname;
+		this.notify_realname = recipe_realname;
 	}
 	public String getFile_path() {
 		return file_path;

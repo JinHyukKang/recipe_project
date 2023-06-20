@@ -32,22 +32,22 @@
 	  		
 	  		<div class="border" style="border-radius: 10px; width:1200px;">
 	  			<div class="d-flex" style="border-bottom: 1px solid black; background-color:lightgray; border-radius: 10px;">
-		  			<p style="margin-top:5px; margin-bottom: 5px; margin-left:25px; margin-right:25px;"><strong>No.</strong></p>
+		  			<p style="margin-top:5px; margin-bottom: 5px; margin-left:10px; margin-right:15px;"><strong>No.</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px; width:100px;"><strong>아이디</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px; width:100px;"><strong>회원명</strong></p>
-		  			<p style="margin-top:5px; margin-bottom: 5px; width:100px;"><strong>닉네임</strong></p>
+		  			<p style="margin-top:5px; margin-bottom: 5px; width:90px;"><strong>닉네임</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px; width:80px;"><strong>성별</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px; width:100px;"><strong>이메일</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px; width:100px;"><strong>우편번호</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px; width:100px;"><strong>주소</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px; width:80px;"><strong>상세주소</strong></p>
-		  			<p style="margin-top:5px; margin-bottom: 5px; width:90px;"><strong>참고주소</strong></p>
-		  			<p style="margin-top:5px; margin-bottom: 5px; width:100px;"><strong>생년월일</strong></p>
+		  			<p style="margin-top:5px; margin-bottom: 5px; width:85px;"><strong>참고주소</strong></p>
+		  			<p style="margin-top:5px; margin-bottom: 5px; width:90px;"><strong>생년월일</strong></p>
 		  			<p style="margin-top:5px; margin-bottom: 5px;"><strong>등록일</strong></p>
 	  			</div>
 	  			<c:forEach var="AllMember" items="${AllMember}" varStatus="loop" begin="${page.cri.startNum}" end="${page.cri.startNum + page.cri.amount - 1}">
 		  			<div class="d-flex md-3">
-		  				<div style="margin-top:5px; margin-left:30px; width:50px;">
+		  				<div style="margin-top:5px; margin-left:10px; width:40px;">
 			  				<p>${loop.index + 1}</p>
 			  			</div>
 			  			<div style="margin-top:5px; width:100px;">
@@ -56,7 +56,7 @@
 			  			<div style="margin-top:5px; width:100px;">
 			  				<p>${AllMember.user_name}</p>
 			  			</div>
-			  			<div style="margin-top:5px; width:100px;">
+			  			<div style="margin-top:5px; width:90px;">
 			  				<p>${AllMember.user_nickname}</p>
 			  			</div>
 			  			<div style="margin-top:5px; width:70px;">
@@ -77,14 +77,15 @@
 			  			<div style="margin-top:5px; width:80px;">
 			  				<p>${AllMember.user_extraaddr}</p>
 			  			</div>
-			  			<div style="margin-top:5px; margin-bottom: 5px; margin-right: 30px;">
+			  			<div style="margin-top:5px; margin-bottom: 5px; margin-right: 20px;">
 			  				<p>${AllMember.user_birth}</p>
 			  			</div>
 			  			<div style="margin-top:5px; margin-bottom: 5px; margin-right: 30px;">
-			  				<p><fmt:formatDate value="${AllMember.join_date}" pattern="yyyy-MM-dd-HH-mm" /></p>
+			  				<p><fmt:formatDate value="${AllMember.join_date}" pattern="yyyy-MM-dd" /></p>
 			  			</div>
 			  			<div class="d-flex">
-			  				
+			  			<!-- 게시글 삭제 -->
+				    	<button class="btn btn-danger" onclick="deleteUser(${AllMember.user_num},event)" style="height: 35px; margin-top: 5px;">회원탈퇴</button>	
 			  				
 			  			</div>
 		  			</div>
@@ -123,7 +124,26 @@
     <%@ include file="/resources/include/footer.jsp" %>
 </footer>
 
-
+<script>
+//회원탈퇴(관리자페이지)
+function deleteUser(user_num,event) {
+	event.preventDefault();
+    if (confirm("회원을 탈퇴시키겠습니까?")) {
+        $.ajax({
+            url: '/Admin/DeleteUser.do',
+            type: 'post',
+            data: {user_num: user_num },
+            success: function(response) {
+                alert("회원이 정상적으로 탈퇴 되었습니다.");
+                location.href = '/Admin/AdminMember';
+            },
+            error: function(xhr, status, error) {
+                alert("회원 탈퇴에 실패했습니다.");
+            }
+        });
+    }
+}
+</script>
 
 </body>
 </html>

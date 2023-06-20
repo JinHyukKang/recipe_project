@@ -65,10 +65,10 @@
 			  			<div style="margin-top:5px; margin-bottom: 5px; margin-right: 30px;">
 			  				<p><fmt:formatDate value="${findWriteAll.insert_date}" pattern="yyyy-MM-dd-HH-mm" /></p>
 			  			</div>
-			  			<div class="d-flex">
-			  				<!-- 게시글 삭제 -->
-					    	<button class="btn btn-danger" onclick="deleteRecipe(${findWriteAll.recipe_num},event)" style="height: 35px; margin-top: 5px;">삭제</button>
-			  			</div>
+			  			
+		  				<!-- 게시글 삭제 -->
+				    	<button class="btn btn-danger" onclick="deleteRecipe(${findWriteAll.recipe_num},event)" style="height: 35px; margin-top: 5px;">삭제</button>
+			  			
 		  			</div>
 	  			</c:forEach>
 	  		</div>
@@ -124,10 +124,6 @@ function deleteRecipe(recipe_num,event) {
         });
     }
 }
-
-
-
-
 </script>
 
 </body>

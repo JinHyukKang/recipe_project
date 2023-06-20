@@ -7,11 +7,13 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.recipe.model.BoardVO;
 import com.recipe.model.Criteria;
@@ -78,5 +80,29 @@ public class AdminController {
 
 			return "/Admin/AdminPost";	 
 	 }
+	 
+	// 게시글 삭제
+	@ResponseBody
+	@RequestMapping(value = "/DeleteRecipe.do", method = RequestMethod.POST)
+	public ResponseEntity<String> DeleteRecipe(BoardVO board, Model model,
+			@RequestParam("recipe_num") int recipe_num) throws Exception {
+
+			// 게시글 삭제 메소드 호출
+			boardservice.DeleteRecipe(recipe_num);
+
+			return ResponseEntity.ok("success");
+		}
+	
+	//관리자페이지(회원탈퇴)
+	@ResponseBody
+	@RequestMapping(value = "/DeleteUser.do", method = RequestMethod.POST)
+	public ResponseEntity<String> DeleteUser(BoardVO board, Model model,
+			@RequestParam("user_num") int user_num) throws Exception {
+
+			// 게시글 삭제 메소드 호출
+			memberservice.DeleteUser(user_num);
+
+			return ResponseEntity.ok("success");
+		}
 
 }

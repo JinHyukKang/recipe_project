@@ -64,4 +64,8 @@ public class MemberServiceImple implements MemberService{
 		int cnt = membermapper.UserCount();
 		return cnt;
 	}
+	//관리자페이지(회원탈퇴)
+	public void DeleteUser(@Param("user_num") int user_num)throws Exception{
+		membermapper.DeleteUser(user_num);
+	}
 }

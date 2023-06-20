@@ -21,4 +21,7 @@ public interface MypageMapper {
 	
 	//회원탈퇴
 	public void memberout(@Param("user_id") String user_id, @Param("user_pass") String user_pass)throws Exception;
+	
+	//관리자페이지(회원탈퇴)
+	public void DeleteUser(@Param("user_num") int user_num)throws Exception;
 }

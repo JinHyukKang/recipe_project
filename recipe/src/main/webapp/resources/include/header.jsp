@@ -100,7 +100,7 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="">
+					<a class="nav-link" href="/Notify/Notify">
 					공지사항
 					</a>
 				</li>
