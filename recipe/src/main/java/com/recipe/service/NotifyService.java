@@ -2,6 +2,8 @@ package com.recipe.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.recipe.model.NotifyVO;
 
 public interface NotifyService {
@@ -14,4 +16,10 @@ public interface NotifyService {
 	
 	//공지사항 개수 불러오기
 	public int countNotify()throws Exception;
+	
+	//공지사항 상세보기 데이터 불러오기
+	public List<NotifyVO> notifyView(@Param("notify_num") int notify_num)throws Exception;
+	
+	//공지사항 삭제하기
+	public void DeleteNotify(@Param("notify_num") int notify_num)throws Exception;
 }

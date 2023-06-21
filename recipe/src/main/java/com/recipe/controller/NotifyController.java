@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -104,8 +105,8 @@ public class NotifyController {
 	      file.transferTo(new File(filePath));
 	      
 	      //BoadVO에 user가 설정한 파일명, 임의로 부가한 파일명, 파일 저장 경로 설정
-	      notify.setRecipe_realname(real_fileName); 
-	      notify.setRecipe_filename(fileName);
+	      notify.setNotify_realname(real_fileName);
+	      notify.setNotify_filename(real_fileName);
 	      notify.setFile_path(filePath);
 	      
 	      notifyservice.notifyWrite(notify);
@@ -134,6 +135,33 @@ public class NotifyController {
 
 	    
 	}
+	
+	//공지사항상세보기 페이지 이동
+	@RequestMapping(value="/NotifyView", method = RequestMethod.GET)
+	public String NotifyView(Model model,
+							@RequestParam("notify_num") int notify_num)throws Exception{
+		
+		//공지사항 상세보기 데이터 불러오기
+		List<NotifyVO> notifyView = notifyservice.notifyView(notify_num);
+		model.addAttribute("notifyView",notifyView);
+		
+		
+		logger.info("공지사항상세보기 이동");
+		
+		return "/Notify/NotifyView";
+	 }
+	
+	//공지사항삭제
+	@ResponseBody
+	@RequestMapping(value="/DeleteNotify.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	public ResponseEntity<String> DeleteNotify(@RequestParam("notify_num") int notify_num)throws Exception{
+		
+		//공지사항 삭제 메소드
+		notifyservice.DeleteNotify(notify_num);
+		
+		return ResponseEntity.ok("success");
+	}
+	
 	
 	
 }

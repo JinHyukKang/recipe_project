@@ -48,16 +48,16 @@ public class NotifyVO {
 	public void setInsert_date(Date insert_date) {
 		this.insert_date = insert_date;
 	}
-	public String getRecipe_filename() {
+	public String getNotify_filename() {
 		return notify_filename;
 	}
-	public void setRecipe_filename(String recipe_filename) {
+	public void setNotify_filename(String recipe_filename) {
 		this.notify_filename = recipe_filename;
 	}
-	public String getRecipe_realname() {
+	public String getNotify_realname() {
 		return notify_realname;
 	}
-	public void setRecipe_realname(String recipe_realname) {
+	public void setNotify_realname(String recipe_realname) {
 		this.notify_realname = recipe_realname;
 	}
 	public String getFile_path() {

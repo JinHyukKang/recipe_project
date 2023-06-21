@@ -29,10 +29,12 @@
 						<h6 style="font-style:oblique;">작성일 : <fmt:formatDate value="${viewWrite.insert_date}" pattern="yyyy년 MM월 dd일 HH시 mm분" /></h6>
 					</div>
 				</div>
-				<div class="justify-content-center row mt-5 mb-5" style="margin-bottom:100px;">
-					<img src="${path}/resources/upload/${viewWrite.recipe_filename}.jpg" 
-					id="recipe_filename" name="recipe_filename" style="width: 600px; height: 400px;">
-				</div>
+				<c:if test="${not empty viewWrite.recipe_filename}">
+					<div class="justify-content-center row mt-5 mb-5" style="margin-bottom:100px;">
+						<img src="${path}/resources/upload/${viewWrite.recipe_filename}.jpg" 
+						id="recipe_filename" name="recipe_filename" style="width: 600px; height: 400px;">
+					</div>
+				</c:if>
 				<div style="margin-left:100px; margin-right:100px; margin-bottom:80px;">
 					<p style="font-size:18px;">${viewWrite.recipe_content}</p>
 				</div>

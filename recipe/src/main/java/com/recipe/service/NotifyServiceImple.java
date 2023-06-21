@@ -2,6 +2,7 @@ package com.recipe.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +28,25 @@ public class NotifyServiceImple implements NotifyService {
 	public int countNotify()throws Exception{
 		return notifymapper.countNotify();
 	}
+	
+	//공지사항 상세보기 데이터 불러오기
+	public List<NotifyVO> notifyView(@Param("notify_num") int notify_num)throws Exception{
+		return notifymapper.notifyView(notify_num);
+	}
+	
+	//공지사항 삭제하기
+	public void DeleteNotify(@Param("notify_num") int notify_num)throws Exception{
+		notifymapper.DeleteNotify(notify_num);
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+

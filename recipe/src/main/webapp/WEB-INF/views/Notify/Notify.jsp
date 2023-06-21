@@ -25,18 +25,18 @@
 		  			<p style="margin-top:5px; margin-bottom: 5px;"><strong>작성일</strong></p>
 	  			</div>
 	  			<c:forEach var="findNotify" items="${findNotify}" varStatus="loop" begin="${page.cri.startNum}" end="${page.cri.startNum + page.cri.amount - 1}">
-		  			<div class="d-flex">
+		  			<div class="d-flex" style="height:40px;">
 		  				<div style="margin-top:5px; margin-left:30px; width:45px;">
 			  				<p>${findNotify.notify_num}</p>
 			  			</div>
 			  			<div style="margin-top:5px; width:450px;margin-right:10px;">
 			  				<p>
-			  				<a href="/Notify/NotifyView?recipe_num=${findNotify.notify_num}" 
+			  				<a href="/Notify/NotifyView?notify_num=${findNotify.notify_num}" 
 			  				style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; 
 			  				width: 250px;display: inline-block;">
 			  			${findNotify.notify_title}</a></p>
 			  			</div>
-			  			<div style="margin-top:5px; width:120px;margin-right:40px;">
+			  			<div style="margin-top:5px; width:120px;margin-right:35px;">
 			  				<p>${findNotify.user_nickname}</p>
 			  			</div>
 			  			<div style="margin-top:5px; margin-bottom: 5px; margin-right: 30px;">
@@ -44,9 +44,9 @@
 			  			</div>
 			  			<c:if test="${user_id eq 'admin'}">
 			  				<!-- 게시글 수정 -->
-			  				<button class="btn btn-success" onclick="location.href='/Notify/NotifyView?recipe_num=${findNotify.notify_num}'" style="height: 35px; margin-top:5px; margin-right:5px;">수정</button>
+			  				<button class="btn btn-success" onclick="location.href='/Notify/NotifyView?notify_num=${findNotify.notify_num}'" style="height: 35px; margin-top:3px; margin-right:5px;">수정</button>
 			  				<!-- 게시글 삭제 -->
-				    		<button class="btn btn-danger" onclick="deleteNotify(${findNotify.notify_num},event)" style="height: 35px; margin-top: 5px;">삭제</button>	
+				    		<button class="btn btn-danger" onclick="deleteNotify(${findNotify.notify_num},event)" style="height: 35px; margin-top: 3px;">삭제</button>	
 			  			</c:if>
 		  			</div>
 	  			</c:forEach>
@@ -68,17 +68,17 @@
  
  
  <script>
-//회원탈퇴(관리자페이지)
+//공지글 삭제
 function deleteNotify(notify_num,event) {
 	event.preventDefault();
     if (confirm("공지글을 삭제하시겠습니까?")) {
         $.ajax({
-            url: '/Admin/DeleteUser.do',
+            url: '/Notify/DeleteNotify.do',
             type: 'post',
             data: {notify_num: notify_num },
             success: function(response) {
                 alert("공지글이 정상적으로 삭제 되었습니다.");
-                location.href = '/Admin/AdminMember';
+                location.href = '/Notify/Notify';
             },
             error: function(xhr, status, error) {
                 alert("공지글 삭제에 실패했습니다.");

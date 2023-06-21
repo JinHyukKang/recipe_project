@@ -25,13 +25,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 공지사항 데이터 불러오기 -->
 <select id="findNotify" resultType="com.recipe.model.NotifyVO">
-SELECT *
-FROM notify
+	SELECT *
+	FROM notify
+	ORDER BY insert_date DESC
 </select>
 
 <!-- 공지사항 게시글 개수 가져오기 -->
 <select id="countNotify" resultType="int">
-SELECT COUNT(*)
-FROM notify
+	SELECT COUNT(*)
+	FROM notify
 </select>
+
+<!-- 공지사항 상세 보기 데이터 불러오기 -->
+<select id="notifyView" resultType="com.recipe.model.NotifyVO">
+	SELECT *
+	FROM notify
+	WHERE notify_num = #{notify_num}
+</select>
+
+<!-- 공지글 삭제하기 -->
+<select id="DeleteNotify">
+	DELETE *
+	FROM notify
+	WHERE notify_num = #{notify_num}
+</select>
+
+
 </mapper>
