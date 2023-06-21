@@ -99,7 +99,7 @@ public class NotifyController {
 	      String fileName = uuids[0];
 	      
 	      //파일 저장 경로 설정
-	      String uploadPath = "D:/spring_project/recipe/recipe/src/main/webapp/resources/upload/";
+	      String uploadPath = "C:/workspace/recipe/recipe/src/main/webapp/resources/upload/";
 	      String filePath = uploadPath + fileName + fileExtension;
 	      //설정한 경로로 이미지 파일 저장
 	      file.transferTo(new File(filePath));
@@ -153,13 +153,44 @@ public class NotifyController {
 	
 	//공지사항삭제
 	@ResponseBody
-	@RequestMapping(value="/DeleteNotify.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	@RequestMapping(value="/DeleteNotify.do", method = RequestMethod.POST)
 	public ResponseEntity<String> DeleteNotify(@RequestParam("notify_num") int notify_num)throws Exception{
 		
 		//공지사항 삭제 메소드
 		notifyservice.DeleteNotify(notify_num);
 		
 		return ResponseEntity.ok("success");
+	}
+	
+	//공지사항 수정페이지 이동
+	@RequestMapping(value="/NotifyUpdate", method = RequestMethod.GET)
+	public String NotifyUpdate(@RequestParam("notify_num") int notify_num,
+								Model model)throws Exception{
+		
+		
+		//공지사항 상세보기 데이터 불러오기
+		List<NotifyVO> notifyView = notifyservice.notifyView(notify_num);
+		model.addAttribute("notifyView",notifyView);
+		
+		
+		logger.info("공지사항 수정페이지 이동");
+		
+		return "/Notify/NotifyUpdate";
+	}
+	
+	//공지사항 수정
+	@RequestMapping(value="/NotifyUpdate.do", method = RequestMethod.POST)
+	public String NotifyUpdateDo(Model model,
+								@RequestParam("notify_num") int notify_num,
+								@RequestParam("notifyFile") MultipartFile file,
+								@RequestParam("notify_title") String notify_title,
+								@RequestParam("notify_content") String notify_content)throws Exception{
+		
+		String message="";
+		
+		
+		
+		return "";
 	}
 	
 	

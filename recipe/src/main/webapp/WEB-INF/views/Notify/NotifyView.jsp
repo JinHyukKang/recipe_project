@@ -13,6 +13,7 @@
 <title>공지사항 상세보기</title>
 </head>
 <body>
+<%@ include file="/resources/include/header.jsp" %>
 <div class="container">
 	<div class="row mt-5">
 		<div class="col-md-12">
@@ -36,13 +37,14 @@
 					<p style="font-size:18px;">${notifyView.notify_content}</p>
 				</div>
 			</div>
-			
 			</c:forEach>
-		
-		
-		
+			<!-- 목록으로 -->
+			<div class="mb-3">
+				<button type="button" class="btn btn-secondary row mt-3 mx-3" onclick="location.href = '/Notify/Notify';">목록으로</button>
+			</div>
 		</div>
 	</div>
 </div>
+<%@ include file="/resources/include/footer.jsp" %>
 </body>
 </html>

@@ -277,7 +277,7 @@
 	</div>
 </div>
 
-	<%@ include file="/resources/include/footer.jsp" %>
+<%@ include file="/resources/include/footer.jsp" %>
 
 
 <script>

@@ -22,4 +22,10 @@ public interface NotifyService {
 	
 	//공지사항 삭제하기
 	public void DeleteNotify(@Param("notify_num") int notify_num)throws Exception;
+	
+	//공지사항 수정하기(이미지포함)
+	public void notifyUpdateImg(@Param("notify_num") int notify_num)throws Exception;
+		
+	//공지사항 수정하기(이미지미포함)
+	public void notifyUpdate(@Param("notify_num") int notify_num)throws Exception;
 }

@@ -45,10 +45,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 공지글 삭제하기 -->
 <select id="DeleteNotify">
-	DELETE *
-	FROM notify
+	DELETE FROM notify
 	WHERE notify_num = #{notify_num}
 </select>
 
+<!-- 공지사항 수정(이미지 수정 포함) -->
+<update id="notifyUpdateImg">
+UPDATE notify
+SET
+	notify_title = #{notify_title},
+	notify_filename = #{notify_filename},
+	notify_realname = #{notify_realname},
+	file_path = #{file_path},
+	notify_content = #{notify_content}
+WHERE 
+	notify_num = #{notify_num}
 
+</update>
+
+<!-- 공지사항 수정(이미지 수정 미포함) -->
+<update id="notifyUpdate">
+UPDATE notify
+SET
+	notify_title = #{notify_title},
+	notify_content = #{notify_content}
+WHERE 
+	notify_num = #{notify_num}
+
+</update>
 </mapper>

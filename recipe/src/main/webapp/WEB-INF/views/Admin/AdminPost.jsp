@@ -15,7 +15,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/resources/js/popuptest.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>관리자페이지(게시글관리)</title>
 </head>
