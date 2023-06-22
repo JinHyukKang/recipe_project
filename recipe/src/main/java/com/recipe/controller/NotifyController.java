@@ -179,8 +179,10 @@ public class NotifyController {
 	}
 	
 	//공지사항 수정
-	@RequestMapping(value="/NotifyUpdate.do", method = RequestMethod.POST)
-	public String NotifyUpdateDo(Model model,
+	@ResponseBody
+	@RequestMapping(value="/NotifyUpdate.do",produces="text/html; charset=UTF-8", method = RequestMethod.POST)
+	public String NotifyUpdateDo(NotifyVO notify,
+								Model model,
 								@RequestParam("notify_num") int notify_num,
 								@RequestParam("notifyFile") MultipartFile file,
 								@RequestParam("notify_title") String notify_title,
@@ -188,9 +190,43 @@ public class NotifyController {
 		
 		String message="";
 		
+		// 이미지 파일 업로드
+				if (!file.isEmpty()) {
+					String real_fileName = file.getOriginalFilename();// 업로드한 파일 이름 받아오기
+					long size = file.getSize(); // 업로드한 파일 크기 받아오기
+					String fileExtension = real_fileName.substring(real_fileName.lastIndexOf("."), real_fileName.length());
+																															
+
+					// 업로드 파일명 중복을 방지하기 위해 임의의 파일명 부여
+					UUID uuid = UUID.randomUUID();
+					String[] uuids = uuid.toString().split("-");
+					String fileName = uuids[0];
+
+					// 파일 저장 경로 설정
+					String uploadPath = "D:/spring_project/recipe/recipe/src/main/webapp/resources/upload/";
+					String filePath = uploadPath + fileName + fileExtension;
+					// 설정한 경로로 이미지 파일 저장
+					file.transferTo(new File(filePath));
+					
+					notifyservice.notifyUpdateImg(notify_num, notify_title,fileName, real_fileName, filePath, notify_content);
+					
+					message = "<script>";
+					message += "alert('공지사항수정이 완료되었습니다.');";
+					message += "location.href='/Notify/Notify';";
+					message += "</script>";
+				} else {
+					
+					notifyservice.notifyUpdate(notify_num, notify_title, notify_content);
+					
+					message = "<script>";
+					message += "alert('공지사항수정이 완료되었습니다.');";
+					message += "location.href='/Notify/Notify';";
+					message += "</script>";
+				}
+				
+			return message;
 		
 		
-		return "";
 	}
 	
 	

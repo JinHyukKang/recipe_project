@@ -95,7 +95,7 @@ public class BoardController {
 	      String fileName = uuids[0];
 	      
 	      //파일 저장 경로 설정
-	      String uploadPath = "C:/workspace/recipe/recipe/src/main/webapp/resources/upload/";
+	      String uploadPath = "D:/spring_project/recipe/recipe/src/main/webapp/resources/upload/";
 	      String filePath = uploadPath + fileName + fileExtension;
 	      //설정한 경로로 이미지 파일 저장
 	      file.transferTo(new File(filePath));

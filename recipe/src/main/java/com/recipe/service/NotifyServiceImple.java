@@ -1,6 +1,8 @@
 package com.recipe.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +42,34 @@ public class NotifyServiceImple implements NotifyService {
 	}
 	
 	//공지사항 수정하기(이미지포함)
-	public void notifyUpdateImg(@Param("notify_num") int notify_num)throws Exception{
-		notifymapper.notifyUpdateImg(notify_num);
+	public void notifyUpdateImg(@Param("notify_num") int notify_num, String notify_title, String notify_filename, 
+								String notify_realname, String file_path, String notify_content)throws Exception{
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("notify_num",notify_num);
+		map.put("notify_title", notify_title);
+		map.put("notify_filename", notify_filename);
+		map.put("notify_realname", notify_realname);
+		map.put("file_path", file_path);
+		map.put("notify_content", notify_content);
+		
+		notifymapper.notifyUpdateImg(map);
 	}
 		
 	//공지사항 수정하기(이미지미포함)
-	public void notifyUpdate(@Param("notify_num") int notify_num)throws Exception{
-		notifymapper.notifyUpdate(notify_num);
+	public void notifyUpdate(@Param("notify_num") int notify_num, String notify_title, String notify_content)throws Exception{
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("notify_num",notify_num);
+		map.put("notify_title", notify_title);
+		map.put("notify_content", notify_content);
+		
+		notifymapper.notifyUpdate(map);
 	}
+
+	
 	
 	
 }

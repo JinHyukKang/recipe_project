@@ -29,7 +29,7 @@
               <div class="d-flex">
               	<input type="text" class="form-control col-lg-5" id="user_id" name="user_id" required>
               	<span id="id_error"></span><br>
-              	<button class="btn btn-primary col-lg-2" id="id_Chk" onclick="checkUserId()">중복 확인</button>
+              	<button class="btn btn-primary col-lg-2" id="id_Chk" onclick="checkUserId()" value="0">중복 확인</button>
               </div>
           </div>
           
@@ -68,7 +68,7 @@
               <label for="user_nickname">닉네임</label>
               <div class="d-flex">
               	<input type="text" class="form-control col-lg-5" id="user_nickname" name="user_nickname" required>
-              	<button class="btn btn-primary col-lg-2" id="nickname_Chk" onclick="checkUserNickname()">중복 확인</button>
+              	<button class="btn btn-primary col-lg-2" id="nickname_Chk" onclick="checkUserNickname()" value="0">중복 확인</button>
               </div>
             </div>
           
@@ -106,7 +106,8 @@
             <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
           </div>
           <div class="mb-4"></div>
-          <input type="submit" class="btn btn-primary btn-lg btn-block" value="가입 완료"/>
+          	<input type="submit" id="submitBtn" class="btn btn-primary btn-lg btn-block" value="가입 완료" disabled>
+			<span id="idnick_Chk" style="color: red;">아이디 혹은 닉네임 중복확인을 해주세요</span>
         </form>
         
      	</div>
@@ -122,62 +123,90 @@
    
 <script>
 
-//회원가입 완료 알림창 
-function joinSuccess(){
-	var join = "${param.join}";
-    if (join === "joinSuccess") {
-        alert("회원가입에 성공하였습니다.");
-    }
-}
+$(document).ready(function () {
+    // submit 버튼 초기 상태 설정
+    $('#submitBtn').prop('disabled', true);
 
+    // 가입완료 버튼 상태 업데이트 함수
+    function updateSubmitButtonState() {
+        var idChkValue = $('#id_Chk').val();
+        var nicknameChkValue = $('#nickname_Chk').val();
+
+        if (idChkValue === "1" && nicknameChkValue === "1") {
+            $('#submitBtn').prop('disabled', false);
+            $('#idnick_Chk').text('');
+        } else {
+            $('#submitBtn').prop('disabled', true);
+            $('#idnick_Chk').text('아이디 혹은 닉네임 중복확인을 해주세요');
+            $('#idnick_Chk').css('color', 'red');
+        }
+    }
+
+    // id_Chk 값과 nickname_Chk 값 모두 변경될 때마다 submit 버튼 상태 업데이트
+    $('#id_Chk, #nickname_Chk').change(function () {
+        updateSubmitButtonState();
+    });
+});
 
 //아이디 중복 테스트
 function checkUserId() {
-    var user_id = $('#user_id').val();
-    if(user_id === ''){
-    	alert('아이디를 입력해주세요')
-    }else{
-   	 $.ajax({
-   	        url: '/member/idChk',
-   	        type: 'post',
-   	        data: {user_id: user_id},
-   	        success: function(response){
-   	        	if(response === "fail") {
-   	        		alert("이미 사용중인 아이디입니다.");
-   	        		$("#user_id").val("");
-   	        		$("#user_id").focus();
-   	        	}else if(response === "success") {
-   	        		alert("사용 가능한 아이디입니다.");
-   	        	}else {
-   	        		alert("잘못된 값 전달");
-   	        	}
-   	        }
-   	    });
+	var user_id = $('#user_id').val();
+    if (user_id === '') {
+        alert('아이디를 입력해주세요');
+    } else {
+        $.ajax({
+            url: '/member/idChk',
+            type: 'post',
+            data: { user_id: user_id },
+            success: function (response) {
+                if (response === "fail") {
+                    alert("이미 사용중인 아이디입니다.");
+                    $("#user_id").val("");
+                    $("#user_id").focus();
+                    $("#id_Chk").val("0");
+                } else if (response === "success") {
+                    alert("사용 가능한 아이디입니다.");
+                    $("#id_Chk").val("1"); // id_Chk의 value 값을 1로 변경
+                    updateSubmitButtonState(); // 가입완료 버튼 상태 업데이트
+                } else {
+                    alert("잘못된 값 전달");
+                }
+            }
+        });
     }
    
 };
 
 //닉네임 중복 테스트
 function checkUserNickname() {
-    var user_nickname = $('#user_nickname').val();
+	var user_nickname = $('#user_nickname').val();
+    if (user_nickname === '') {
+        alert('닉네임을 입력해주세요');
+    } else {
+        $.ajax({
+            url: '/member/nicknameChk',
+            type: 'post',
+            data: { user_nickname: user_nickname },
+            success: function (response) {
+                if (response === "fail") {
+                    alert("이미 사용중인 닉네임입니다.");
+                    $("#user_nickname").val("");
+                    $("#user_nickname").focus();
+                    $("#nickname_Chk").val("0");
+                } else if (response === "success") {
+                    alert("사용 가능한 닉네임입니다.");
+                    $("#nickname_Chk").val("1");
+                    updateSubmitButtonState(); // 가입완료 버튼 상태 업데이트
+                } else {
+                    alert("잘못된 값 전달");
+                }
+            }
+        });
+    }
     
-    $.ajax({ 
-        url: '/member/nicknameChk',
-        type: 'post',
-        data: {user_nickname: user_nickname},
-        success: function(response){
-        	if(response === "fail") {
-        		alert("이미 사용중인 닉네임입니다.");
-        		$("#user_nickname").val("");
-        		$("#user_nickname").focus();
-        	}else if(response === "success") {
-        		alert("사용 가능한 닉네임입니다.");
-        	}else {
-        		alert("잘못된 값 전달");
-        	}
-        }
-    });
 };
+
+
 
 //비밀번호 확인
 function checkUserpass() {

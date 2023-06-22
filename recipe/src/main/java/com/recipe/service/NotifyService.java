@@ -1,6 +1,7 @@
 package com.recipe.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -24,8 +25,9 @@ public interface NotifyService {
 	public void DeleteNotify(@Param("notify_num") int notify_num)throws Exception;
 	
 	//공지사항 수정하기(이미지포함)
-	public void notifyUpdateImg(@Param("notify_num") int notify_num)throws Exception;
+	public void notifyUpdateImg(@Param("notify_num") int notify_num,String notify_title, String notify_filename, 
+			String notify_realname, String file_path, String notify_content)throws Exception;
 		
 	//공지사항 수정하기(이미지미포함)
-	public void notifyUpdate(@Param("notify_num") int notify_num)throws Exception;
+	public void notifyUpdate(@Param("notify_num") int notify_num, String notify_title, String notify_content)throws Exception;
 }
