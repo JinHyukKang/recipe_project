@@ -59,9 +59,9 @@
                <label for="option2">여</label>             
          </div><br>
           </div>
-          <div class="dropdown">
+          <div class="dropdown mb-3">
             <label for="user_birth" class="form-label">생년월일 </label>
-            <input type="date" class="form-control  col-lg-6" name="user_birth" value="<fmt:formatDate value="${user_birth}" type="full"/>">
+            <input type="date" class="form-control col-lg-6" name="user_birth" value="<fmt:formatDate value='${user_birth}' type='date' pattern='yyyy-MM-dd' />">
          </div>
             
             <div class="mb-3">
@@ -123,31 +123,30 @@
    
 <script>
 
+//가입완료 버튼 상태 업데이트 함수
+function updateSubmitButtonState() {
+    var idChkValue = $('#id_Chk').val();
+    var nicknameChkValue = $('#nickname_Chk').val();
+
+    if (idChkValue === "1" && nicknameChkValue === "1") {
+        $('#submitBtn').prop('disabled', false);
+        $('#idnick_Chk').text('');
+    } else {
+        $('#submitBtn').prop('disabled', true);
+        
+    }
+}
+
 $(document).ready(function () {
     // submit 버튼 초기 상태 설정
     $('#submitBtn').prop('disabled', true);
-
-    // 가입완료 버튼 상태 업데이트 함수
-    function updateSubmitButtonState() {
-        var idChkValue = $('#id_Chk').val();
-        var nicknameChkValue = $('#nickname_Chk').val();
-
-        if (idChkValue === "1" && nicknameChkValue === "1") {
-            $('#submitBtn').prop('disabled', false);
-            $('#idnick_Chk').text('');
-        } else {
-            $('#submitBtn').prop('disabled', true);
-            $('#idnick_Chk').text('아이디 혹은 닉네임 중복확인을 해주세요');
-            $('#idnick_Chk').css('color', 'red');
-        }
-    }
-
+    $('#idnick_Chk').text('아이디 혹은 닉네임 중복확인을 해주세요');
+    $('#idnick_Chk').css('color', 'red');
     // id_Chk 값과 nickname_Chk 값 모두 변경될 때마다 submit 버튼 상태 업데이트
     $('#id_Chk, #nickname_Chk').change(function () {
         updateSubmitButtonState();
     });
 });
-
 //아이디 중복 테스트
 function checkUserId() {
 	var user_id = $('#user_id').val();
